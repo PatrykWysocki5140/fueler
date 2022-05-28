@@ -1,69 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-//import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
-//import 'package:gallery/demos/material/material_demo_types.dart';
 
-class _CheckboxDemo extends StatefulWidget {
-  @override
-  _CheckboxDemoState createState() => _CheckboxDemoState();
-}
+void main() => runApp(const MyApp());
 
-class _CheckboxDemoState extends State<_CheckboxDemo> with RestorationMixin {
-  RestorableBoolN checkboxValueA = RestorableBoolN(true);
-  RestorableBoolN checkboxValueB = RestorableBoolN(false);
-  RestorableBoolN checkboxValueC = RestorableBoolN(null);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  @override
-  String get restorationId => 'checkbox_demo';
-
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(checkboxValueA, 'checkbox_a');
-    registerForRestoration(checkboxValueB, 'checkbox_b');
-    registerForRestoration(checkboxValueC, 'checkbox_c');
-  }
-
-  @override
-  void dispose() {
-    checkboxValueA.dispose();
-    checkboxValueB.dispose();
-    checkboxValueC.dispose();
-    super.dispose();
-  }
+  static const String _title = 'Flutter Code Sample';
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Checkbox(
-            value: checkboxValueA.value,
-            onChanged: (value) {
-              setState(() {
-                checkboxValueA.value = value;
-              });
-            },
-          ),
-          Checkbox(
-            value: checkboxValueB.value,
-            onChanged: (value) {
-              setState(() {
-                checkboxValueB.value = value;
-              });
-            },
-          ),
-          Checkbox(
-            value: checkboxValueC.value,
-            tristate: true,
-            onChanged: (value) {
-              setState(() {
-                checkboxValueC.value = value;
-              });
-            },
-          ),
-        ],
+    return MaterialApp(
+      title: _title,
+      home: Scaffold(
+        appBar: AppBar(title: const Text(_title)),
+        body: const Center(
+          child: MyStatefulWidget(),
+        ),
       ),
+    );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  bool isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.red;
+      }
+      return Colors.red;
+    }
+
+    return Checkbox(
+      checkColor: Colors.white,
+      fillColor: MaterialStateProperty.resolveWith(getColor),
+      value: isChecked,
+      onChanged: (bool? value) {
+        setState(() {
+          isChecked = value!;
+        });
+      },
     );
   }
 }
