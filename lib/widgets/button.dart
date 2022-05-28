@@ -20,8 +20,7 @@ class _FloatingActionButtonDemo extends State<FloatingActionButtonDemo2> {
         children: [
           const SizedBox(height: 40),
           FloatingActionButton.extended(
-            icon: const Icon(Icons.add),
-            label: Text(localizations.buttonClicksDescription),
+            label: Text('Przycisk'),
             onPressed: () {},
           ),
         ],
