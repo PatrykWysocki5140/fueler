@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
+import 'package:fueler/pages/welcome_page.dart';
 
 import '../widgets/language-switcher.dart';
 
@@ -45,7 +46,7 @@ class _MainLayout extends State<MainLayout> {
                 icon: Icon(Icons.person),
                 onPressed: () {
                   setState(() {
-                    _myPage.jumpToPage(0);
+                    _myPage.jumpToPage(1);
                   });
                 },
               ),
@@ -55,7 +56,7 @@ class _MainLayout extends State<MainLayout> {
                 icon: Icon(Icons.navigation),
                 onPressed: () {
                   setState(() {
-                    _myPage.jumpToPage(1);
+                    _myPage.jumpToPage(2);
                   });
                 },
               ),
@@ -65,7 +66,7 @@ class _MainLayout extends State<MainLayout> {
                 icon: Icon(Icons.settings),
                 onPressed: () {
                   setState(() {
-                    _myPage.jumpToPage(2);
+                    _myPage.jumpToPage(3);
                   });
                 },
               ),
@@ -79,14 +80,15 @@ class _MainLayout extends State<MainLayout> {
           print('Page Changes to index $int');
         },
         children: <Widget>[
+          Welcome(),
           Center(
             child: Container(
-              child: Text('Empty Body 0test'),
+              child: Text('Empty Body 1test'),
             ),
           ),
           Center(
             child: Container(
-              child: Text('Empty Body 1test'),
+              child: Text('Empty Body 2test'),
             ),
           ),
           Center(
