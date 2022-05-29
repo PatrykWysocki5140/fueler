@@ -23,6 +23,16 @@ class LoginWidget extends StatelessWidget {
   }
 }
 
+class IconWidget extends StatelessWidget {
+  final IconData icon;
+  const IconWidget({required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(icon, size: 50.0);
+  }
+}
+
 /*
 return Center(
       child: Column(

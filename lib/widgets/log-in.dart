@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fueler/widgets/main_button.dart';
+import 'package:fueler/widgets/basic_widgets.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class Login extends StatelessWidget {
           Row(
               //children: const <Widget>[Text("Zaloguj się"), Icon(Icons.login)],
               ),
-          const Icon(Icons.no_accounts, size: 50.0),
+          const IconWidget(icon: Icons.no_accounts),
           const LoginWidget(
             icon: Icons.login,
             text: "zaloguj sie",
