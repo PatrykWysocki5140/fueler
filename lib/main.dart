@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fueler/notifiers/LanguageNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
-import 'package:fueler/pages/main-page.dart';
+import 'package:fueler/layouts/main-layout.dart';
 import 'package:fueler/widgets/language-switcher.dart';
 import 'package:fueler/widgets/theme_mode.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MainPage(),
+      body: MainLayout(),
     );
   }
 }
