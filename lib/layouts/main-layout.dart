@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fueler/widgets/theme_mode.dart';
+import 'package:fueler/pages/settings_page.dart';
 
 import '../widgets/language-switcher.dart';
 

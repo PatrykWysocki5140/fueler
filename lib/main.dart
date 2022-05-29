@@ -5,7 +5,7 @@ import 'package:fueler/notifiers/LanguageNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
 import 'package:fueler/layouts/main-layout.dart';
 import 'package:fueler/widgets/language-switcher.dart';
-import 'package:fueler/widgets/theme_mode.dart';
+import 'package:fueler/pages/settings_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
