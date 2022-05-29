@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fueler/notifiers/LanguageNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
+import 'package:fueler/pages/main-page.dart';
 import 'package:fueler/widgets/language-switcher.dart';
 import 'package:fueler/widgets/theme_mode.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +19,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  //const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     NightMode usertheme = Provider.of<NightMode>(context);
@@ -37,10 +36,30 @@ class MyApp extends StatelessWidget {
                 languages.languages.entries.map((e) => Locale(e.key)),
             locale: Locale(languages.language.key),
             home: child ?? const SizedBox.shrink()),
-        child: const MyHomePage(title: 'Flutter Demo Home Page'));
+        child: const MyHomePage(title: ''));
+  }
+}
+///////////////////////////////////////////////////////////////////////////
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: MainPage(),
+    );
   }
 }
 
+/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -83,7 +102,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ////
             FloatingActionButton(
               heroTag: "btn1",
-              onPressed: _incrementCounter,
+              onPressed: // _incrementCounter
+                  () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MainPage()));
+              },
               tooltip: 'Increment',
               child: const Icon(Icons.plus_one),
             )
@@ -104,3 +127,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
