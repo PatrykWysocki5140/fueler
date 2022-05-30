@@ -33,7 +33,7 @@ class _SettingsState extends State<Settings> {
       ),
     );
   }
-
+/*
   Widget settingsWidget(name, icon, context) {
     NightMode usertheme = Provider.of<NightMode>(context);
     checked = usertheme.getEnabled();
@@ -71,5 +71,28 @@ class _SettingsState extends State<Settings> {
           },
           value: checked,
         ));
+  }
+}*/
+
+  Widget settingsWidget(name, icon, context) {
+    NightMode usertheme = Provider.of<NightMode>(context);
+    checked = usertheme.getEnabled();
+
+    return FloatingActionButton(
+      onPressed: () {},
+      child: ListTile(
+        onTap: () {
+          setState(() {
+            checked = !checked;
+            if (checked) {
+              usertheme.userthemeMode = ThemeData.dark();
+            } else {
+              usertheme.userthemeMode = ThemeData.light();
+            }
+            usertheme.enabled = checked;
+          });
+        },
+      ),
+    );
   }
 }

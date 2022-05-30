@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
@@ -27,7 +25,7 @@ class _MainLayout extends State<MainLayout> {
   final int page;
   _MainLayout(this.page);
 
-  final PageController _myPage = PageController(initialPage: 1); // to było ok
+  final PageController _myPage = PageController(initialPage: 0); // to było ok
 
   // _MainLayout(${1|int,num,Object,Comparable<num>|} ${2|recordName,name,i|});
 
