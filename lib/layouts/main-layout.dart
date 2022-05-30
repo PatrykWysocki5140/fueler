@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/language-switcher.dart';
 
 class MainLayout extends StatefulWidget {
@@ -102,7 +102,8 @@ class _MainLayout extends State<MainLayout> {
           Welcome(),
           Center(
             child: Container(
-              child: Text('Empty Body 1test'),
+              child: Text(
+                  AppLocalizations.of(context)!.buttonClicksDescriptionLogin),
             ),
           ),
           Center(

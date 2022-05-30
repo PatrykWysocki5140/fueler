@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fueler/widgets/basic_widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 
+  //String tefxt = AppLocalizations.of(context)!.buttonClicksDescriptionLogin;
+  // ignore: non_constant_identifier_names
+//AppLocalizations.of(context)!.buttonClicksDescriptionLogin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +19,7 @@ class Login extends StatelessWidget {
           IconWidget(icon: Icons.no_accounts),
           LoginWidget(
             icon: Icons.login,
-            text: "zaloguj sie",
+            /*text: "text",*/
           ),
         ],
       ),

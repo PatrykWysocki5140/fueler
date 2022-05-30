@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../layouts/main-layout.dart';
 
 class LoginWidget extends StatelessWidget {
   final IconData icon;
-  final String text;
-  const LoginWidget({required this.icon, required this.text});
+  //final String text;
+  const LoginWidget({required this.icon /*, required this.text*/});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,8 @@ class LoginWidget extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           FloatingActionButton.extended(
-            label: Text(text),
+            label: Text(
+                AppLocalizations.of(context)!.buttonClicksDescriptionLogin),
             icon: Icon(icon),
             onPressed: () {
               Navigator.push(context,
