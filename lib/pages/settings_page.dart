@@ -25,6 +25,7 @@ class _SettingsState extends State<Settings> {
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               settingsWidget("Dark mode", FontAwesomeIcons.moon, context)
             ],
@@ -78,21 +79,20 @@ class _SettingsState extends State<Settings> {
     NightMode usertheme = Provider.of<NightMode>(context);
     checked = usertheme.getEnabled();
 
-    return FloatingActionButton(
-      onPressed: () {},
-      child: ListTile(
-        onTap: () {
-          setState(() {
-            checked = !checked;
-            if (checked) {
-              usertheme.userthemeMode = ThemeData.dark();
-            } else {
-              usertheme.userthemeMode = ThemeData.light();
-            }
-            usertheme.enabled = checked;
-          });
-        },
-      ),
+    return FloatingActionButton.extended(
+      label: Text('Color change'),
+      tooltip: 'Color change',
+      onPressed: () {
+        setState(() {
+          checked = !checked;
+          if (checked) {
+            usertheme.userthemeMode = ThemeData.dark();
+          } else {
+            usertheme.userthemeMode = ThemeData.light();
+          }
+          usertheme.enabled = checked;
+        });
+      },
     );
   }
 }
