@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
@@ -5,16 +7,35 @@ import 'package:fueler/pages/welcome_page.dart';
 import '../widgets/language-switcher.dart';
 
 class MainLayout extends StatefulWidget {
-  const MainLayout({Key? key}) : super(key: key);
+  //const MainLayout({Key? key}) : super(key: key);
+  //final int recordName;
+  //final String recordName;
+  //const MainLayout(this.recordName);
+
+  //const MainLayout({Key? key, required this.recordName}): super(key: key); //to było ok
+  //const MyRecord(this.recordName);
+
+  final int page;
+
+  MainLayout({required this.page});
 
   @override
-  _MainLayout createState() => _MainLayout();
+  _MainLayout createState() => _MainLayout(page);
 }
 
 class _MainLayout extends State<MainLayout> {
-  PageController _myPage = PageController(initialPage: 0);
+  final int page;
+  _MainLayout(this.page);
+
+  final PageController _myPage = PageController(initialPage: 1); // to było ok
+
+  // _MainLayout(${1|int,num,Object,Comparable<num>|} ${2|recordName,name,i|});
+
+  //_MainLayout(${1|int,num,Object,Comparable<num>|} ${2|recordName,name,i|});
+  //PageController(initialPage: this.recordName);
   @override
   Widget build(BuildContext context) {
+    //var myPage = widget.recordName;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
