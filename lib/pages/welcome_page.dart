@@ -12,9 +12,9 @@ class Welcome extends StatefulWidget {
 class _Welcome extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(40.0),
+        padding: EdgeInsets.all(40.0),
         child: Login(),
       ),
     );
@@ -35,3 +35,9 @@ return Scaffold(
       )
     );
     */
+    /*return const Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(40.0),
+        child: Login(),
+      ),
+    );*/

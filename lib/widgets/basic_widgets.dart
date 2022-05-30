@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fueler/pages/settings_page.dart';
+import 'package:fueler/pages/welcome_page.dart';
+
+import '../layouts/main-layout.dart';
 
 class LoginWidget extends StatelessWidget {
   final IconData icon;
@@ -15,7 +19,10 @@ class LoginWidget extends StatelessWidget {
           FloatingActionButton.extended(
             label: Text(text),
             icon: Icon(icon),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MainLayout(page: 2)));
+            },
           ),
         ],
       ),

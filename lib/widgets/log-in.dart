@@ -8,12 +8,12 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: <Widget>[
-          Row(
+        children: const <Widget>[
+          /*Row(
               //children: const <Widget>[Text("Zaloguj się"), Icon(Icons.login)],
-              ),
-          const IconWidget(icon: Icons.no_accounts),
-          const LoginWidget(
+              ),*/
+          IconWidget(icon: Icons.no_accounts),
+          LoginWidget(
             icon: Icons.login,
             text: "zaloguj sie",
           ),
