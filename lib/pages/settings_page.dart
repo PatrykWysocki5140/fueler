@@ -16,11 +16,6 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        //title: Text(AppLocalizations.of(context)!.buttonClicksDescription),
-        title: const Text("dupa"),
-      ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         child: Center(

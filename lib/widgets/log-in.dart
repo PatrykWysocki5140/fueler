@@ -10,19 +10,17 @@ class Login extends StatelessWidget {
 //AppLocalizations.of(context)!.buttonClicksDescriptionLogin
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: const <Widget>[
-          /*Row(
+    return Column(
+      children: const <Widget>[
+        /*Row(
               //children: const <Widget>[Text("Zaloguj się"), Icon(Icons.login)],
               ),*/
-          IconWidget(icon: Icons.no_accounts),
-          LoginWidget(
-            icon: Icons.login,
-            /*text: "text",*/
-          ),
-        ],
-      ),
+        IconWidget(icon: Icons.no_accounts),
+        LoginWidget(
+          icon: Icons.login,
+          /*text: "text",*/
+        ),
+      ],
     );
   }
 /*

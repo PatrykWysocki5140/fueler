@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
@@ -17,6 +19,7 @@ class LoginWidget extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           FloatingActionButton.extended(
+            backgroundColor: Colors.transparent,
             label: Text(
                 AppLocalizations.of(context)!.buttonClicksDescriptionLogin),
             icon: Icon(icon),
@@ -31,6 +34,38 @@ class LoginWidget extends StatelessWidget {
   }
 }
 
+/*
+class NavigationWidget extends StatelessWidget {
+  final int page;
+  final IconData icon;
+  final AppLocalizations text;
+  // ignore: use_key_in_widget_constructors
+  const NavigationWidget(
+      {required this.page, required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 10),
+          FloatingActionButton.extended(
+            label: Text(AppLocalizations.of(context)!.text),
+            icon: Icon(icon),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MainLayout(page: page)));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+*/
 class IconWidget extends StatelessWidget {
   final IconData icon;
   const IconWidget({required this.icon});

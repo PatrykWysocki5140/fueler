@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../widgets/language-switcher.dart';
 
 class MainLayout extends StatefulWidget {
   //const MainLayout({Key? key}) : super(key: key);
@@ -15,9 +14,11 @@ class MainLayout extends StatefulWidget {
 
   final int page;
 
-  MainLayout({required this.page});
+  // ignore: use_key_in_widget_constructors
+  const MainLayout({required this.page});
 
   @override
+  // ignore: no_logic_in_create_state
   _MainLayout createState() => _MainLayout(page);
 }
 
@@ -37,22 +38,23 @@ class _MainLayout extends State<MainLayout> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: Text(""),
+        //backgroundColor: Colors.black12,
+        title: const Text(""),
         leading: GestureDetector(
           onTap: () {},
-          child: Icon(Icons.search),
+          child: const Icon(Icons.search),
         ),
         actions: <Widget>[
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
+              padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {},
-                child: Icon(Icons.refresh),
+                child: const Icon(Icons.refresh),
               )),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         child: Container(
           height: 75,
           child: Row(
@@ -61,8 +63,8 @@ class _MainLayout extends State<MainLayout> {
             children: <Widget>[
               IconButton(
                 iconSize: 30.0,
-                padding: EdgeInsets.only(left: 28.0, right: 28.0),
-                icon: Icon(Icons.person),
+                padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                icon: const Icon(Icons.person),
                 onPressed: () {
                   setState(() {
                     _myPage.jumpToPage(1);
@@ -71,8 +73,8 @@ class _MainLayout extends State<MainLayout> {
               ),
               IconButton(
                 iconSize: 30.0,
-                padding: EdgeInsets.only(left: 28.0, right: 28.0),
-                icon: Icon(Icons.navigation),
+                padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                icon: const Icon(Icons.navigation),
                 onPressed: () {
                   setState(() {
                     _myPage.jumpToPage(2);
@@ -81,8 +83,8 @@ class _MainLayout extends State<MainLayout> {
               ),
               IconButton(
                 iconSize: 30.0,
-                padding: EdgeInsets.only(left: 28.0, right: 28.0),
-                icon: Icon(Icons.settings),
+                padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                icon: const Icon(Icons.settings),
                 onPressed: () {
                   setState(() {
                     _myPage.jumpToPage(3);
@@ -96,10 +98,11 @@ class _MainLayout extends State<MainLayout> {
       body: PageView(
         controller: _myPage,
         onPageChanged: (int) {
+          // ignore: avoid_print
           print('Page Changes to index $int');
         },
         children: <Widget>[
-          Welcome(),
+          const Welcome(),
           Center(
             child: Container(
               child: Text(
@@ -111,14 +114,10 @@ class _MainLayout extends State<MainLayout> {
               child: Text('Empty Body 2test'),
             ),
           ),
-          Center(
-            child: Container(
-              child: Settings(),
-            ),
-          ),
+          const Settings(),
         ],
         physics:
-            NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
+            const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
       ),
     );
   }
