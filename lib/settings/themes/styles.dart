@@ -1,38 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:fueler/widgets/basic_widgets.dart';
 
 class Styles {
   static ThemeData themeData(bool isDarkTheme) {
     return ThemeData(
+
+        //primarySwatch: isDarkTheme ? Colors.red : Colors.white,
+        //backgroundColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
+        //primaryColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
+        //indicatorColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
+        //hintColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
+        //highlightColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
+        //focusColor: isDarkTheme ? GetColors.black : GetColors.red,
+        //disabledColor: isDarkTheme ? GetColors.red : GetColors.white,
+        hoverColor: isDarkTheme ? GetColors.black : GetColors.red,
+        appBarTheme: AppBarTheme(
+          backgroundColor: isDarkTheme ? GetColors.gray : GetColors.white,
+          foregroundColor: isDarkTheme ? GetColors.red : GetColors.black,
+        ),
+        canvasColor:
+            isDarkTheme ? GetColors.lightBlack : GetColors.white, //tło wewnątrz
+        brightness: isDarkTheme ? Brightness.dark : Brightness.light,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: isDarkTheme ? GetColors.gray : GetColors.gray,
+          foregroundColor: isDarkTheme ? GetColors.red : GetColors.black,
+          hoverColor: isDarkTheme ? GetColors.black : GetColors.red,
+        ),
+        bottomAppBarColor: isDarkTheme ? GetColors.gray : GetColors.white,
+        iconTheme: IconThemeData(
+          color: isDarkTheme ? GetColors.red : GetColors.black,
+        )
+/*
       primarySwatch: Colors.red,
       primaryColor:
-          isDarkTheme ? Color.fromARGB(255, 153, 14, 14) : Colors.white,
-      backgroundColor:
-          isDarkTheme ? Color.fromARGB(255, 166, 44, 44) : Color(0xFFF1F5FB),
-      indicatorColor:
-          isDarkTheme ? Color.fromARGB(255, 174, 29, 43) : Color(0xffCBDCF8),
-      hintColor:
-          isDarkTheme ? Color.fromARGB(255, 144, 35, 31) : Color(0xffEECED3),
-      highlightColor:
-          isDarkTheme ? Color.fromARGB(255, 169, 30, 14) : Color(0xffFCE192),
-      hoverColor:
-          isDarkTheme ? Color.fromARGB(255, 19, 19, 162) : Color(0xff4285F4),
-      focusColor:
-          isDarkTheme ? Color.fromARGB(255, 108, 10, 28) : Color(0xffA8DAB5),
-      disabledColor: Color.fromARGB(255, 207, 12, 12),
-      cardColor: isDarkTheme ? Color.fromARGB(255, 184, 37, 37) : Colors.white,
+          isDarkTheme ? const Color.fromARGB(255, 153, 14, 14) : Colors.white,
+      backgroundColor: isDarkTheme
+          ? const Color.fromARGB(255, 166, 44, 44)
+          : const Color(0xFFF1F5FB),
+      indicatorColor: isDarkTheme
+          ? const Color.fromARGB(255, 174, 29, 43)
+          : const Color(0xffCBDCF8),
+      hintColor: isDarkTheme
+          ? const Color.fromARGB(255, 144, 35, 31)
+          : const Color(0xffEECED3),
+      highlightColor: isDarkTheme
+          ? const Color.fromARGB(255, 169, 30, 14)
+          : const Color(0xffFCE192),
+      hoverColor: isDarkTheme
+          ? const Color.fromARGB(255, 19, 19, 162)
+          : const Color.fromARGB(255, 119, 131, 150),
+      focusColor: isDarkTheme
+          ? const Color.fromARGB(255, 108, 10, 28)
+          : const Color(0xffA8DAB5),
+      disabledColor: const Color.fromARGB(255, 207, 12, 12),
+      cardColor:
+          isDarkTheme ? const Color.fromARGB(255, 184, 37, 37) : Colors.white,
       canvasColor:
-          isDarkTheme ? Color.fromARGB(255, 35, 35, 35) : Colors.grey[50],
+          isDarkTheme ? const Color.fromARGB(255, 35, 35, 35) : Colors.grey[50],
       // ignore: deprecated_member_use, prefer_const_constructors
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: Colors.red,
       ),
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-      appBarTheme: const AppBarTheme(
-        elevation: 0.0,
+
+      appBarTheme: AppBarTheme(
+        backgroundColor: isDarkTheme
+            ? const Color.fromARGB(255, 108, 10, 28)
+            : const Color(0xffA8DAB5),
       ),
       textSelectionTheme: TextSelectionThemeData(
-          selectionColor:
-              isDarkTheme ? Color.fromARGB(255, 162, 30, 30) : Colors.black),
-    );
+          selectionColor: isDarkTheme
+              ? const Color.fromARGB(255, 162, 30, 30)
+              : Colors.black),*/
+        );
   }
+}
+
+class GetColors {
+  static Color red = Color.fromARGB(255, 242, 28, 28);
+  static Color white = Color.fromARGB(255, 237, 235, 235);
+  static Color lightBlack = Color.fromARGB(255, 31, 30, 30);
+  static Color black = Color.fromARGB(255, 0, 0, 0);
+  static Color gray = Color.fromARGB(255, 44, 42, 42);
 }
