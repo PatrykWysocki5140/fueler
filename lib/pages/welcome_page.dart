@@ -38,7 +38,7 @@ class _Welcome extends State<Welcome> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MainLayout(page: 1)));
+                            builder: (context) => MainLayout(page: 2)));
                   },
                 ),
                 Column(

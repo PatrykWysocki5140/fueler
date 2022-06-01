@@ -60,76 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MainLayout(
-        page: 1,
+        page: 0,
       ),
     );
   }
 }
-
-/*
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: const <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: LanguageSwitcher(),
-          )
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(AppLocalizations.of(context)!.buttonClicksDescription),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            ////
-            FloatingActionButton(
-              heroTag: "btn1",
-              onPressed: // _incrementCounter
-                  () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MainPage()));
-              },
-              tooltip: 'Increment',
-              child: const Icon(Icons.plus_one),
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "btn2",
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Settings()));
-        },
-        tooltip: 'Settings',
-        child: const Icon(Icons.settings),
-      ),
-    );
-  }
-}
-*/
