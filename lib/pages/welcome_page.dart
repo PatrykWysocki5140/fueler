@@ -49,8 +49,8 @@ class _Welcome extends State<Welcome> {
                       ],
                     ),
                     Row(
-                      children: [
-                        const StationInfo(
+                      children: const [
+                        StationInfo(
                           stationicon: Icons.login,
                           stationaddress: "Poznań, ulica: xyz 123A",
                           pb: 314.1,
