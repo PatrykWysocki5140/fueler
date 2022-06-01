@@ -12,6 +12,7 @@ class StationInfo extends StatelessWidget {
   final double pb;
   final double on;
   final double lpg;
+  final int grade;
 
   const StationInfo({
     required this.stationicon,
@@ -19,6 +20,7 @@ class StationInfo extends StatelessWidget {
     required this.pb,
     required this.on,
     required this.lpg,
+    required this.grade,
   });
 
   @override
