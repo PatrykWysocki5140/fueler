@@ -41,13 +41,26 @@ class _Welcome extends State<Welcome> {
                             builder: (context) => const MainLayout(page: 1)));
                   },
                 ),
-                const StationInfo(
-                  stationicon: Icons.login,
-                  stationaddress: "Poznań, ulica: xyz 123A",
-                  pb: 314.1,
-                  on: 314,
-                  lpg: 314,
-                ),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(AppLocalizations.of(context)!.populartoday),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const StationInfo(
+                          stationicon: Icons.login,
+                          stationaddress: "Poznań, ulica: xyz 123A",
+                          pb: 314.1,
+                          on: 314,
+                          lpg: 314,
+                        ),
+                      ],
+                    ),
+                  ],
+                )
                 ///// tu wjedzie widget customowy const StationInfo(),
               ],
             ),

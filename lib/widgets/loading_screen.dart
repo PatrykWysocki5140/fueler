@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fueler/settings/themes/styles.dart';
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -42,36 +43,35 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   void dispose() {
     controller.dispose();
     super.dispose();
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: Center(
-          child: Column( 
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            const Text(
-              'Skanowanie najtańszych cen paliw...',
-              style: TextStyle(fontSize: 20),
+        backgroundColor: GetColors.gray,
+        body: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                const Text(
+                  'Skanowanie najtańszych cen paliw...',
+                  style: TextStyle(fontSize: 20),
+                ),
+                Transform.scale(
+                  scale: 2.0,
+                  child: CircularProgressIndicator(
+                    value: controller.value,
+                    semanticsLabel: 'Linear progress indicator',
+                    valueColor: AlwaysStoppedAnimation<Color>(GetColors.red),
+                    backgroundColor: GetColors.black,
+                    strokeWidth: 14.0,
+                  ),
+                )
+              ],
             ),
-            Transform.scale(
-              scale: 2.0,
-              child: CircularProgressIndicator(
-                value: controller.value,
-              semanticsLabel: 'Linear progress indicator',
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-              backgroundColor: Color.fromARGB(255, 0, 0, 0),
-              strokeWidth : 14.0,
-              ),
-            )
-          ],
-        ),
-      ),)
-    );
+          ),
+        ));
   }
 }
-

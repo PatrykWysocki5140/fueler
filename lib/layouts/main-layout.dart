@@ -3,6 +3,7 @@ import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fueler/widgets/basic_widgets.dart';
+import 'package:fueler/widgets/loading_screen.dart';
 
 class MainLayout extends StatefulWidget {
   //const MainLayout({Key? key}) : super(key: key);
@@ -43,44 +44,27 @@ class _MainLayout extends State<MainLayout> {
         title: const Text(""),
         leading: GestureDetector(
             onTap: () {},
-            child: TextButton(
-                onPressed: () {},
-                child: LoginWidget(
-                  icon: Icons.login,
-                ))
-
-            /*
-            IconButton(           
+            child: IconButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MainLayout(page: 2)));
+                setState(() {
+                  _myPage.jumpToPage(1);
+                });
               },
               icon: const Icon(Icons.search),
-            )
-*/
-
-            /*FloatingActionButton.extended(
-            extendedTextStyle: const TextStyle(color: Colors.black),
-            label: const Text(""),
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MainLayout(page: 2)));
-            },
-          ),*/
-            //const Icon(Icons.search),
-            ),
+            )),
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
-                child: const Icon(Icons.refresh),
-              )),
+                  onTap: () {},
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _myPage.jumpToPage(4);
+                      });
+                    },
+                    icon: const Icon(Icons.refresh),
+                  ))),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -145,6 +129,7 @@ class _MainLayout extends State<MainLayout> {
             ),
           ),
           const Settings(),
+          const LoadingScreen(),
         ],
         physics:
             const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.

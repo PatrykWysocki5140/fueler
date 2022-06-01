@@ -1,5 +1,6 @@
 {
     "buttonClicksDescription": "Wcisnąłeś przycisk tyle razy:", 
     "buttonClicksDescriptionLogin": "Zaloguj się",
-    "buttonClicksSearchStation": "Szukaj stacji"
+    "buttonClicksSearchStation": "Szukaj stacji",
+    "populartoday": "Popularne dzisiaj"
 }
