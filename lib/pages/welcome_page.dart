@@ -40,6 +40,7 @@ class _Welcome extends State<Welcome> {
                             builder: (context) => const MainLayout(page: 1)));
                   },
                 ),
+                ///// tu wjedzie widget customowy const StationInfo(),
               ],
             ),
           ),
