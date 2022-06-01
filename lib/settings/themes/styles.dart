@@ -77,9 +77,9 @@ class Styles {
 }
 
 class GetColors {
-  static Color red = Color.fromARGB(255, 242, 28, 28);
+  static Color red = Color.fromARGB(255, 223, 31, 31);
   static Color white = Color.fromARGB(255, 237, 235, 235);
   static Color lightBlack = Color.fromARGB(255, 31, 30, 30);
   static Color black = Color.fromARGB(255, 0, 0, 0);
-  static Color gray = Color.fromARGB(255, 44, 42, 42);
+  static Color gray = Color.fromARGB(255, 91, 90, 90);
 }
