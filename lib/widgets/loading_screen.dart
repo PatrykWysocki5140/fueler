@@ -31,7 +31,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   void initState() {
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 1),
     )..addListener(() {
         setState(() {});
       });
