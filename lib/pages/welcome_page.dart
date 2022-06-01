@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fueler/layouts/main-layout.dart';
 import 'package:fueler/widgets/basic_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fueler/widgets/stationinfo.dart';
 import '../widgets/log-in.dart';
 
 class Welcome extends StatefulWidget {
@@ -39,6 +40,13 @@ class _Welcome extends State<Welcome> {
                         MaterialPageRoute(
                             builder: (context) => const MainLayout(page: 1)));
                   },
+                ),
+                const StationInfo(
+                  stationicon: Icons.login,
+                  stationaddress: "Poznań, ulica: xyz 123A",
+                  pb: 314.1,
+                  on: 314,
+                  lpg: 314,
                 ),
                 ///// tu wjedzie widget customowy const StationInfo(),
               ],
