@@ -56,6 +56,7 @@ class _Welcome extends State<Welcome> {
                           pb: 314.1,
                           on: 314,
                           lpg: 314,
+                          grade: 1,
                         ),
                       ],
                     ),
