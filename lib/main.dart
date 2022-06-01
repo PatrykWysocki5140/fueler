@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fueler/notifiers/LanguageNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
+import 'package:fueler/settings/themes/styles.dart';
 import 'package:fueler/widgets/language-switcher.dart';
 import 'package:fueler/widgets/theme_mode.dart';
 import 'package:provider/provider.dart';
@@ -13,32 +14,35 @@ void main() async {
       ChangeNotifierProvider(create: (context) => LanguageNotifier()),
       ChangeNotifierProvider<NightMode>.value(value: NightMode())
     ],
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  //const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    NightMode usertheme = Provider.of<NightMode>(context);
-    return Consumer<LanguageNotifier>(
-        builder: (context, languages, child) => MaterialApp(
-            title: 'test apki',
-            theme: usertheme.getTheme(),
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales:
-                languages.languages.entries.map((e) => Locale(e.key)),
-            locale: Locale(languages.language.key),
-            home: child ?? const SizedBox.shrink()),
-        child: const MyHomePage(title: 'Flutter Demo Home Page'));
-  }
+  Widget build(BuildContext context) => Consumer<NightMode>(
+      builder: (context, nightMode, child) => Consumer<LanguageNotifier>(
+          builder: (context, languages, child) => FutureBuilder<ThemeData>(
+              future: nightMode.getTheme(),
+              initialData: Styles.themeData(false),
+              builder: (BuildContext context,
+                      AsyncSnapshot<ThemeData> themeData) =>
+                  MaterialApp(
+                      title: 'test apki',
+                      theme: themeData.data,
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      supportedLocales:
+                          languages.languages.entries.map((e) => Locale(e.key)),
+                      locale: Locale(languages.language.key),
+                      home: child ?? const SizedBox.shrink())),
+          child: const MyHomePage(title: 'Flutter Demo Home Page')));
 }
 
 class MyHomePage extends StatefulWidget {
@@ -87,8 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
               tooltip: 'Increment',
               child: const Icon(Icons.plus_one),
             )
-
-            ///
           ],
         ),
       ),
