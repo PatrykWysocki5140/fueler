@@ -9,9 +9,9 @@ import '../layouts/main-layout.dart';
 class StationInfo extends StatelessWidget {
   final IconData stationicon;
   final String stationaddress;
-  final Float pb;
-  final Float on;
-  final Float lpg;
+  final double pb;
+  final double on;
+  final double lpg;
 
   const StationInfo({
     required this.stationicon,
