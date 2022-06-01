@@ -28,32 +28,6 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-/*
-  Widget settingsWidget(name, icon, context) {
-    return Consumer<NightMode>(
-        builder: (context, nightMode, child) => FutureBuilder(
-            future: nightMode.enabled,
-            initialData: false,
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) =>
-                ListTile(
-                    title: Text(name),
-                    subtitle: const Text("Turn dark mode on / off"),
-                    leading: Icon(
-                      icon,
-                      color: Colors.blue,
-                    ),
-                    onTap: () {
-                      nightMode.switchTheme();
-                    },
-                    trailing: Checkbox(
-                      onChanged: (value) {
-                        nightMode.switchTheme();
-                      },
-                      value: snapshot.data,
-                    ))));
-  }
-}*/
-
   Widget settingsWidget(name, icon, context) {
     return Consumer<NightMode>(
         builder: (context, nightMode, child) => FutureBuilder(
@@ -61,7 +35,7 @@ class _SettingsState extends State<Settings> {
             initialData: false,
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) =>
                 FloatingActionButton.extended(
-                    label: Text('Color change'),
+                    label: const Text('Color change'),
                     tooltip: 'Color change',
                     onPressed: () => nightMode.switchTheme())));
   }

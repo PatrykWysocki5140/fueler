@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
@@ -40,7 +41,7 @@ class MainLayout extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
-        child: Container(
+        child: SizedBox(
           height: 75,
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -76,24 +77,22 @@ class MainLayout extends StatelessWidget {
       ),
       body: PageView(
         controller: _myPage,
-        onPageChanged: (int) {
-          print('Page Changes to index $int');
+        onPageChanged: (pageID) {
+          if (kDebugMode) {
+            print('Page Changes to index $pageID');
+          }
         },
         children: <Widget>[
           const Welcome(),
           Center(
-            child: Container(
-              child: Text(
-                  AppLocalizations.of(context)!.buttonClicksDescriptionLogin),
-            ),
+            child: Text(
+                AppLocalizations.of(context)!.buttonClicksDescriptionLogin),
           ),
-          Center(
-            child: Container(
-              child: Text('Empty Body 2test'),
-            ),
+          const Center(
+            child: Text('Empty Body 2test'),
           ),
           const Settings(),
-          const LoadingScreen(),
+          LoadingScreen(onCompletion: () => _myPage.jumpToPage(0)),
         ],
         physics:
             const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.

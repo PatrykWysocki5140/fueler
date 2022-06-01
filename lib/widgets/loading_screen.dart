@@ -1,37 +1,44 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fueler/settings/themes/styles.dart';
 
 class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+  final Function onCompletion;
 
-  static const String _title = 'Flutter Code Sample';
+  const LoadingScreen({Key? key, required this.onCompletion}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
+    return Scaffold(
+      body: MyStatefulWidget(onCompletion: onCompletion),
     );
   }
 }
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+  final Function onCompletion;
+
+  const MyStatefulWidget({Key? key, required this.onCompletion})
+      : super(key: key);
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
-/// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
 class _MyStatefulWidgetState extends State<MyStatefulWidget>
     with TickerProviderStateMixin {
   late AnimationController controller;
 
+  final int seconds = 2;
+  late final Timer timer;
+
   @override
   void initState() {
+    timer = Timer(Duration(seconds: seconds * 2), () => widget.onCompletion());
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: Duration(seconds: seconds),
     )..addListener(() {
         setState(() {});
       });
@@ -41,6 +48,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
 
   @override
   void dispose() {
+    timer.cancel();
     controller.dispose();
     super.dispose();
   }
@@ -48,7 +56,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: GetColors.gray,
         body: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Center(
