@@ -19,6 +19,7 @@ class LoginWidget extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           FloatingActionButton.extended(
+            heroTag: "loginbutton",
             backgroundColor: Colors.transparent,
             label: Text(
                 AppLocalizations.of(context)!.buttonClicksDescriptionLogin),

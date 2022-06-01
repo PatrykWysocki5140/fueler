@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fueler/widgets/basic_widgets.dart';
 
 class MainLayout extends StatefulWidget {
   //const MainLayout({Key? key}) : super(key: key);
@@ -41,9 +42,38 @@ class _MainLayout extends State<MainLayout> {
         //backgroundColor: Colors.black12,
         title: const Text(""),
         leading: GestureDetector(
-          onTap: () {},
-          child: const Icon(Icons.search),
-        ),
+            onTap: () {},
+            child: TextButton(
+                onPressed: () {},
+                child: LoginWidget(
+                  icon: Icons.login,
+                ))
+
+            /*
+            IconButton(           
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainLayout(page: 2)));
+              },
+              icon: const Icon(Icons.search),
+            )
+*/
+
+            /*FloatingActionButton.extended(
+            extendedTextStyle: const TextStyle(color: Colors.black),
+            label: const Text(""),
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MainLayout(page: 2)));
+            },
+          ),*/
+            //const Icon(Icons.search),
+            ),
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
