@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fueler/widgets/stationinfo.dart';
 import '../widgets/log-in.dart';
 
+/*
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
 
@@ -12,22 +13,20 @@ class Welcome extends StatefulWidget {
   _Welcome createState() => _Welcome();
 }
 
-class _Welcome extends State<Welcome> {
+class _Welcome extends State<Welcome> {*/
+class Welcome extends StatelessWidget {
+  const Welcome({Key? key}) : super(key: key); //nie było
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-
-        //mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           const SizedBox(height: 10),
           const Login(),
           Center(
-            //widthFactor: 100,
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.end,
-              //mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 50),
                 FloatingActionButton.extended(
@@ -41,28 +40,32 @@ class _Welcome extends State<Welcome> {
                             builder: (context) => MainLayout(page: 2)));
                   },
                 ),
-                Column(
-                  children: [
-                    Row(
+                Container(
+                    margin: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, top: 20.0),
+                    child: Column(
                       children: [
-                        Text(AppLocalizations.of(context)!.populartoday),
-                      ],
-                    ),
-                    Row(
-                      children: const [
-                        StationInfo(
-                          stationicon: Icons.login,
-                          stationaddress: "Poznań, ulica: xyz 123A",
-                          pb: 314.1,
-                          on: 314,
-                          lpg: 314,
-                          grade: 1,
+                        Row(
+                          children: [
+                            Text(AppLocalizations.of(context)!.populartoday),
+                          ],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            StationInfo(
+                              stationicon: Icons.login,
+                              stationaddress: "Poznań, ulica: xyz 123A",
+                              pb: 314.1,
+                              on: 314,
+                              lpg: 314,
+                              grade: 1,
+                            ),
+                          ],
+                        )
                       ],
-                    ),
-                  ],
-                )
-                ///// tu wjedzie widget customowy const StationInfo(),
+                    )),
               ],
             ),
           ),
@@ -86,7 +89,7 @@ return Scaffold(
       )
     );
     */
-    /*return const Scaffold(
+/*return const Scaffold(
       body: Padding(
         padding: EdgeInsets.all(40.0),
         child: Login(),

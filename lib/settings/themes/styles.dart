@@ -4,7 +4,6 @@ import 'package:fueler/widgets/basic_widgets.dart';
 class Styles {
   static ThemeData themeData(bool isDarkTheme) {
     return ThemeData(
-
         //primarySwatch: isDarkTheme ? Colors.red : Colors.white,
         //backgroundColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
         //primaryColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
@@ -29,7 +28,27 @@ class Styles {
         bottomAppBarColor: isDarkTheme ? GetColors.gray : GetColors.white,
         iconTheme: IconThemeData(
           color: isDarkTheme ? GetColors.red : GetColors.black,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: isDarkTheme ? GetColors.red : GetColors.black,
+          ),
+          fillColor: GetColors.green,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            borderSide: BorderSide(
+              color: GetColors.green,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            borderSide: BorderSide(
+              color: GetColors.red,
+              width: 2.0,
+            ),
+          ),
         )
+
 /*
       primarySwatch: Colors.red,
       primaryColor:

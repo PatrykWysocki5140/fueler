@@ -1,6 +1,15 @@
 {
     "buttonClicksDescription": "You have clicked the button this many times:",
     "buttonClicksDescriptionLogin": "Log in",
+    "buttonClicksDescriptionRegister": "Registration",
     "buttonClicksSearchStation": "Search for stations",
-    "populartoday": "mainstream today"
+    "populartoday": "mainstream today",
+    "searchSearchPage": "Search",
+    "localizationSearchPage": "Location",
+    "fuelcostSearchPage": "Ceny paliw:",
+    "textValidator": "Wpisz tekst",
+    "phonenumber": "Numer telefonu",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło",
+    "passwordrepeat": "Powtórz hasło"
 }

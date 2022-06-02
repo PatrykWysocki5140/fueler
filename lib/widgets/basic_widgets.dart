@@ -35,6 +35,36 @@ class LoginWidget extends StatelessWidget {
   }
 }
 
+class RegisterWidget extends StatelessWidget {
+  //final IconData icon;
+  //final String text;
+  // ignore: use_key_in_widget_constructors
+  const RegisterWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 10),
+          FloatingActionButton.extended(
+            heroTag: "registerbutton",
+            backgroundColor: Colors.transparent,
+            label: Text(
+                AppLocalizations.of(context)!.buttonClicksDescriptionRegister),
+            icon: Icon(Icons.person_add_alt_outlined),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MainLayout(page: 2)));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /*
 class NavigationWidget extends StatelessWidget {
   final int page;

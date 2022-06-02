@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/pages/settings_page.dart';
+import 'package:fueler/pages/user_less_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
+import 'package:fueler/pages/search_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fueler/widgets/loading_screen.dart';
 
@@ -22,7 +24,7 @@ class MainLayout extends StatelessWidget {
             onTap: () {},
             child: IconButton(
               onPressed: () {
-                _myPage.jumpToPage(1);
+                _myPage.jumpToPage(5);
               },
               icon: const Icon(Icons.search),
             )),
@@ -84,15 +86,11 @@ class MainLayout extends StatelessWidget {
         },
         children: <Widget>[
           const Welcome(),
-          Center(
-            child: Text(
-                AppLocalizations.of(context)!.buttonClicksDescriptionLogin),
-          ),
-          const Center(
-            child: Text('Empty Body 2test'),
-          ),
+          const UserLess(),
+          const Welcome(),
           const Settings(),
           LoadingScreen(onCompletion: () => _myPage.jumpToPage(0)),
+          const Search(),
         ],
         physics:
             const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.

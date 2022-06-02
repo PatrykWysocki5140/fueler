@@ -55,30 +55,29 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                const Text(
-                  'Skanowanie najtańszych cen paliw...',
-                  style: TextStyle(fontSize: 20),
-                ),
-                Transform.scale(
-                  scale: 2.0,
-                  child: CircularProgressIndicator(
-                    value: controller.value,
-                    semanticsLabel: 'Linear progress indicator',
-                    valueColor: AlwaysStoppedAnimation<Color>(GetColors.red),
-                    backgroundColor: GetColors.black,
-                    strokeWidth: 14.0,
-                  ),
-                )
-              ],
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            const Text(
+              'Skanowanie najtańszych cen paliw...',
+              style: TextStyle(fontSize: 20),
             ),
-          ),
-        ));
+            Transform.scale(
+              scale: 2.0,
+              child: CircularProgressIndicator(
+                value: controller.value,
+                semanticsLabel: 'Linear progress indicator',
+                valueColor: AlwaysStoppedAnimation<Color>(GetColors.red),
+                backgroundColor: GetColors.black,
+                strokeWidth: 14.0,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
