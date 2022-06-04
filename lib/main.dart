@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
               builder: (BuildContext context,
                       AsyncSnapshot<ThemeData> themeData) =>
                   MaterialApp(
-                      title: 'test apki',
+                      title: 'Fueler',
                       theme: themeData.data,
                       localizationsDelegates: const [
                         AppLocalizations.delegate,
