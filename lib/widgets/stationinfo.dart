@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fueler/settings/themes/styles.dart';
 
 import '../layouts/main-layout.dart';
 
@@ -19,20 +20,49 @@ class StationInfo extends StatelessWidget {
     required this.grade,
   });
 
-  @override
+@override
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: () => Navigator.push(context,
             MaterialPageRoute(builder: (context) => MainLayout(page: 5))),
-        child: Column(
-          children: <Widget>[
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(GetColors.green), maximumSize: const Size(200, 200).
+          
+        ),
+        child: Container(        
+          child: Column( children: <Widget>[
             Row(
               children: <Widget>[Text(stationaddress)],
             ),
             Row(
-                ////children: ], no i tutja dalej
-                )
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+              Column(
+                children: [
+                  const Image(image: AssetImage('pb95.png'), width: 20, height: 20),
+                  const Text('7,30'),
+                ],
+              ),
+              Column(
+                children: [
+                  const Image(image: AssetImage('on.png'), width: 20, height: 20),
+                  const Text('6,2'),
+                ],
+              ),
+              Column(
+                children: [
+                  const Image(image: AssetImage('lpg.png'), width: 20, height: 20),
+                  const Text('2,21'),
+                ],
+              ),
+              Column(
+                
+                children: [
+                  const Image(image: AssetImage('orlen_logo.png'), width: 40, height: 40),
+                  ],
+              ),
+            ])
           ],
-        ));
+        )));
   }
 }

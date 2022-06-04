@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fueler/layouts/main-layout.dart';
+import 'package:fueler/settings/themes/styles.dart';
 import 'package:fueler/widgets/stationinfo.dart';
 
 import '../widgets/log-in.dart';
@@ -55,8 +56,9 @@ class Welcome extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: const [
                             StationInfo(
+                              
                               stationicon: Icons.login,
-                              stationaddress: "Poznań, ulica: xyz 123A",
+                              stationaddress: "Poznań, ul. Zgoda 19",
                               pb: 314.1,
                               on: 314,
                               lpg: 314,
