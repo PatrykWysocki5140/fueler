@@ -1,15 +1,14 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:fueler/pages/settings_page.dart';
-import 'package:fueler/pages/welcome_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../layouts/main-layout.dart';
 
 class LoginWidget extends StatelessWidget {
   final IconData icon;
+
   //final String text;
-  const LoginWidget({required this.icon /*, required this.text*/});
+  const LoginWidget({required this.icon /*, required this.text*/
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class LoginWidget extends StatelessWidget {
             icon: Icon(icon),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainLayout(page: 2)));
+                  MaterialPageRoute(builder: (context) => MainLayout(page: 1)));
             },
           ),
         ],
@@ -99,6 +98,7 @@ class NavigationWidget extends StatelessWidget {
 */
 class IconWidget extends StatelessWidget {
   final IconData icon;
+
   const IconWidget({required this.icon});
 
   @override

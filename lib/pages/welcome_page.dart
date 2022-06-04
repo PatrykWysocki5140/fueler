@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fueler/layouts/main-layout.dart';
-import 'package:fueler/widgets/basic_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fueler/layouts/main-layout.dart';
 import 'package:fueler/widgets/stationinfo.dart';
+
 import '../widgets/log-in.dart';
 
 /*
@@ -37,7 +37,7 @@ class Welcome extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MainLayout(page: 2)));
+                            builder: (context) => MainLayout(page: 4)));
                   },
                 ),
                 Container(

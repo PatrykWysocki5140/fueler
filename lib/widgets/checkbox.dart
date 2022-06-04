@@ -73,7 +73,7 @@ class CheckboxFormField extends FormField<bool> {
             initialValue: initialValue,
             builder: (FormFieldState<bool> state) {
               return Container(
-                width: 100,
+                width: 120,
                 child: Row(
                   children: [
                     Checkbox(

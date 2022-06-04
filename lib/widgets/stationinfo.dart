@@ -1,9 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:fueler/pages/settings_page.dart';
-import 'package:fueler/pages/welcome_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../layouts/main-layout.dart';
 
 class StationInfo extends StatelessWidget {
@@ -26,7 +22,8 @@ class StationInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {},
+        onPressed: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => MainLayout(page: 5))),
         child: Column(
           children: <Widget>[
             Row(
