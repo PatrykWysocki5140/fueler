@@ -24,15 +24,41 @@ class StationInfo extends StatelessWidget {
     return TextButton(
         onPressed: () => Navigator.push(context,
             MaterialPageRoute(builder: (context) => MainLayout(page: 5))),
-        child: Column(
+        child: Container(
+            child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[Text(stationaddress)],
             ),
-            Row(
-                ////children: ], no i tutja dalej
-                )
+            Row(children: [
+              Column(
+                children: [
+                  Text(pb.toStringAsFixed(2))
+                  //zdjecie
+                  //cena
+                ],
+              ),
+              Column(
+                children: [
+                  //Text(pb.toString())
+                  //zdjecie
+                  //cena
+                ],
+              ),
+              Column(
+                children: [
+                  //Text(pb.toString())
+                  //zdjecie
+                  //cena
+                ],
+              ),
+              Column(
+                children: [
+                  //zdjecie logo stacji
+                ],
+              ),
+            ])
           ],
-        ));
+        )));
   }
 }
