@@ -1,11 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:fueler/widgets/fuel-row.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:tuple/tuple.dart';
+
+import '../layouts/main-layout.dart';
 
 class Popup extends StatelessWidget {
   final Marker marker;
@@ -25,10 +28,15 @@ class Popup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        child: Row(
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             prices(context),
+            TextButton(
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MainLayout(page: 7))),
+              child: Text(AppLocalizations.of(context)!.updateStation),
+            )
           ],
         ),
       ),
@@ -92,45 +100,54 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(context) {
     markers.sort(((a, b) => (a.item1 * 100 - b.item1 * 100).round()));
-    return FlutterMap(
-      options: MapOptions(
-          center: LatLng(52.409538, 16.931992),
-          zoom: 13.0,
-          onTap: (_, __) => _popupLayerController.hideAllPopups()),
-      children: [
-        TileLayerWidget(
-          options: TileLayerOptions(
-            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            subdomains: ['a', 'b', 'c'],
-            attributionBuilder: (_) {
-              return const Text("© OpenStreetMap contributors");
-            },
-          ),
-        ),
-        PopupMarkerLayerWidget(
-          options: PopupMarkerLayerOptions(
-              markerRotateOrigin: const Offset(20, 0),
-              popupController: _popupLayerController,
-              popupSnap: PopupSnap.markerBottom,
-              popupAnimation: const PopupAnimation.fade(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut),
-              popupBuilder: (BuildContext context, Marker marker) {
-                if (marker is FuelMarker) {
-                  return Popup(
-                      marker: marker,
-                      onPrice: marker.data.item4,
-                      pbPrice: marker.data.item5,
-                      lpgPrice: marker.data.item6);
-                }
-                return const SizedBox(
-                  height: 0,
-                  width: 0,
-                );
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MainLayout(page: 6))),
+          child: const Icon(
+            Icons.add,
+            size: 40,
+          )),
+      body: FlutterMap(
+        options: MapOptions(
+            center: LatLng(52.409538, 16.931992),
+            zoom: 13.0,
+            onTap: (_, __) => _popupLayerController.hideAllPopups()),
+        children: [
+          TileLayerWidget(
+            options: TileLayerOptions(
+              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              subdomains: ['a', 'b', 'c'],
+              attributionBuilder: (_) {
+                return const Text("© OpenStreetMap contributors");
               },
-              markers: markers.map((e) => FuelMarker(data: e)).toList()),
-        )
-      ],
+            ),
+          ),
+          PopupMarkerLayerWidget(
+            options: PopupMarkerLayerOptions(
+                markerRotateOrigin: const Offset(20, 0),
+                popupController: _popupLayerController,
+                popupSnap: PopupSnap.markerBottom,
+                popupAnimation: const PopupAnimation.fade(
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeInOut),
+                popupBuilder: (BuildContext context, Marker marker) {
+                  if (marker is FuelMarker) {
+                    return Popup(
+                        marker: marker,
+                        onPrice: marker.data.item4,
+                        pbPrice: marker.data.item5,
+                        lpgPrice: marker.data.item6);
+                  }
+                  return const SizedBox(
+                    height: 0,
+                    width: 0,
+                  );
+                },
+                markers: markers.map((e) => FuelMarker(data: e)).toList()),
+          )
+        ],
+      ),
     );
   }
 }

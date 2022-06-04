@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fueler/pages/add-page.dart';
 import 'package:fueler/pages/search_page.dart';
 import 'package:fueler/pages/settings_page.dart';
+import 'package:fueler/pages/update-page.dart';
 import 'package:fueler/pages/user_less_page.dart';
 import 'package:fueler/pages/welcome_page.dart';
 import 'package:fueler/widgets/loading_screen.dart';
@@ -85,18 +86,15 @@ class MainLayout extends StatelessWidget {
         ),
         body: PageView(
           controller: _myPage,
-          onPageChanged: (pageID) {
-            if (kDebugMode) {
-              print('Page Changes to index $pageID');
-            }
-          },
           children: <Widget>[
             const Welcome(),
-            UserLess(),
+            const UserLess(),
             const Settings(),
             LoadingScreen(onCompletion: () => _myPage.jumpToPage(0)),
             const Search(),
             MapPage(),
+            const AddPage(),
+            const UpdatePage(),
           ],
           physics:
               const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.

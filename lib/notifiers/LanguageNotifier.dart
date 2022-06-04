@@ -16,5 +16,9 @@ class LanguageNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  String get currentLanguage {
+    return _currentLanguage.key;
+  }
+
   Map<String, String> get languages => _supportedLanguages;
 }

@@ -20,55 +20,72 @@ class StationInfo extends StatelessWidget {
     required this.grade,
   });
 
-@override
+  @override
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: () => Navigator.push(context,
             MaterialPageRoute(builder: (context) => MainLayout(page: 5))),
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(GetColors.green)),
-        child: Container(        
-          child: Column( children: <Widget>[
+            backgroundColor: MaterialStateProperty.all(GetColors.green)),
+        child: Column(
+          children: <Widget>[
             Row(
               children: <Widget>[Text(stationaddress)],
             ),
-            Container(padding: EdgeInsets.symmetric(vertical: 2),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-              Container(padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                children: [
-                  const Image(image: AssetImage('pb95.png'), width: 30, height: 30),
-                  Text(pb.toStringAsFixed(2)),
-                ],
-              ),
-              ),
-              Container(padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: [
-                  const Image(image: AssetImage('on.png'), width: 30, height: 30),
-                  Text(on.toStringAsFixed(2)),
-                ],
-              ),
-              ),
-              Container(padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: [
-                  const Image(image: AssetImage('lpg.png'), width: 30, height: 30),
-                  Text(lpg.toStringAsFixed(2)),
-                ],
-              ),
-              ),
-              Container(padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-              children: [
-                  const Image(image: AssetImage('orlen_logo.png'), width: 60, height: 60),
-              ],
-              ),
-              ),
-            ]))
+            Container(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          children: [
+                            const Image(
+                                image: AssetImage('assets/pb95.png'),
+                                width: 30,
+                                height: 30),
+                            Text(pb.toStringAsFixed(2)),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          children: [
+                            const Image(
+                                image: AssetImage('assets/on.png'),
+                                width: 30,
+                                height: 30),
+                            Text(on.toStringAsFixed(2)),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          children: [
+                            const Image(
+                                image: AssetImage('assets/lpg.png'),
+                                width: 30,
+                                height: 30),
+                            Text(lpg.toStringAsFixed(2)),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Column(
+                          children: const [
+                            Image(
+                                image: AssetImage('assets/orlen_logo.png'),
+                                width: 60,
+                                height: 60),
+                          ],
+                        ),
+                      ),
+                    ]))
           ],
-        )));
+        ));
   }
 }
