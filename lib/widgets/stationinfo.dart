@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fueler/settings/themes/styles.dart';
 
 import '../layouts/main-layout.dart';
 
@@ -33,7 +34,10 @@ class StationInfo extends StatelessWidget {
             Row(children: [
               Column(
                 children: [
-                  Text(pb.toStringAsFixed(2))
+                  Text(
+                    pb.toStringAsFixed(2),
+                    style: TextStyle(color: GetColors.orange),
+                  )
                   //zdjecie
                   //cena
                 ],

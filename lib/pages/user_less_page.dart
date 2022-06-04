@@ -48,9 +48,18 @@ class _UserLess extends State<UserLess> {
                                 borderSide: const BorderSide(),
                               )),
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null) {
+                              return AppLocalizations.of(context)!
+                                  .nullValidator;
+                            } else if (value.length.isInfinite) {
+                            } else if (value.isEmpty) {
                               return AppLocalizations.of(context)!
                                   .textValidator;
+                            } else if (!RegExp(
+                                    r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
+                                .hasMatch(value)) {
+                              return AppLocalizations.of(context)!
+                                  .numberValidator;
                             }
                             return null;
                           },
@@ -77,6 +86,7 @@ class _UserLess extends State<UserLess> {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
+                          obscuringCharacter: "*",
                           decoration: InputDecoration(
                               labelText: AppLocalizations.of(context)!.password,
                               border: OutlineInputBorder(
@@ -95,6 +105,7 @@ class _UserLess extends State<UserLess> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
+                          obscuringCharacter: "*",
                           decoration: InputDecoration(
                               labelText:
                                   AppLocalizations.of(context)!.passwordrepeat,
@@ -119,7 +130,7 @@ class _UserLess extends State<UserLess> {
                             children: [
                               const SizedBox(height: 10),
                               FloatingActionButton.extended(
-                                heroTag: "registerbutton",
+                                heroTag: "registerbuttonclick",
                                 backgroundColor: Colors.transparent,
                                 label: Text(AppLocalizations.of(context)!
                                     .buttonClicksDescriptionRegister),
