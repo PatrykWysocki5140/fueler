@@ -92,7 +92,7 @@ class MainLayout extends StatelessWidget {
           },
           children: <Widget>[
             const Welcome(),
-            const UserLess(),
+            UserLess(),
             const Settings(),
             LoadingScreen(onCompletion: () => _myPage.jumpToPage(0)),
             const Search(),

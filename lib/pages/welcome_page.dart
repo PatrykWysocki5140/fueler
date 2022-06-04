@@ -43,7 +43,7 @@ class Welcome extends StatelessWidget {
                 ),
                 Container(
                     margin: const EdgeInsets.only(
-                        left: 20.0, right: 20.0, top: 20.0),
+                        left: 40.0, right: 40.0, top: 20.0),
                     child: Column(
                       children: [
                         Row(

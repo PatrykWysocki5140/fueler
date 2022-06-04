@@ -6,12 +6,13 @@ class Styles {
     return ThemeData(
         //primarySwatch: isDarkTheme ? Colors.red : Colors.white,
         //backgroundColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
-        //primaryColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
+        //primaryColor: isDarkTheme ? GetColors.red : GetColors.red,
         //indicatorColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
         //hintColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
         //highlightColor: isDarkTheme ? GetColors.lightBlack : GetColors.white,
         //focusColor: isDarkTheme ? GetColors.black : GetColors.red,
         //disabledColor: isDarkTheme ? GetColors.red : GetColors.white,
+        //splashColor: GetColors.green,
         hoverColor: isDarkTheme ? GetColors.black : GetColors.red,
         appBarTheme: AppBarTheme(
           backgroundColor: isDarkTheme ? GetColors.gray : GetColors.white,
@@ -29,6 +30,22 @@ class Styles {
         iconTheme: IconThemeData(
           color: isDarkTheme ? GetColors.red : GetColors.black,
         ),
+        /*buttonTheme: ButtonThemeData(
+            buttonColor: isDarkTheme ? GetColors.black : GetColors.white,
+            textTheme: ButtonTextTheme.primary),*/
+
+        textTheme: TextTheme(
+            bodyText1:
+                TextStyle(color: isDarkTheme ? GetColors.red : GetColors.black),
+            bodyText2:
+                TextStyle(color: isDarkTheme ? GetColors.red : GetColors.black),
+            button: TextStyle(
+                color: isDarkTheme ? GetColors.red : GetColors.white)),
+        textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(
+          isDarkTheme ? GetColors.red : GetColors.black,
+        ))),
         inputDecorationTheme: InputDecorationTheme(
           labelStyle: TextStyle(
             color: isDarkTheme ? GetColors.red : GetColors.black,
