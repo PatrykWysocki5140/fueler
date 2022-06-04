@@ -26,42 +26,48 @@ class StationInfo extends StatelessWidget {
         onPressed: () => Navigator.push(context,
             MaterialPageRoute(builder: (context) => MainLayout(page: 5))),
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(GetColors.green), maximumSize: const Size(200, 200).
-          
-        ),
+          backgroundColor: MaterialStateProperty.all(GetColors.green)),
         child: Container(        
           child: Column( children: <Widget>[
             Row(
               children: <Widget>[Text(stationaddress)],
             ),
-            Row(
+            Container(padding: EdgeInsets.symmetric(vertical: 2),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-              Column(
+              Container(padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
                 children: [
-                  const Image(image: AssetImage('pb95.png'), width: 20, height: 20),
-                  const Text('7,30'),
+                  const Image(image: AssetImage('pb95.png'), width: 30, height: 30),
+                  Text(pb.toStringAsFixed(2)),
                 ],
               ),
-              Column(
+              ),
+              Container(padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
                 children: [
-                  const Image(image: AssetImage('on.png'), width: 20, height: 20),
-                  const Text('6,2'),
+                  const Image(image: AssetImage('on.png'), width: 30, height: 30),
+                  Text(on.toStringAsFixed(2)),
                 ],
               ),
-              Column(
+              ),
+              Container(padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
                 children: [
-                  const Image(image: AssetImage('lpg.png'), width: 20, height: 20),
-                  const Text('2,21'),
+                  const Image(image: AssetImage('lpg.png'), width: 30, height: 30),
+                  Text(lpg.toStringAsFixed(2)),
                 ],
               ),
-              Column(
-                
-                children: [
-                  const Image(image: AssetImage('orlen_logo.png'), width: 40, height: 40),
-                  ],
               ),
-            ])
+              Container(padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+              children: [
+                  const Image(image: AssetImage('orlen_logo.png'), width: 60, height: 60),
+              ],
+              ),
+              ),
+            ]))
           ],
         )));
   }

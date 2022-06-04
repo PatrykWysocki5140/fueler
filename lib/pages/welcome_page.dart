@@ -59,9 +59,9 @@ class Welcome extends StatelessWidget {
                               
                               stationicon: Icons.login,
                               stationaddress: "Poznań, ul. Zgoda 19",
-                              pb: 314.1,
-                              on: 314,
-                              lpg: 314,
+                              pb: 7.1,
+                              on: 6.3,
+                              lpg: 3.14,
                               grade: 1,
                             ),
                           ],
