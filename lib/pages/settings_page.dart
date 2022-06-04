@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:fueler/notifiers/LanguageNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
+import 'package:fueler/widgets/language-switcher.dart';
 import 'package:provider/provider.dart';
-
-void main() {
-  runApp(const Settings());
-}
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
@@ -158,7 +157,7 @@ class _HomePageState extends State<_SettingsStat> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold)),
                     tooltip: 'Language',
-                    onPressed: () {/* Do something */},
+                    onPressed: () {},
                     icon: const Icon(
                       Icons.abc,
                       size: 30,
@@ -315,5 +314,20 @@ class _HomePageState extends State<_SettingsStat> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                 )));
+  }
+
+  Widget languageWidget() {
+    return Consumer<LanguageNotifier>(builder: (context, languages, child) {
+      return DropdownButton(
+        items: languages.languages.entries
+            .map<DropdownMenuItem<String>>((MapEntry<String, String> entry) =>
+                DropdownMenuItem(child: Text(entry.value), value: entry.key))
+            .toList(),
+        onChanged: (String? newValue) {
+          languages.currentLanguage = newValue!;
+        },
+        value: AppLocalizations.of(context)!.localeName,
+      );
+    });
   }
 }

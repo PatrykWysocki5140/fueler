@@ -86,7 +86,8 @@ class _UserLess extends State<UserLess> {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          obscuringCharacter: "*",
+                          obscureText: true,
+                          //obscuringCharacter: "*",
                           decoration: InputDecoration(
                               labelText: AppLocalizations.of(context)!.password,
                               border: OutlineInputBorder(
@@ -105,7 +106,7 @@ class _UserLess extends State<UserLess> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                          obscuringCharacter: "*",
+                          obscureText: true,
                           decoration: InputDecoration(
                               labelText:
                                   AppLocalizations.of(context)!.passwordrepeat,
