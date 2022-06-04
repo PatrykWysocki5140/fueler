@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fueler/notifiers/LanguageNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
-import 'package:fueler/notifiers/signup_notifier.dart';
 import 'package:fueler/settings/themes/styles.dart';
 import 'package:fueler/layouts/main-layout.dart';
 import 'package:fueler/widgets/language-switcher.dart';
@@ -15,7 +14,6 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => LanguageNotifier()),
       ChangeNotifierProvider<NightMode>.value(value: NightMode()),
-      ChangeNotifierProvider(create: (context) => SignupValidation())
     ],
     child: const MyApp(),
   ));
