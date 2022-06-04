@@ -31,10 +31,10 @@ class _UserLess extends State<UserLess> {
             const SizedBox(height: 10),
             const Login(),
             Column(
-              children: const [
+              children: [
                 //FormPage(),
-                Text("data"),
-                /*
+                //Text("data"),
+
                 Form(
                     key: _formKey,
                     child: Column(
@@ -116,7 +116,7 @@ class _UserLess extends State<UserLess> {
                         const SizedBox(height: 10),
                         const RegisterWidget()
                       ],
-                    )),*/
+                    )),
               ],
             )
           ],
