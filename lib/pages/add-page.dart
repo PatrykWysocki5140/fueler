@@ -164,6 +164,7 @@ class _AddPageState extends State<AddPage> {
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: FloatingActionButton(
+                                          heroTag: "addfuel" + index.toString(),
                                           onPressed: () {
                                             setState(
                                                 () => currentlyOpenedFuels++);
@@ -182,6 +183,7 @@ class _AddPageState extends State<AddPage> {
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: FloatingActionButton(
+                                          heroTag: index,
                                           onPressed: () {
                                             setState(
                                                 () => currentlyOpenedFuels--);
@@ -202,6 +204,7 @@ class _AddPageState extends State<AddPage> {
                       children: [
                         const SizedBox(height: 10),
                         FloatingActionButton.extended(
+                          heroTag: "tagxyz",
                           label: Text(AppLocalizations.of(context)!.addStation),
                           icon: const Icon(Icons.add),
                           onPressed: () {

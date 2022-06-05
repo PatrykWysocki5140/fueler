@@ -118,6 +118,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: FloatingActionButton(
+                                          heroTag: index,
                                           onPressed: () {
                                             setState(
                                                 () => currentlyOpenedFuels++);
@@ -136,6 +137,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                         padding:
                                             const EdgeInsets.only(left: 20),
                                         child: FloatingActionButton(
+                                          heroTag: index.toString() + "qwertyy",
                                           onPressed: () {
                                             setState(
                                                 () => currentlyOpenedFuels--);
@@ -156,6 +158,7 @@ class _UpdatePageState extends State<UpdatePage> {
                       children: [
                         const SizedBox(height: 10),
                         FloatingActionButton.extended(
+                          heroTag: "12345",
                           label:
                               Text(AppLocalizations.of(context)!.updateStation),
                           icon: const Icon(Icons.update),
