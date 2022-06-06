@@ -96,8 +96,7 @@ class MainLayout extends StatelessWidget {
             const AddPage(),
             const UpdatePage(),
           ],
-          physics:
-              const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
+          physics: const NeverScrollableScrollPhysics(),
         ),
       ),
     );
