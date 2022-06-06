@@ -47,6 +47,8 @@ class Welcome extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(AppLocalizations.of(context)!.populartoday),
                           ],
@@ -56,7 +58,6 @@ class Welcome extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: const [
                             StationInfo(
-                              
                               stationicon: Icons.login,
                               stationaddress: "Poznań, ul. Zgoda 19",
                               pb: 7.1,
