@@ -5,7 +5,7 @@ import 'package:fueler/pages/settings_page.dart';
 
 import '../bloc/navbar/navigation_cubit.dart';
 import '../bloc/theme/theme_cubit.dart';
-import '../elements/nav_bar_items.dart';
+import '../model/enums/nav_bar_items.dart';
 import 'settings_screen.dart';
 
 class RootScreen extends StatefulWidget {

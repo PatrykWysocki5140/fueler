@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../elements/nav_bar_items.dart';
+import '../../model/enums/nav_bar_items.dart';
 
 part 'navigation_state.dart';
 
