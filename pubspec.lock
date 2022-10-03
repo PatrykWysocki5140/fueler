@@ -189,6 +189,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+<<<<<<< Updated upstream
   latlong2:
     dependency: transitive
     description:
@@ -196,6 +197,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.1"
+=======
+>>>>>>> Stashed changes
   lints:
     dependency: transitive
     description:
@@ -432,6 +435,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.9"
+<<<<<<< Updated upstream
   timeago:
     dependency: "direct main"
     description:
@@ -467,6 +471,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.1"
+=======
+>>>>>>> Stashed changes
   vector_math:
     dependency: transitive
     description:
