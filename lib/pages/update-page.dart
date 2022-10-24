@@ -24,7 +24,6 @@ class _UpdatePageState extends State<UpdatePage> {
           leading: null,
           automaticallyImplyLeading: false,
           title: Text(AppLocalizations.of(context)!.updateStation),
-          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Padding(

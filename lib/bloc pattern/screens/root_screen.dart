@@ -19,7 +19,7 @@ class _RootScreenState extends State<RootScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flueler'),
-        actions: [
+        /* actions: [
           BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return Switch(
@@ -30,7 +30,7 @@ class _RootScreenState extends State<RootScreen> {
                   });
             },
           ),
-        ],
+        ],*/
       ),
       bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
@@ -77,7 +77,7 @@ class _RootScreenState extends State<RootScreen> {
         if (state.navbarItem == NavbarItem.home) {
           return Text("1"); //HomeScreen();
         } else if (state.navbarItem == NavbarItem.settings) {
-          return SettingsScreen();
+          return Text("2");
         } else if (state.navbarItem == NavbarItem.profile) {
           return Text("3"); //ProfileScreen();
         }

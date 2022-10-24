@@ -1,43 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc pattern/bloc/navbar/navigation_cubit.dart';
-import 'bloc pattern/bloc/theme/theme_cubit.dart';
-import 'bloc pattern/screens/root_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fueler/notifiers/LanguageNotifier.dart';
+import 'package:fueler/notifiers/ThemeNotifier.dart';
+import 'package:fueler/settings/themes/styles.dart';
+import 'package:fueler/layouts/main-layout.dart';
+import 'package:fueler/widgets/language-switcher.dart';
+import 'package:fueler/pages/settings_page.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(Root());
-}
+import 'bloc pattern/bloc/bloc_main.dart';
 
-class Root extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<NavigationCubit>(create: (context) => NavigationCubit()),
-        BlocProvider<ThemeCubit>(
-          create: (context) => ThemeCubit(),
-        ),
-      ],
-      child: MyApp(),
-    );
-  }
+void main() async {
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => LanguageNotifier()),
+      ChangeNotifierProvider<NightMode>.value(value: NightMode()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Consumer<NightMode>(
+      builder: (context, nightMode, child) => Consumer<LanguageNotifier>(
+          builder: (context, languages, child) => FutureBuilder<ThemeData>(
+              future: nightMode.getTheme(),
+              initialData: Styles.themeData(false),
+              builder: (BuildContext context,
+                      AsyncSnapshot<ThemeData> themeData) =>
+                  MaterialApp(
+                      title: 'Fueler',
+                      theme: themeData.data,
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      supportedLocales:
+                          languages.languages.entries.map((e) => Locale(e.key)),
+                      locale: Locale(languages.language.key),
+                      home: child ?? const SizedBox.shrink())),
+          child: const MyHomePage(title: '')));
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+  //final _formKey = GlobalKey<FormState>();
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) {
-        return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flueler',
-            theme: state.theme,
-            home: RootScreen());
-      },
-    );
-    /*MaterialApp(
-      theme: state.theme,
-      home: RootScreen(),
-    );*/
+    return Root();
   }
 }

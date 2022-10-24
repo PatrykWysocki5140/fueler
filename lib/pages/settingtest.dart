@@ -36,7 +36,6 @@ class _HomePageState extends State<_SettingsStat> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ustawienia'),
-        centerTitle: true,
       ),
       body: const Center(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,

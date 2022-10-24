@@ -24,7 +24,6 @@ class _AddPageState extends State<AddPage> {
           leading: null,
           automaticallyImplyLeading: false,
           title: Text(AppLocalizations.of(context)!.addStation),
-          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Padding(
