@@ -10,14 +10,14 @@ import '../bloc/theme/theme_cubit.dart';
 import '../model/enums/nav_bar_items.dart';
 import 'settings_screen.dart';
 
-class RootScreen extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   @override
-  _RootScreenState createState() => _RootScreenState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _RootScreenState extends State<RootScreen> {
+class _MainScreenState extends State<MainScreen> {
   @override
-  Widget build(BuildContext parentcontext) {
+  Widget build(BuildContext context) {
     return BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
       return Scaffold(
@@ -36,20 +36,14 @@ class _RootScreenState extends State<RootScreen> {
             Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: FloatingActionButton(
-                  heroTag: "/settingsss",
+                  heroTag: null,
                   child: const Icon(Icons.refresh),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (parentcontext) => SettingsScreen()));
-
                     // LoadingScreen(onCompletion: () => null);
                     /*
                     MaterialPageRoute(
                         builder: (context) =>
-                            LoadingScreen(onCompletion: () => SettingsScreen()));
-                            */
+                            LoadingScreen(onCompletion: () => Root()));*/
                   },
                 )
                 /* 

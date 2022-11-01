@@ -32,5 +32,8 @@
     "longitude": "Długość geograficzna",
     "plainNumberValidator": "Wpisz liczbę",
     "price": "Cena",
-    "updateStation": "Aktualizuj"
+    "updateStation": "Aktualizuj",
+    "account": "Użytkownik",
+    "navigate": "Nawiguj",
+    "exit": "Wyjdź"
 }

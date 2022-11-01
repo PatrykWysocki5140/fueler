@@ -32,5 +32,8 @@
     "longitude": "Longitude",
     "plainNumberValidator": "Enter a number",
     "price": "Price",
-    "updateStation": "Update"
+    "updateStation": "Update",
+    "account": "Account",
+    "navigate": "Navigate",
+    "exit": "Exit"
 }

@@ -1,61 +1,129 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:ffi';
 
-import '../bloc/theme/theme_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fueler/bloc%20pattern/settings/get_size.dart';
+import 'package:fueler/notifiers/LanguageNotifier.dart';
+import 'package:fueler/notifiers/ThemeNotifier.dart';
+import 'package:provider/provider.dart';
+import 'dart:io' show Platform, exit;
+import 'package:flutter/services.dart';
 
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) {
-        return Switch(
-            activeColor: Colors.black,
-            value: state.isDarkThemeOn,
-            onChanged: (newValue) {
-              context.read<ThemeCubit>().toggleSwitch(newValue);
-            });
+    return Consumer<LanguageNotifier>(
+      builder: (context, languages, child) {
+        return Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Center(
+                child: Text(
+                  AppLocalizations.of(context)!.settings,
+                  style: TextStyle(
+                      fontSize: GetSize.fontSizeH1,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment
+                    .spaceAround, //Center Row contents horizontally,
+                children: [
+                  Container(
+                    width: GetSize.floatingActionButtonWidth,
+                    child: FloatingActionButton.extended(
+                      label: Text(
+                        AppLocalizations.of(context)!.lang,
+                      ),
+                      tooltip: AppLocalizations.of(context)!.lang,
+                      onPressed: () {
+                        if (languages.currentLanguage == "pl") {
+                          languages.currentLanguage = "en";
+                        } else {
+                          languages.currentLanguage = "pl";
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.abc,
+                        size: 30,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      width: GetSize.floatingActionButtonWidth,
+                      child: Consumer<NightMode>(
+                          builder: (context, nightMode, child) => FutureBuilder(
+                              future: nightMode.enabled,
+                              initialData: false,
+                              builder: (BuildContext context,
+                                      AsyncSnapshot<bool> snapshot) =>
+                                  FloatingActionButton.extended(
+                                    label: Text(
+                                        snapshot.data ?? false
+                                            ? AppLocalizations.of(context)!
+                                                .light
+                                            : AppLocalizations.of(context)!
+                                                .dark,
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold)),
+                                    tooltip: snapshot.data ?? false
+                                        ? AppLocalizations.of(context)!.light
+                                        : AppLocalizations.of(context)!.dark,
+                                    onPressed: () => nightMode.switchTheme(),
+                                    icon: const Icon(
+                                      Icons.toggle_off,
+                                      size: 30,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                  ))))
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: GetSize.floatingActionButtonWidth,
+                    child: FloatingActionButton.extended(
+                      label: Text(AppLocalizations.of(context)!.exit,
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
+                      tooltip: AppLocalizations.of(context)!.exit,
+                      onPressed: () {
+                        if (Platform.isAndroid) {
+                          SystemNavigator.pop();
+                        } else if (Platform.isIOS) {
+                          exit(0);
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.exit_to_app,
+                        size: 15,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        );
       },
     );
   }
 }
-
-/*
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Switch themes'),
-        actions: [
-          BlocBuilder<SwitchCubit, SwitchState>(
-            builder: (context, state) {
-              return Switch(
-                value: state.isDarkThemeOn,
-                onChanged: (value) {
-                  if (value) {
-                    context.read<SwitchCubit>().toggleSwitch(true);
-                  } else {
-                    context.read<SwitchCubit>().toggleSwitch(false);
-                  }
-                },
-              );
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Text(
-              'Hello world',
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-*/

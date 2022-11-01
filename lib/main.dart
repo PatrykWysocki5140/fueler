@@ -3,13 +3,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fueler/notifiers/LanguageNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
-import 'package:fueler/settings/themes/styles.dart';
+
 import 'package:fueler/layouts/main-layout.dart';
 import 'package:fueler/widgets/language-switcher.dart';
 import 'package:fueler/pages/settings_page.dart';
 import 'package:provider/provider.dart';
 
 import 'bloc pattern/bloc/bloc_main.dart';
+import 'bloc pattern/style/styles.dart';
 
 void main() async {
   runApp(MultiProvider(
@@ -50,10 +51,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
   final String title;
-  //final _formKey = GlobalKey<FormState>();
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }

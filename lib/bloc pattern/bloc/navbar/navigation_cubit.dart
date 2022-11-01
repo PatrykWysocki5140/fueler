@@ -5,18 +5,21 @@ import '../../model/enums/nav_bar_items.dart';
 part 'navigation_state.dart';
 
 class NavigationCubit extends Cubit<NavigationState> {
-  NavigationCubit() : super(NavigationState(NavbarItem.home, 0));
+  NavigationCubit() : super(NavigationState(NavbarItem.profile, 0));
 
   void getNavBarItem(NavbarItem navbarItem) {
     switch (navbarItem) {
-      case NavbarItem.home:
-        emit(NavigationState(NavbarItem.home, 0));
+      case NavbarItem.profile:
+        emit(NavigationState(NavbarItem.profile, 0));
+        break;
+      case NavbarItem.map:
+        emit(NavigationState(NavbarItem.map, 1));
         break;
       case NavbarItem.settings:
-        emit(NavigationState(NavbarItem.settings, 1));
+        emit(NavigationState(NavbarItem.settings, 2));
         break;
-      case NavbarItem.profile:
-        emit(NavigationState(NavbarItem.profile, 2));
+      case NavbarItem.refresh:
+        emit(NavigationState(NavbarItem.refresh, 3));
         break;
     }
   }
