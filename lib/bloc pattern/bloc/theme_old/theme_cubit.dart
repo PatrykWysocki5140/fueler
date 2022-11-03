@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:fueler/settings/themes/styles.dart';
+import 'package:fueler/bloc%20pattern/style/styles.dart';
 
 part 'theme_state.dart';
 

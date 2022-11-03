@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fueler/bloc%20pattern/bloc/bloc_main.dart';
-import 'package:fueler/bloc%20pattern/screens/loading_screen.dart';
-import 'package:fueler/pages/settings_page.dart';
+import 'package:fueler/bloc%20pattern/bloc/bloc_main_old.dart';
+import 'package:fueler/bloc%20pattern/screens_old/loading_screen.dart';
+import 'package:fueler/pages_old/settings_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../bloc/navbar/navigation_cubit.dart';
-import '../bloc/theme/theme_cubit.dart';
-import '../model/enums/nav_bar_items.dart';
+import '../bloc/navbar_old/navigation_cubit.dart';
+import '../bloc/theme_old/theme_cubit.dart';
+import '../model/enums/nav_bar_items_old.dart';
 import 'settings_screen.dart';
 
-class MainScreen extends StatefulWidget {
+class RootScreen extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _RootScreenState createState() => _RootScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _RootScreenState extends State<RootScreen> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext parentcontext) {
     return BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
       return Scaffold(
@@ -36,37 +36,15 @@ class _MainScreenState extends State<MainScreen> {
             Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: FloatingActionButton(
-                  heroTag: null,
+                  heroTag: "/settingsss",
                   child: const Icon(Icons.refresh),
                   onPressed: () {
-                    // LoadingScreen(onCompletion: () => null);
-                    /*
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            LoadingScreen(onCompletion: () => Root()));*/
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (parentcontext) => SettingsScreen()));
                   },
-                )
-                /* 
-              GestureDetector(
-                    onTap: () {},
-                    child: IconButton(
-                      
-                      onPressed: () {
-                        //Text("sdsdsd");
-                        //LoadingScreen(onCompletion: () => Root());
-
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => LoadingScreen(onCompletion: () => Root())));
-                        /*
-                        LoadingScreen(
-                            onCompletion: () =>
-                                BlocProvider.of<NavigationCubit>(context)
-                                    .getNavBarItem(NavbarItem.settings));*/
-                      },
-                      icon: const Icon(Icons.refresh),
-                    ))*/
-
-                ),
+                )),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(

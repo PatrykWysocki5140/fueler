@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:bart/bart.dart';
 
-class HomePage extends StatelessWidget with AppBarNotifier {
+class MapPage extends StatelessWidget with AppBarNotifier {
   final BuildContext parentContext;
-  const HomePage({
+  const MapPage({
     Key? key,
     required this.parentContext,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return Text("map page");
+  }
+  /*
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -74,5 +77,5 @@ class HomePage extends StatelessWidget with AppBarNotifier {
         ),
       ),
     );
-  }
+  }*/
 }

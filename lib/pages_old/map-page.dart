@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
-import 'package:fueler/widgets/fuel-row.dart';
+import 'package:fueler/widgets_old/fuel-row.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:tuple/tuple.dart';
 
-import '../layouts/main-layout.dart';
+import '../layouts_old/main-layout.dart';
 
 class Popup extends StatelessWidget {
   final Marker marker;

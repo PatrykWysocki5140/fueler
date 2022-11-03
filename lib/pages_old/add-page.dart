@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../layouts/main-layout.dart';
-import '../settings/themes/styles.dart';
+import '../layouts_old/main-layout.dart';
+import '../settings_old/themes/styles.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);

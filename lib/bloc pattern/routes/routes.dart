@@ -1,8 +1,8 @@
 import 'package:bart/bart.dart';
-import 'package:example/tabs/page_counter.dart';
-import 'package:example/tabs/fake_list.dart';
 import 'package:flutter/material.dart';
-import 'tabs/home_page.dart';
+import 'package:fueler/bloc%20pattern/routes/tabs/map_page.dart';
+import 'package:fueler/bloc%20pattern/routes/tabs/settings_page.dart';
+import 'tabs/profile_page.dart';
 import 'package:animations/animations.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -12,52 +12,46 @@ Future appPushNamed(String route, {Object? arguments}) =>
 
 List<BartMenuRoute> subRoutes() {
   return [
+    // strona profil usera // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "Home",
-      icon: Icons.home,
-      path: '/home',
-      pageBuilder: (parentContext, tabContext, settings) => HomePage(
-        key: const PageStorageKey<String>("home"),
+      label: "Profile",
+      icon: Icons.person,
+      path: '/profile',
+      pageBuilder: (parentContext, tabContext, settings) => ProfilePage(
+        key: const PageStorageKey<String>("profile"),
         parentContext: parentContext,
       ),
       transitionDuration: bottomBarTransitionDuration,
       transitionsBuilder: bottomBarTransition,
     ),
+    // strona mapa // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "Library",
-      icon: Icons.video_library_rounded,
-      path: '/library',
-      pageBuilder: (parentContext, tabContext, settings) => const FakeListPage(
-        key: PageStorageKey<String>("library"),
+      label: "Map",
+      icon: Icons.person,
+      path: '/map',
+      pageBuilder: (parentContext, tabContext, settings) => MapPage(
+        key: const PageStorageKey<String>("map"),
+        parentContext: parentContext,
       ),
       transitionDuration: bottomBarTransitionDuration,
       transitionsBuilder: bottomBarTransition,
     ),
+    // strona ustawienia // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "Profile",
+      label: "Settings",
       icon: Icons.person,
-      path: '/profile',
-      pageBuilder: (parentContext, tabContext, settings) => Container(
-          key: const PageStorageKey<String>("profile"),
-          child: const Center(child: Text('Profile page'))),
-      transitionDuration: bottomBarTransitionDuration,
-      transitionsBuilder: bottomBarTransition,
-    ),
-    BartMenuRoute.bottomBar(
-      label: "Counter",
-      icon: Icons.countertops,
-      path: '/counter',
-      pageBuilder: (parentContext, tabContext, settings) => PageFakeCounter(
-        key: const PageStorageKey<String>("counter"),
-        showAppBar: true,
+      path: '/settings',
+      pageBuilder: (parentContext, tabContext, settings) => SettingsPage(
+        key: const PageStorageKey<String>("settings"),
+        parentContext: parentContext,
       ),
       transitionDuration: bottomBarTransitionDuration,
       transitionsBuilder: bottomBarTransition,
     ),
     BartMenuRoute.innerRoute(
-      path: '/home/inner',
+      path: '/profile/inner',
       pageBuilder: (parentContext, tabContext, settings) =>
-          const Center(child: Text("Sub Route page")),
+          const Center(child: Text("Inner route")),
     ),
   ];
 }

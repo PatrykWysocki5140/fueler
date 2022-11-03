@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fueler/widgets/basic_widgets.dart';
+import 'package:fueler/widgets_old/basic_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login extends StatelessWidget {

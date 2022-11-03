@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fueler/settings/themes/styles.dart';
+import 'package:fueler/settings_old/themes/styles.dart';
 
-import '../layouts/main-layout.dart';
+import '../layouts_old/main-layout.dart';
 
 class StationInfo extends StatelessWidget {
   final IconData stationicon;

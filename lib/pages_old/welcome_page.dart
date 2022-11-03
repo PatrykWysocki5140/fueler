@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fueler/layouts/main-layout.dart';
-import 'package:fueler/settings/themes/styles.dart';
-import 'package:fueler/widgets/stationinfo.dart';
+import 'package:fueler/layouts_old/main-layout.dart';
+import 'package:fueler/settings_old/themes/styles.dart';
+import 'package:fueler/widgets_old/stationinfo.dart';
 
-import '../widgets/log-in.dart';
+import '../widgets_old/log-in.dart';
 
 /*
 class Welcome extends StatefulWidget {

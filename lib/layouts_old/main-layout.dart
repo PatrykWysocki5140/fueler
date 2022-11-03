@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:fueler/pages/add-page.dart';
-import 'package:fueler/pages/search_page.dart';
-import 'package:fueler/pages/settings_page.dart';
-import 'package:fueler/pages/update-page.dart';
-import 'package:fueler/pages/user_less_page.dart';
-import 'package:fueler/pages/welcome_page.dart';
-import 'package:fueler/widgets/loading_screen.dart';
+import 'package:fueler/pages_old/add-page.dart';
+import 'package:fueler/pages_old/search_page.dart';
+import 'package:fueler/pages_old/settings_page.dart';
+import 'package:fueler/pages_old/update-page.dart';
+import 'package:fueler/pages_old/user_less_page.dart';
+import 'package:fueler/pages_old/welcome_page.dart';
+import 'package:fueler/widgets_old/loading_screen.dart';
 
-import '../pages/map-page.dart';
+import '../pages_old/map-page.dart';
 
 class MainLayout extends StatelessWidget {
   late final PageController _myPage;

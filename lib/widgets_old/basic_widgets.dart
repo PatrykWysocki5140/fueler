@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../layouts/main-layout.dart';
+import '../layouts_old/main-layout.dart';
 
 class LoginWidget extends StatelessWidget {
   final IconData icon;

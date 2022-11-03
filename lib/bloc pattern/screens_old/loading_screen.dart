@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fueler/settings/themes/styles.dart';
+import 'package:fueler/bloc%20pattern/settings/get_colors.dart';
 
 class LoadingScreen extends StatelessWidget {
   final Function onCompletion;

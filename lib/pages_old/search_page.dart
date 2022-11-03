@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fueler/settings/themes/styles.dart';
-import 'package:fueler/widgets/checkbox.dart';
-import 'package:fueler/widgets/stationinfo.dart';
+import 'package:fueler/settings_old/themes/styles.dart';
+import 'package:fueler/widgets_old/checkbox.dart';
+import 'package:fueler/widgets_old/stationinfo.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
