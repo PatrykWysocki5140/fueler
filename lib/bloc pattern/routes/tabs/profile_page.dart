@@ -1,3 +1,5 @@
+// ignore_for_file: recursive_getters
+
 import 'package:flutter/material.dart';
 
 import 'package:bart/bart.dart';
@@ -10,6 +12,7 @@ class ProfilePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   _ProfilePage createState() => _ProfilePage(parentContext);
 }
 
@@ -52,7 +55,7 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
-    return Text("profile page");
+    return const Text("profile page");
   }
 
   /*

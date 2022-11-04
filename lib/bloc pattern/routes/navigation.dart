@@ -15,8 +15,10 @@ class _MainPageMenuState extends State<MainPageMenu> {
   Widget build(BuildContext context) {
     return BartScaffold(
       routesBuilder: widget.routesBuilder,
+      //scaffoldOptions: ScaffoldOptions(backgroundColor: Color(0xFF27CB95)),
       bottomBar: BartBottomBar.adaptive(
-          // bottomBarFactory: BartCupertinoBottomBar.bottomBarFactory,
+
+          //bottomBarFactory: BartCupertinoBottomBar.bottomBarFactory,
           ),
     );
   }

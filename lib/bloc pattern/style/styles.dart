@@ -1,3 +1,5 @@
+import 'package:bart/bart/widgets/bottom_bar/bottom_bar.dart';
+import 'package:bart/bart/widgets/bottom_bar/styles/bottom_bar_material.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/bloc%20pattern/settings/get_colors.dart';
 
@@ -6,6 +8,65 @@ import 'package:fueler/widgets_old/basic_widgets.dart';
 class Styles {
   static ThemeData themeData(bool isDarkTheme) {
     return ThemeData(
+      // Nagłówek
+      appBarTheme: AppBarTheme(
+        backgroundColor:
+            isDarkTheme ? GetColors.darkAccent : GetColors.lightAccent,
+        foregroundColor:
+            isDarkTheme ? GetColors.darkMainFont : GetColors.lightMainFont,
+      ),
+      ////////////////////////////////////////////////////////////////////
+      ///
+      /// Przcisk "floating"
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor:
+            isDarkTheme ? GetColors.darkAccent : GetColors.lightAccent,
+        foregroundColor:
+            isDarkTheme ? GetColors.darkMainFont : GetColors.lightMainFont,
+        hoverColor:
+            isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight,
+      ),
+      ////////////////////////////////////////////////////////////////////
+      ///
+      /// tło dolengo menu - nieaktywne
+      //canvasColor: isDarkTheme ? GetColors.darkAccent : GetColors.lightAccent,
+      ////////////////////////////////////////////////////////////////////
+      ///
+      /// Dolne menu
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor:
+            isDarkTheme ? GetColors.darkAccent : GetColors.lightAccent,
+        selectedItemColor:
+            isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight,
+        unselectedItemColor:
+            isDarkTheme ? GetColors.darkMainFont : GetColors.lightMainFont,
+      ),
+
+      ////////////////////////////////////////////////////////////////////
+      ///
+      /// style konkretnych stron
+      scaffoldBackgroundColor:
+          isDarkTheme ? GetColors.darkShades : GetColors.lightShades,
+      ////////////////////////////////////////////////////////////////////
+      ///
+      /// styl tekstów - globalny
+      textTheme: TextTheme(
+          bodyText1: TextStyle(
+              color: isDarkTheme
+                  ? GetColors.darkMainFont
+                  : GetColors.lightMainFont),
+          bodyText2: TextStyle(
+              color: isDarkTheme
+                  ? GetColors.darkMainFont
+                  : GetColors.lightMainFont),
+          button: TextStyle(
+              color: isDarkTheme
+                  ? GetColors.darkMainFont
+                  : GetColors.lightMainFont)),
+      ////////////////////////////////////////////////////////////////////
+      ///
+      ///
+/*
         hoverColor: isDarkTheme ? GetColors.black : GetColors.red,
         appBarTheme: AppBarTheme(
           backgroundColor: isDarkTheme ? GetColors.gray : GetColors.white,
@@ -53,6 +114,7 @@ class Styles {
               width: 2.0,
             ),
           ),
-        ));
+        )*/
+    );
   }
 }

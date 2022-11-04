@@ -19,7 +19,8 @@ class SettingsPage extends StatelessWidget with AppBarNotifier {
   Widget build(BuildContext context) {
     return Consumer<LanguageNotifier>(
       builder: (context, languages, child) {
-        return Container(
+        return Scaffold(
+            body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -125,7 +126,7 @@ class SettingsPage extends StatelessWidget with AppBarNotifier {
               )
             ],
           ),
-        );
+        ));
       },
     );
   }
