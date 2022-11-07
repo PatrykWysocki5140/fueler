@@ -2,10 +2,18 @@ import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/bloc%20pattern/routes/tabs/map_page.dart';
 import 'package:fueler/bloc%20pattern/routes/tabs/settings_page.dart';
+import 'UI/splash_screen/splash_screen_page.dart';
 import 'tabs/profile_page.dart';
 import 'package:animations/animations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+// ignore: non_constant_identifier_names
+late final BuildContext _Context;
+void setContext(BuildContext parentContext) {
+  _Context = parentContext;
+}
 
 Future appPushNamed(String route, {Object? arguments}) =>
     navigatorKey.currentState!.pushNamed(route, arguments: arguments);
@@ -14,7 +22,7 @@ List<BartMenuRoute> subRoutes() {
   return [
     // strona profil usera // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "Profile",
+      label: "", //AppLocalizations.of(Context)!.account,
       icon: Icons.person,
       path: '/profile',
       pageBuilder: (parentContext, tabContext, settings) => ProfilePage(
@@ -26,8 +34,8 @@ List<BartMenuRoute> subRoutes() {
     ),
     // strona mapa // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "Map",
-      icon: Icons.person,
+      label: "", //AppLocalizations.of(Context)!.navigate,
+      icon: Icons.navigation,
       path: '/map',
       pageBuilder: (parentContext, tabContext, settings) => MapPage(
         key: const PageStorageKey<String>("map"),
@@ -38,8 +46,8 @@ List<BartMenuRoute> subRoutes() {
     ),
     // strona ustawienia // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "Settings",
-      icon: Icons.person,
+      label: "", //AppLocalizations.of(Context)!.settings,
+      icon: Icons.settings,
       path: '/settings',
       pageBuilder: (parentContext, tabContext, settings) => SettingsPage(
         key: const PageStorageKey<String>("settings"),
@@ -52,6 +60,10 @@ List<BartMenuRoute> subRoutes() {
       path: '/profile/inner',
       pageBuilder: (parentContext, tabContext, settings) =>
           const Center(child: Text("Inner route")),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/splash',
+      pageBuilder: (parentContext, tabContext, settings) => SplashScreen(),
     ),
   ];
 }

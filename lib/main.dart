@@ -11,9 +11,11 @@ import 'package:fueler/widgets_old/language-switcher.dart';
 import 'package:fueler/pages_old/settings_page.dart';
 import 'package:provider/provider.dart';
 
+import 'bloc pattern/routes/UI/splash_screen/splash_screen_page.dart';
 import 'bloc pattern/bloc/bloc_main_old.dart';
 import 'bloc pattern/style/styles.dart';
 
+//late final BuildContext Parentcontext;
 void main() async {
   runApp(MultiProvider(
     providers: [
@@ -45,24 +47,29 @@ class MyApp extends StatelessWidget {
             builder: (context, languages, child) => FutureBuilder<ThemeData>(
                 future: nightMode.getTheme(),
                 initialData: Styles.themeData(false),
-                builder: (BuildContext context,
-                        AsyncSnapshot<ThemeData> themeData) =>
-                    MaterialApp(
-                      title: 'Fueler',
-                      onGenerateRoute: routes,
-                      theme: themeData.data,
-                      localizationsDelegates: const [
-                        AppLocalizations.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                      ],
-                      supportedLocales:
-                          languages.languages.entries.map((e) => Locale(e.key)),
-                      locale: Locale(languages.language.key),
-
-                      //home: child ?? const SizedBox.shrink()
-                    )),
+                builder:
+                    (BuildContext context, AsyncSnapshot<ThemeData> themeData) {
+                  SplashScreen();
+                  //Parentcontext = context;
+                  //setContext(context);
+                  return MaterialApp(
+                    title: 'Fueler',
+                    onGenerateRoute: routes,
+                    theme: themeData.data,
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales:
+                        languages.languages.entries.map((e) => Locale(e.key)),
+                    locale: Locale(languages.language.key),
+                    initialRoute: '/',
+                    //home: child ?? const SizedBox.shrink()
+                    home: SplashScreen(),
+                  );
+                }),
             //child: const MyHomePage(title: '')
           ));
 }
@@ -87,6 +94,12 @@ Route<dynamic> routes(RouteSettings settings) {
     case '/':
       return MaterialPageRoute(
         builder: (_) => const MainPageMenu(routesBuilder: subRoutes),
+        // builder: (_) { const MainPageMenu(routesBuilder: subRoutes);},
+      );
+    case '/main':
+      return MaterialPageRoute(
+        builder: (_) => const MainPageMenu(routesBuilder: subRoutes),
+        // builder: (_) { const MainPageMenu(routesBuilder: subRoutes);},
       );
     case '/parent':
       return MaterialPageRoute(
