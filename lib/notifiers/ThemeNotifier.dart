@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../bloc pattern/style/styles.dart';
+import '../style/styles.dart';
 
 class NightMode extends ChangeNotifier {
   final String preferencesKey = "dark_mode_enabled";

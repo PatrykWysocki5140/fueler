@@ -1,0 +1,85 @@
+import 'package:bart/bart.dart';
+import 'package:flutter/material.dart';
+import 'package:fueler/routes/tabs/map_page.dart';
+import 'package:fueler/routes/tabs/settings_page.dart';
+import 'UI/splash_screen/splash_screen_page.dart';
+import 'tabs/profile_page.dart';
+import 'package:animations/animations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+// ignore: non_constant_identifier_names
+late final BuildContext _Context;
+void setContext(BuildContext parentContext) {
+  _Context = parentContext;
+}
+
+Future appPushNamed(String route, {Object? arguments}) =>
+    navigatorKey.currentState!.pushNamed(route, arguments: arguments);
+
+List<BartMenuRoute> subRoutes() {
+  return [
+    // strona profil usera // bottom bar menu
+    BartMenuRoute.bottomBar(
+      label: "", //AppLocalizations.of(Context)!.account,
+      icon: Icons.person,
+      path: '/profile',
+      pageBuilder: (parentContext, tabContext, settings) => ProfilePage(
+        key: const PageStorageKey<String>("profile"),
+        parentContext: parentContext,
+      ),
+      transitionDuration: bottomBarTransitionDuration,
+      transitionsBuilder: bottomBarTransition,
+    ),
+    // strona mapa // bottom bar menu
+    BartMenuRoute.bottomBar(
+      label: "", //AppLocalizations.of(Context)!.navigate,
+      icon: Icons.navigation,
+      path: '/map',
+      pageBuilder: (parentContext, tabContext, settings) => MapPage(
+        key: const PageStorageKey<String>("map"),
+        parentContext: parentContext,
+      ),
+      transitionDuration: bottomBarTransitionDuration,
+      transitionsBuilder: bottomBarTransition,
+    ),
+    // strona ustawienia // bottom bar menu
+    BartMenuRoute.bottomBar(
+      label: "", //AppLocalizations.of(Context)!.settings,
+      icon: Icons.settings,
+      path: '/settings',
+      pageBuilder: (parentContext, tabContext, settings) => SettingsPage(
+        key: const PageStorageKey<String>("settings"),
+        parentContext: parentContext,
+      ),
+      transitionDuration: bottomBarTransitionDuration,
+      transitionsBuilder: bottomBarTransition,
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/profile/inner',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const Center(child: Text("Inner route")),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/splash',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          SplashScreen("/splash"),
+    ),
+  ];
+}
+
+Widget bottomBarTransition(
+  BuildContext c,
+  Animation<double> a1,
+  Animation<double> a2,
+  Widget child,
+) =>
+    FadeThroughTransition(
+      animation: a1,
+      secondaryAnimation: a2,
+      fillColor: Colors.white,
+      child: child,
+    );
+
+const bottomBarTransitionDuration = Duration(milliseconds: 700);
