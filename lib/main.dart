@@ -7,6 +7,7 @@ import 'package:fueler/routes/navigation.dart';
 import 'package:fueler/routes/routes.dart';
 import 'package:fueler/style/styles.dart';
 import 'package:provider/provider.dart';
+import 'notifiers/APINotifier.dart';
 import 'notifiers/auth.dart';
 import 'dart:developer';
 import 'routes/UI/splash_screen/splash_screen_page.dart';
@@ -16,7 +17,7 @@ void main() async {
   log("dupa");
 
   final AuthModel _auth = AuthModel();
-  _auth.loadSettings();
+  //_auth.loadSettings();
   /*
   try {
   } catch (e) {
@@ -29,6 +30,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => LanguageNotifier()),
       ChangeNotifierProvider<NightMode>.value(value: NightMode()),
       ChangeNotifierProvider<AuthModel>.value(value: _auth),
+      ChangeNotifierProvider<Api>(create: (context) => Api())
     ],
     child: const MyApp(),
   ));
@@ -51,43 +53,46 @@ class MyApp extends StatelessWidget {
   }*/
 
   @override
-  Widget build(BuildContext context) => Consumer<AuthModel>(
-      builder: (context, model, child) => Consumer<NightMode>(
-          builder: (context, nightMode, child) => Consumer<LanguageNotifier>(
-                builder: (context, languages, child) =>
-                    FutureBuilder<ThemeData>(
-                        future: nightMode.getTheme(),
-                        initialData: Styles.themeData(false),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<ThemeData> themeData) {
-                          //const SplashScreen("/main");
-                          //Parentcontext = context;
-                          //setContext(context);
-                          return MaterialApp(
-                            title: 'Fueler',
-                            onGenerateRoute: routes,
-                            theme: themeData.data,
-                            localizationsDelegates: const [
-                              AppLocalizations.delegate,
-                              GlobalMaterialLocalizations.delegate,
-                              GlobalWidgetsLocalizations.delegate,
-                              GlobalCupertinoLocalizations.delegate,
-                            ],
-                            supportedLocales: languages.languages.entries
-                                .map((e) => Locale(e.key)),
-                            locale: Locale(languages.language.key),
-                            initialRoute: '/',
-                            //home: child ?? const SizedBox.shrink()
-                            home: /*
+  Widget build(BuildContext context) => Consumer<Api>(
+      builder: (context, apimodel, child) => Consumer<AuthModel>(
+          builder: (context, model, child) => Consumer<NightMode>(
+              builder: (context, nightMode, child) =>
+                  Consumer<LanguageNotifier>(
+                    builder: (context, languages, child) =>
+                        FutureBuilder<ThemeData>(
+                            future: nightMode.getTheme(),
+                            initialData: Styles.themeData(false),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<ThemeData> themeData) {
+                              //const SplashScreen("/main");
+                              //Parentcontext = context;
+                              //setContext(context);
+                              return MaterialApp(
+                                title: 'Fueler',
+                                onGenerateRoute: routes,
+                                theme: themeData.data,
+                                localizationsDelegates: const [
+                                  AppLocalizations.delegate,
+                                  GlobalMaterialLocalizations.delegate,
+                                  GlobalWidgetsLocalizations.delegate,
+                                  GlobalCupertinoLocalizations.delegate,
+                                ],
+                                supportedLocales: languages.languages.entries
+                                    .map((e) => Locale(e.key)),
+                                locale: Locale(languages.language.key),
+                                initialRoute: '/',
+                                //home: child ?? const SizedBox.shrink()
+                                home:
+                                    /*
                           Consumer<AuthModel>(builder: (context, model, child) {
                         if (model.user != null) return SplashScreen("/main");
                         return SplashScreen("/main");
                       })*/
-                                SplashScreen("/main"),
-                          );
-                        }),
-                //child: const MyHomePage(title: '')
-              )));
+                                    SplashScreen("/main"),
+                              );
+                            }),
+                    //child: const MyHomePage(title: '')
+                  ))));
 }
 
 /*

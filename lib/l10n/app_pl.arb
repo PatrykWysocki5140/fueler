@@ -35,5 +35,10 @@
     "updateStation": "Aktualizuj",
     "account": "Użytkownik",
     "navigate": "Nawiguj",
-    "exit": "Wyjdź"
+    "exit": "Wyjdź",
+    "procesing": "Przetwarzanie danych",
+    "error": "Błąd",
+    "warning": "Ostrzeżenie",
+    "success": "Sukces",
+    "register": "Rejestracja"  
 }

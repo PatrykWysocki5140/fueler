@@ -35,5 +35,10 @@
     "updateStation": "Update",
     "account": "Account",
     "navigate": "Navigate",
-    "exit": "Exit"
+    "exit": "Exit",
+    "procesing": "Processing Data",
+    "error": "Error",
+    "warning": "Warning",
+    "success": "Success",
+    "register": "Register"
 }
