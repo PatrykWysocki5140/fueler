@@ -3,6 +3,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:bart/bart.dart';
+import 'package:fueler/notifiers/APINotifier.dart';
+import 'package:provider/provider.dart';
+
+import '../UI/register_screen/register_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   final BuildContext parentContext;
@@ -55,7 +59,13 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("profile page");
+    if (Provider.of<Api>(context).user.id != null) {
+      return const RegisterScreen();
+    } else {
+      return const RegisterScreen();
+    }
+    ;
+    //return const Text("profile page");
   }
 
   /*

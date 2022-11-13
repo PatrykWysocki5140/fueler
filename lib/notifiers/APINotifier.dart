@@ -6,40 +6,51 @@ import '../model/API_Model/Api_service.dart';
 
 class Api with ChangeNotifier {
   late List<User> users;
-  late User user;
+  User user = User();
   ApiService api = ApiService();
   bool loading = false;
   bool savedUser = false;
 
   // ignore: non_constant_identifier_names
+  Future<dynamic> GetLocalUser() async {
+    var _prefs = await SharedPreferences.getInstance();
+    user =
+        (await api.apiService_getUserById(_prefs.getString("UserID") as int))!;
+    if (user.id != null) SaveLocalUser(user);
+    return user;
+  }
+
+  // ignore: non_constant_identifier_names
+  void SaveLocalUser(User u) {
+    users.add(u);
+    savedUser = true;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString("UserID", u.id.toString());
+    });
+    notifyListeners();
+  }
+
+  // ignore: non_constant_identifier_names
   Users(context) async {
     loading = true;
-    users = (await api.getUsers(context))!;
+    users = (await api.apiService_getUsers(context))!;
     loading = false;
     notifyListeners();
   }
 
   Future<dynamic> LogIn(String login, String password) async {
-    user = (await api.loginUser(login, password))!;
+    user = (await api.apiService_loginUser(login, password))!;
     if (user == null) {
       return null;
     } else {
-      SharedPreferences.getInstance().then((prefs) {
-        prefs.setString("UserID", user.id.toString());
-      });
+      SaveLocalUser(user);
     }
-    notifyListeners();
   }
 
-    Future<dynamic> RegisterUser(User user) async {
-    user = (await api.registerUser(user.toJson()))!;
-    if (user == null) {
-      return null;
-    } else {
-      SharedPreferences.getInstance().then((prefs) {
-        prefs.setString("UserID", user.id.toString());
-      });
-    }
-    notifyListeners();
+  Future<User?> RegisterUser(User user) async {
+    user = (await api.apiService_registerUser(user.toJson()))!;
+    if (user != null) SaveLocalUser(user);
+
+    return user;
   }
 }

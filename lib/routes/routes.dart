@@ -2,6 +2,7 @@ import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/routes/tabs/map_page.dart';
 import 'package:fueler/routes/tabs/settings_page.dart';
+import 'UI/register_screen/register_screen.dart';
 import 'UI/splash_screen/splash_screen_page.dart';
 import 'tabs/profile_page.dart';
 import 'package:animations/animations.dart';
@@ -64,7 +65,12 @@ List<BartMenuRoute> subRoutes() {
     BartMenuRoute.innerRoute(
       path: '/splash',
       pageBuilder: (parentContext, tabContext, settings) =>
-          SplashScreen("/splash"),
+          const SplashScreen("/splash"),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/profile/register',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const RegisterScreen(),
     ),
   ];
 }

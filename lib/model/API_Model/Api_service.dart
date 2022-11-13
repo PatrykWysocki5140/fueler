@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   ///////////////////////// http
-  Future<List<User>?> getUsers(context) async {
+  Future<List<User>?> apiService_getUsers(context) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.usersEndpoint);
       var response = await http.get(url);
@@ -20,7 +20,7 @@ class ApiService {
     return null;
   }
 
-  Future<User?> login(String login, password) async {
+  Future<User?> apiService_login(String login, password) async {
     try {
       http.Response response = await http.post(
           Uri.parse(ApiConstants.baseUrl + ApiConstants.userEndpoint),
@@ -36,12 +36,12 @@ class ApiService {
     return null;
   }
 
-  Future<User?> register(User user) async {
+  Future<User?> apiService_register(User user) async {
     try {
       http.Response response = await http.post(
           Uri.parse(ApiConstants.baseUrl + ApiConstants.userEndpoint),
           body: {
-            'login': login,
+            'login': user.name,
           });
 
       if (response.statusCode == 200) {
@@ -57,7 +57,8 @@ class ApiService {
   ///////////////////////// dio
   final Dio _dio = Dio();
 
-  Future<dynamic> registerUser(Map<String, dynamic>? data) async {
+  // ignore: non_constant_identifier_names
+  Future<dynamic> apiService_registerUser(Map<String, dynamic>? data) async {
     Response response;
     try {
       response = await _dio.post(
@@ -73,7 +74,8 @@ class ApiService {
     return User.fromJson(response.data);
   }
 
-  Future<dynamic> loginUser(String login, String password) async {
+  // ignore: non_constant_identifier_names
+  Future<dynamic> apiService_loginUser(String login, String password) async {
     try {
       Response response = await _dio.post(
         ApiConstants.baseUrl + ApiConstants.userEndpoint,
@@ -89,7 +91,24 @@ class ApiService {
     }
   }
 
-  Future<dynamic> getUserProfileData(String accessToken) async {
+  // ignore: non_constant_identifier_names
+  Future<User?> apiService_getUserById(int id) async {
+    try {
+      Response response = await _dio.post(
+        ApiConstants.baseUrl + ApiConstants.userEndpoint,
+        data: {
+          'id': id.toString(),
+        },
+        queryParameters: {'apikey': ApiConstants.apiKey},
+      );
+      return User.fromJson(response.data);
+    } on DioError catch (e) {
+      return null;
+    }
+  }
+
+  // ignore: non_constant_identifier_names
+  Future<dynamic> apiService_getUserProfileData(String accessToken) async {
     try {
       Response response = await _dio.get(
         ApiConstants.baseUrl + ApiConstants.userEndpoint,
@@ -104,7 +123,8 @@ class ApiService {
     }
   }
 
-  Future<dynamic> updateUserProfile({
+  // ignore: non_constant_identifier_names
+  Future<dynamic> apiService_updateUserProfile({
     required String accessToken,
     required Map<String, dynamic> data,
   }) async {
@@ -123,7 +143,8 @@ class ApiService {
     }
   }
 
-  Future<dynamic> logoutUser(String accessToken) async {
+  // ignore: non_constant_identifier_names
+  Future<dynamic> apiService_logoutUser(String accessToken) async {
     try {
       Response response = await _dio.get(
         ApiConstants.baseUrl + ApiConstants.userEndpoint,

@@ -17,6 +17,8 @@ void main() async {
   log("dupa");
 
   final AuthModel _auth = AuthModel();
+  final Api api = Api();
+  api.GetLocalUser;
   //_auth.loadSettings();
   /*
   try {
@@ -30,7 +32,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => LanguageNotifier()),
       ChangeNotifierProvider<NightMode>.value(value: NightMode()),
       ChangeNotifierProvider<AuthModel>.value(value: _auth),
-      ChangeNotifierProvider<Api>(create: (context) => Api())
+      ChangeNotifierProvider<Api>(create: (context) => api)
     ],
     child: const MyApp(),
   ));

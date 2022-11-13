@@ -23,7 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   //final ApiClient _apiClient = Provider.of<Api>(context, listen: true);
-  bool _showPassword = false;
+  bool _showPassword = true;
 
   Future<void> registerUsers() async {
     if (_formKey.currentState!.validate()) {
@@ -47,6 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "BirthDate": "10-12-1985",
         "Gender": "M",
       };*/
+
       User user = User(
         id: 0,
         name: "name",
@@ -59,9 +60,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         userPrivilegeLevel: UserPrivilegeLevel.USER,
       );
 
-      User _user = await Provider.of<Api>(context, listen: true)
-          .api
-          .registerUser(user.toJson()); //_apiClient.registerUser(userData);
+      User? _user =
+          await Provider.of<Api>(context, listen: true).RegisterUser(user);
+      //_apiClient.registerUser(userData);
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
@@ -71,8 +72,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Navigator.of(context).pushNamed("/home/inner");
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('${AppLocalizations.of(context)!.error}: ${_user.name}'),
-          backgroundColor: GetColors.error,//Colors.red.shade300,
+          content:
+              Text('${AppLocalizations.of(context)!.error}: ${_user?.name}'),
+          backgroundColor: GetColors.error, //Colors.red.shade300,
         ));
       }
     }
@@ -82,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.blueGrey[200],
+      //backgroundColor: Colors.blueGrey[200],
       body: Form(
         key: _formKey,
         child: SizedBox(
@@ -145,7 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             _showPassword
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Colors.grey,
+                            //color: Colors.grey,
                           ),
                         ),
                         isDense: true,
@@ -159,12 +161,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: registerUsers,
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 15)),
-                        child:  Text(
+                        child: Text(
                           AppLocalizations.of(context)!.register,
                           style: const TextStyle(
                             fontSize: 20,
