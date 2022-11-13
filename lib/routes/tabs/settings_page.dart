@@ -1,12 +1,14 @@
 import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fueler/model/API_Model/Api_service.dart';
 import 'package:fueler/notifiers/LanguageNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform, exit;
 import 'package:flutter/services.dart';
 
+import '../../notifiers/APINotifier.dart';
 import '../../settings/Get_size.dart';
 
 class SettingsPage extends StatelessWidget with AppBarNotifier {
@@ -18,6 +20,7 @@ class SettingsPage extends StatelessWidget with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
+    //var obj = Provider.of<Api>(context, listen: true).api.getUsers(context);
     return Consumer<LanguageNotifier>(
       builder: (context, languages, child) {
         return Scaffold(

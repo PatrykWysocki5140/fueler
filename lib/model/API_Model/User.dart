@@ -41,11 +41,12 @@ class User {
 */
 
 List<User> userModelFromJson(String str) =>
-    //List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
-    List<User>.from(json.decode(str));
+    List<User>.from(json.decode(str)((x) => User.fromJson(x)));
+   // List<User>.from(json.decode(str));
 
 String userModelToJson(List<User> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+    
 
 class User {
   User({
@@ -54,9 +55,9 @@ class User {
     required this.password,
     required this.phoneNumber,
     required this.email,
-    required this.created,
-    required this.isConfirmed,
-    required this.isBanned,
+    created,
+    isConfirmed,
+    isBanned,
     required this.userPrivilegeLevel,
   });
   int id;
@@ -64,9 +65,9 @@ class User {
   String email;
   String password;
   String phoneNumber;
-  DateTime created;
-  bool isConfirmed;
-  bool isBanned;
+  DateTime? created;
+  bool? isConfirmed;
+  bool? isBanned;
   UserPrivilegeLevel userPrivilegeLevel;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
