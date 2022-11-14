@@ -40,11 +40,9 @@ class Api with ChangeNotifier {
 
   Future<dynamic> LogIn(String login, String password) async {
     user = (await api.apiService_loginUser(login, password))!;
-    if (user == null) {
-      return null;
-    } else {
-      SaveLocalUser(user);
-    }
+    if (user != null) SaveLocalUser(user);
+
+    return user;
   }
 
   Future<User?> RegisterUser(User user) async {

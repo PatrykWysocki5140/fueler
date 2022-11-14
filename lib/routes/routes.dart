@@ -2,6 +2,7 @@ import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/routes/tabs/map_page.dart';
 import 'package:fueler/routes/tabs/settings_page.dart';
+import 'UI/login_screen/login_screen.dart';
 import 'UI/register_screen/register_screen.dart';
 import 'UI/splash_screen/splash_screen_page.dart';
 import 'tabs/profile_page.dart';
@@ -71,6 +72,10 @@ List<BartMenuRoute> subRoutes() {
       path: '/profile/register',
       pageBuilder: (parentContext, tabContext, settings) =>
           const RegisterScreen(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/profile/login',
+      pageBuilder: (parentContext, tabContext, settings) => const LoginScreen(),
     ),
   ];
 }

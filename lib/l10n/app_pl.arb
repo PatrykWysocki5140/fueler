@@ -40,5 +40,11 @@
     "error": "Błąd",
     "warning": "Ostrzeżenie",
     "success": "Sukces",
-    "register": "Rejestracja"  
+    "register": "Rejestracja", 
+    "validEmail": "Wprowadź poprawny adres mailowy",
+    "validPassLeng": "Hasło musi mieć minimum 6 znaków",
+    "validPass": "Hasła muszą być takie same",
+    "validName": "Za krótka nazwa",
+    "validText": "Za krótki tekst",
+    "validPhone": "Wprowadź poprawny numer telefonu" 
 }

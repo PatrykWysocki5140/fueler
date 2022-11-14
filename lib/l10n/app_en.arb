@@ -40,5 +40,11 @@
     "error": "Error",
     "warning": "Warning",
     "success": "Success",
-    "register": "Register"
+    "register": "Register",
+    "validEmail": "Please enter a valid email address.",
+    "validPassLeng": "Password must be at least 6 characters.",
+    "validPass": "Passwords must be the same.",
+    "validName": "Username is too short.",
+    "validText": "Text is too short.",
+    "validPhone": "Phone number is not valid."
 }

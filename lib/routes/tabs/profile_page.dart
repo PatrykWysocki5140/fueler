@@ -1,11 +1,12 @@
 // ignore_for_file: recursive_getters
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:bart/bart.dart';
 import 'package:fueler/notifiers/APINotifier.dart';
 import 'package:provider/provider.dart';
 
+import '../UI/login_screen/login_screen.dart';
 import '../UI/register_screen/register_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -59,10 +60,11 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<Api>(context).user.id != null) {
+    if (Provider.of<Api>(context).user.id == null) {
       return const RegisterScreen();
     } else {
-      return const RegisterScreen();
+      log(Provider.of<Api>(context).user.id.toString());
+      return const LoginScreen();
     }
     ;
     //return const Text("profile page");
