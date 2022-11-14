@@ -6,7 +6,7 @@ class Validator {
     Pattern pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
     RegExp regex = RegExp(pattern as String);
     if (!regex.hasMatch(value)) {
-      return '🚩 ${AppLocalizations.of(context)!.nullValidator}';
+      return '🚩 ${AppLocalizations.of(context)!.validEmail}';
     } else {
       return null;
     }
@@ -25,9 +25,9 @@ class Validator {
     Pattern pattern = r'^.{6,}$';
     RegExp regex = RegExp(pattern as String);
     if (!regex.hasMatch(value)) {
-      return '🚩 ${AppLocalizations.of(context)!.nullValidator}';
+      return '🚩 ${AppLocalizations.of(context)!.validPassLeng}';
     } else if (value != nextpass) {
-      return '🚩 ${AppLocalizations.of(context)!.nullValidator}';
+      return '🚩 ${AppLocalizations.of(context)!.validPass}';
     } else {
       return null;
     }
@@ -37,7 +37,7 @@ class Validator {
     Pattern pattern = r'^.{6,}$';
     RegExp regex = RegExp(pattern as String);
     if (!regex.hasMatch(value)) {
-      return '🚩 ${AppLocalizations.of(context)!.nullValidator}.';
+      return '🚩 ${AppLocalizations.of(context)!.validPassLeng}.';
     } else {
       return null;
     }
@@ -45,7 +45,7 @@ class Validator {
 
   static String? validateName(String value, BuildContext context) {
     if (value.length < 3) {
-      return '🚩 ${AppLocalizations.of(context)!.nullValidator}';
+      return '🚩 ${AppLocalizations.of(context)!.validName}';
     } else {
       return null;
     }
@@ -53,7 +53,7 @@ class Validator {
 
   static String? validateText(String value, BuildContext context) {
     if (value.isEmpty) {
-      return '🚩 ${AppLocalizations.of(context)!.nullValidator}';
+      return '🚩 ${AppLocalizations.of(context)!.validText}';
     } else {
       return null;
     }
@@ -61,7 +61,7 @@ class Validator {
 
   static String? validatePhoneNumber(String value, BuildContext context) {
     if (value.length != 11) {
-      return '🚩 ${AppLocalizations.of(context)!.nullValidator}';
+      return '🚩 ${AppLocalizations.of(context)!.validPhone}';
     } else {
       return null;
     }
