@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:fueler/model/API_Model/User.dart';
 import 'package:fueler/settings/constants.dart';
@@ -69,9 +70,15 @@ class ApiService {
       //return User.fromJson(response.data);
     } on DioError catch (e) {
       //return e.response!.data;
-      response = e.response!.data;
+      response = e.response ??
+          Response(
+            requestOptions: RequestOptions(
+                method: "GET",
+                path: ApiConstants.baseUrl + ApiConstants.userEndpoint),
+            statusCode: 400,
+          );
     }
-    return User.fromJson(response.data);
+    return response.statusCode == 200 ? User.fromJson(response.data) : null;
   }
 
   // ignore: non_constant_identifier_names

@@ -46,5 +46,6 @@
     "validPass": "Hasła muszą być takie same",
     "validName": "Za krótka nazwa",
     "validText": "Za krótki tekst",
-    "validPhone": "Wprowadź poprawny numer telefonu" 
+    "validPhone": "Wprowadź poprawny numer telefonu",
+    "userCreationError": "Rejestracja użytkownika nie powiodła się."
 }

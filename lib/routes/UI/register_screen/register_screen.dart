@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fueler/settings/Get_colors.dart';
-
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fueler/settings/Get_colors.dart';
+import 'package:provider/provider.dart';
+
 import '../../../model/API_Model/User.dart';
 import '../../../model/API_Model/UserPrivilegeLevel.dart';
 import '../../../notifiers/APINotifier.dart';
@@ -12,6 +12,7 @@ import '../../../settings/validator.dart';
 
 class RegisterScreen extends StatefulWidget {
   static String id = "register_screen";
+
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override
@@ -31,11 +32,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _showPassword = true;
 
   Future<void> registerUsers() async {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.procesing),
         backgroundColor: GetColors.success, //Colors.green.shade300,
       ));
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
 /*
       Map<String, dynamic> userData = {
         "Email": [
@@ -66,10 +71,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       User? _user =
-          await Provider.of<Api>(context, listen: true).RegisterUser(user);
+          await Provider.of<Api>(context, listen: false).RegisterUser(user);
       //_apiClient.registerUser(userData);
-
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       // ignore: unnecessary_null_comparison
       if (_user != null) {
@@ -77,8 +80,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Navigator.of(context).pushNamed("/home/inner");
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-              Text('${AppLocalizations.of(context)!.error}: ${_user?.name}'),
+          content: Text(
+              '${AppLocalizations.of(context)!.error}: ${AppLocalizations.of(context)!.userCreationError}'),
           backgroundColor: GetColors.error, //Colors.red.shade300,
         ));
       }
@@ -235,8 +238,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: TextButton(
-                          onPressed: () => Navigator.of(context).pushNamed(
-                              "/profile/login"), //Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen())),
+                          onPressed: () =>
+                              Navigator.of(context).pushNamed("/profile/login"),
+                          //Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen())),
                           child: Text(AppLocalizations.of(context)!.login)),
                     )
                   ],

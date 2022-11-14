@@ -46,5 +46,6 @@
     "validPass": "Passwords must be the same.",
     "validName": "Username is too short.",
     "validText": "Text is too short.",
-    "validPhone": "Phone number is not valid."
+    "validPhone": "Phone number is not valid.",
+    "userCreationError": "User creation has failed."
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:fueler/model/API_Model/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../model/API_Model/Api_service.dart';
 
 class Api with ChangeNotifier {
@@ -46,9 +47,9 @@ class Api with ChangeNotifier {
   }
 
   Future<User?> RegisterUser(User user) async {
-    user = (await api.apiService_registerUser(user.toJson()))!;
-    if (user != null) SaveLocalUser(user);
+    User? _user = (await api.apiService_registerUser(user.toJson()));
+    if (_user != null) SaveLocalUser(_user);
 
-    return user;
+    return _user;
   }
 }
