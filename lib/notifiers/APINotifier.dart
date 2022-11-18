@@ -39,11 +39,12 @@ class Api with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<dynamic> LogIn(String login, String password) async {
-    user = (await api.apiService_loginUser(login, password))!;
-    if (user != null) SaveLocalUser(user);
+  // ignore: non_constant_identifier_names
+  Future<User?> LogIn(String login, String password) async {
+    User? _user = (await api.apiService_loginUser(login, password));
+    if (_user != null) SaveLocalUser(_user);
 
-    return user;
+    return _user;
   }
 
   Future<User?> RegisterUser(User user) async {

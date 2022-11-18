@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: GetColors.success, //Colors.green.shade300,
       ));
 
-      User? _user = await Provider.of<Api>(context, listen: true)
+      User? _user = await Provider.of<Api>(context, listen: false)
           .LogIn(numberController.text, passwordController.text);
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content:
-              Text('${AppLocalizations.of(context)!.error}: ${_user?.name}'),
+              Text('${AppLocalizations.of(context)!.error}'),
           backgroundColor: GetColors.error, //Colors.red.shade300,
         ));
       }

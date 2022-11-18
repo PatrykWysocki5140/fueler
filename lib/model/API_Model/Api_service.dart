@@ -83,8 +83,10 @@ class ApiService {
 
   // ignore: non_constant_identifier_names
   Future<dynamic> apiService_loginUser(String login, String password) async {
+       log(login + " " + password);
+       Response response;
     try {
-      Response response = await _dio.post(
+      response = await _dio.post(
         ApiConstants.baseUrl + ApiConstants.userEndpoint,
         data: {
           'login': login,
@@ -92,10 +94,18 @@ class ApiService {
         },
         queryParameters: {'apikey': ApiConstants.apiKey},
       );
-      return User.fromJson(response.data);
+      //return User.fromJson(response.data);
     } on DioError catch (e) {
-      return e.response!.data;
+      //return e.response!.data;
+      response = e.response ??
+          Response(
+            requestOptions: RequestOptions(
+                method: "GET",
+                path: ApiConstants.baseUrl + ApiConstants.userEndpoint),
+            statusCode: 400,
+          );
     }
+    return response.statusCode == 200 ? User.fromJson(response.data) : null;
   }
 
   // ignore: non_constant_identifier_names
