@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:dio/dio.dart';
 import 'package:fueler/model/API_Model/User.dart';
 import 'package:fueler/settings/constants.dart';
 import 'package:http/http.dart' as http;
+
+import 'UserPrivilegeLevel.dart';
 
 class ApiService {
   ///////////////////////// http
@@ -110,6 +113,7 @@ class ApiService {
 
   // ignore: non_constant_identifier_names
   Future<User?> apiService_getUserById(int id) async {
+    /*
     try {
       Response response = await _dio.post(
         ApiConstants.baseUrl + ApiConstants.userEndpoint,
@@ -121,7 +125,15 @@ class ApiService {
       return User.fromJson(response.data);
     } on DioError catch (e) {
       return null;
-    }
+    }*/
+    //testy
+    //User _user = new User(id: 1);
+    User u = User(id: id,name: "test1",password: "pass",phoneNumber: 12345678912,email: "email@wp.pl",userPrivilegeLevel: UserPrivilegeLevel.USER);
+    u.SetValues(id);
+    log("apiService_getUserById: "+u.id.toString());
+  
+  return u;
+  ///
   }
 
   // ignore: non_constant_identifier_names

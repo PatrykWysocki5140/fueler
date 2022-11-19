@@ -68,6 +68,10 @@ class User {
   bool? isConfirmed;
   bool? isBanned;
   UserPrivilegeLevel? userPrivilegeLevel;
+  // ignore: non_constant_identifier_names
+  void SetValues(int _id,){
+    this.id = _id;
+  }
 
   factory User.fromJson(Map<String, dynamic> json) => User(
       id: json["id"],
@@ -91,5 +95,9 @@ class User {
         "isConfirmed": isConfirmed,
         "isBanned": isBanned,
         "userPrivilegeLevel": userPrivilegeLevel,
+      };
+
+      setVal(int _id) =>{
+        this.id = _id
       };
 }

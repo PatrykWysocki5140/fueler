@@ -14,19 +14,18 @@ import 'routes/UI/splash_screen/splash_screen_page.dart';
 
 //late final BuildContext Parentcontext;
 void main() async {
-  log("dupa");
-
+  WidgetsFlutterBinding.ensureInitialized();
+  log("start");
   final AuthModel _auth = AuthModel();
   final Api api = Api();
-  api.GetLocalUser;
+  //api.GetLocalUser();
+  //log("id:" + api.user.id.toString());
   //_auth.loadSettings();
   /*
   try {
   } catch (e) {
     log("Error Loading User Settings: $e");
   }*/
-
-  log("dupa2");
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => LanguageNotifier()),

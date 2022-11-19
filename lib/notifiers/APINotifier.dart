@@ -1,4 +1,6 @@
 // ignore: file_names
+import 'dart:developer' as dev;
+
 import 'package:flutter/foundation.dart';
 import 'package:fueler/model/API_Model/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,24 +8,46 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/API_Model/Api_service.dart';
 
 class Api with ChangeNotifier {
-  late List<User> users;
+  List<User> users = List.empty();
   User user = User();
   ApiService api = ApiService();
   bool loading = false;
   bool savedUser = false;
 
+
   // ignore: non_constant_identifier_names
   Future<dynamic> GetLocalUser() async {
-    var _prefs = await SharedPreferences.getInstance();
+    dynamic val;
+    SharedPreferences.getInstance().then((prefs) async {
+
+      if (prefs.getString("UserID") != null){
+        if(prefs.getString("UserID")!.isNotEmpty == true){
+          val = prefs.getString("UserID");        }
+          else{
+            val = 0;
+          }
+        }
+      else{
+          val = 0;
+        }        
+        dev.log(val);
+        user =(await api.apiService_getUserById(int.parse(val)))!;
+        dev.log("GetLocalUser"+user.id.toString());
+        if (user.id != null) SaveLocalUser(user);
+      
+        //prefs.getString("UserID");
+    });
+/*
+    var _prefs = await SharedPreferences.getInstance();   
     user =
         (await api.apiService_getUserById(_prefs.getString("UserID") as int))!;
-    if (user.id != null) SaveLocalUser(user);
-    return user;
+    if (user.id != null) SaveLocalUser(user);*/
+    //return user;
   }
 
   // ignore: non_constant_identifier_names
   void SaveLocalUser(User u) {
-    users.add(u);
+    //users.add(u);
     savedUser = true;
     SharedPreferences.getInstance().then((prefs) {
       prefs.setString("UserID", u.id.toString());
