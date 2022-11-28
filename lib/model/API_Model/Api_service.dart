@@ -114,6 +114,7 @@ class ApiService {
   // ignore: non_constant_identifier_names
   Future<User?> apiService_getUserById(int id) async {
     /*
+    //// to jest ok
     try {
       Response response = await _dio.post(
         ApiConstants.baseUrl + ApiConstants.userEndpoint,
@@ -125,14 +126,16 @@ class ApiService {
       return User.fromJson(response.data);
     } on DioError catch (e) {
       return null;
-    }*/
+    }
+    ///////
+    */
+
     //testy
     //User _user = new User(id: 1);
     User u = User(id: id,name: "test1",password: "pass",phoneNumber: 12345678912,email: "email@wp.pl",userPrivilegeLevel: UserPrivilegeLevel.USER);
     u.SetValues(id);
-    log("apiService_getUserById: "+u.id.toString());
-  
-  return u;
+    //log("apiService_getUserById: "+u.id.toString()); 
+    return u;
   ///
   }
 

@@ -61,14 +61,13 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
   @override
   Widget build(BuildContext context) {
     Provider.of<Api>(context).GetLocalUser();
-      log("id:" + Provider.of<Api>(context).user.id.toString());
+      log("profile_page id:" + Provider.of<Api>(context).user.id.toString());
     if (Provider.of<Api>(context).user.id == null) {
       return const RegisterScreen();
-    } else {
-      log(Provider.of<Api>(context).user.id.toString());
+    } else {     
       return const LoginScreen();
     }
-    ;
+    
     //return const Text("profile page");
   }
 
