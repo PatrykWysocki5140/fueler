@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../UI/login_screen/login_screen.dart';
 import '../UI/register_screen/register_screen.dart';
+import '../UI/user_screen/user_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   final BuildContext parentContext;
@@ -61,11 +62,16 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
   @override
   Widget build(BuildContext context) {
     Provider.of<Api>(context).GetLocalUser();
-      log("profile_page id:" + Provider.of<Api>(context).user.id.toString());
+      log("//profile_page//  user id:" + Provider.of<Api>(context).user.id.toString());
+      log("////  user name:" + Provider.of<Api>(context).user.name.toString());
+      log("////  user email:" + Provider.of<Api>(context).user.email.toString());
+      log("////  user phoneNumber:" + Provider.of<Api>(context).user.phoneNumber.toString());
+      log("////  user password:" + Provider.of<Api>(context).user.password.toString());
+      log("////  user userPrivilegeLevel:" + Provider.of<Api>(context).user.userPrivilegeLevel.toString());
     if (Provider.of<Api>(context).user.id == null) {
       return const RegisterScreen();
     } else {     
-      return const LoginScreen();
+      return const UserScreen();
     }
     
     //return const Text("profile page");

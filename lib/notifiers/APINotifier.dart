@@ -24,13 +24,13 @@ class Api with ChangeNotifier {
         if(prefs.getString("UserID")!.isNotEmpty == true){
           val = prefs.getString("UserID");        }
           else{
-            val = 10;
+            val = 0;
           }
         }
       else{
-          val = 10;
+          val = 0;
         }        
-        //dev.log(val);
+        dev.log("//API//GetLocalUser// Local UserID:" + val);
         user =(await api.apiService_getUserById(int.parse(val)))!;
         //dev.log("GetLocalUser"+user.id.toString());
         if (user.id != null) SaveLocalUser(user);

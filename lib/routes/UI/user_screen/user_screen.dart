@@ -10,18 +10,19 @@ import '../../../model/API_Model/UserPrivilegeLevel.dart';
 import '../../../notifiers/APINotifier.dart';
 import '../../../settings/validator.dart';
 
-class LoginScreen extends StatefulWidget {
-  static String id = "login_screen";
-  const LoginScreen({Key? key}) : super(key: key);
+class UserScreen extends StatefulWidget {
+  static String id = "user_screen";
+  const UserScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<UserScreen> createState() => _UserScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _UserScreenState extends State<UserScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController numberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  
   //final ApiClient _apiClient = Provider.of<Api>(context, listen: true);
   bool _showPassword = true;
 
@@ -50,7 +51,14 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
-
+  
+@override
+void initState() {
+  // TODO: implement initState
+  super.initState();
+  // Step 2 <- SEE HERE
+  numberController.text = 'Complete the story from here...';
+}
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -76,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   SizedBox(height: size.height * 0.08),
                     Center(
                       child: Text(
-                        AppLocalizations.of(context)!.login,
+                        AppLocalizations.of(context)!.hello + ", " + Provider.of<Api>(context).user.name.toString(),
                         style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -87,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     SizedBox(height: size.height * 0.03),
                     TextFormField(
+                      //initialValue: "sss",
                       validator: (value) =>
                           Validator.validatePhoneNumber(value ?? "", context),
                       controller: numberController,
