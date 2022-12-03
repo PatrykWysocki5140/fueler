@@ -69,8 +69,27 @@ class User {
   bool? isBanned;
   UserPrivilegeLevel? userPrivilegeLevel;
   // ignore: non_constant_identifier_names
-  void SetValues(int _id,){
-    this.id = _id;
+
+  void SetValues(
+    int _id, 
+    String _name, 
+    String _password, 
+    String _phoneNumber, 
+    String _email,
+    DateTime? _created,  
+    bool? _isConfirmed,
+    bool? _isBanned,
+    UserPrivilegeLevel? _userPrivilegeLevel)
+    {
+    id = _id;
+    name = _name;
+    password = _password;
+    phoneNumber = _phoneNumber;
+    email = _email;
+    created = _created;
+    isConfirmed = _isConfirmed;
+    isBanned = _isBanned;
+    userPrivilegeLevel = _userPrivilegeLevel;
   }
 
   factory User.fromJson(Map<String, dynamic> json) => User(
