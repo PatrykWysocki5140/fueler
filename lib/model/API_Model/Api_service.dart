@@ -132,8 +132,9 @@ class ApiService {
 
     //testy
     //User _user = new User(id: 1);
-    User u = User(id: id,name: "test1",password: "pass",phoneNumber: 12345678912,email: "email@wp.pl",userPrivilegeLevel: UserPrivilegeLevel.USER);
-    u.SetValues(id);
+    User u = User();
+   // u.SetValues(id,"test1","pass123","123456789",);
+   u.SetValues(id, "test", "pass123", "123456789", "email@wp.pl", DateTime.parse('1969-07-20 20:18:04Z'), true, false, UserPrivilegeLevel.USER);
     //log("apiService_getUserById: "+u.id.toString()); 
     return u;
   ///
