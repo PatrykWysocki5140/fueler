@@ -47,5 +47,6 @@
     "validName": "Za krótka nazwa",
     "validText": "Za krótki tekst",
     "validPhone": "Wprowadź poprawny numer telefonu",
-    "userCreationError": "Rejestracja użytkownika nie powiodła się."
+    "userCreationError": "Rejestracja użytkownika nie powiodła się.",
+    "hello": "Cześć"
 }
