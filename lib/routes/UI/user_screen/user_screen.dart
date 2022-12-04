@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:fueler/routes/UI/user_screen/widgets/user_data.dart';
 import 'package:fueler/settings/Get_colors.dart';
 
 import 'package:provider/provider.dart';
@@ -20,50 +21,71 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController numberController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  
-  //final ApiClient _apiClient = Provider.of<Api>(context, listen: true);
-  bool _showPassword = true;
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController userPrivilegeLevelController =
+      TextEditingController();
 
-  Future<void> loginUser() async {
+  final TextEditingController firstpasswordController = TextEditingController();
+  final TextEditingController secondpasswordController =
+      TextEditingController();
+  //final ApiClient _apiClient = Provider.of<Api>(context, listen: true);
+  bool _loadUserData = true;
+  bool _showPassword = true;
+  bool _newPassword = false;
+  bool _newPhone = false;
+  bool _newEmail = false;
+
+  Future<void> UpdatePassword() async {
     if (_formKey.currentState!.validate()) {
+      User _newUserPassword = Provider.of<Api>(context, listen: false).user;
+      passwordController.text = firstpasswordController.text;
+
+      _newUserPassword.SetNewPassword(passwordController.text);
+      User? _user = await Provider.of<Api>(context, listen: false)
+          .UpdateUser(_newUserPassword, context);
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.procesing),
-        backgroundColor: GetColors.success, //Colors.green.shade300,
+        backgroundColor: GetColors.success,
       ));
-
-      User? _user = await Provider.of<Api>(context, listen: false)
-          .LogIn(numberController.text, passwordController.text);
-
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      // ignore: unnecessary_null_comparison
-      if (_user != null) {
-        //Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
-        Navigator.of(context).pushNamed("/home/inner");
+      if (_user?.password == _newUserPassword.password) {
+        _showPassword = false;
+        firstpasswordController.clear();
+        secondpasswordController.clear();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.success),
+          backgroundColor: GetColors.success,
+        ));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-              Text('${AppLocalizations.of(context)!.error}'),
-          backgroundColor: GetColors.error, //Colors.red.shade300,
+          content: Text(AppLocalizations.of(context)!.error),
+          backgroundColor: GetColors.error,
         ));
       }
     }
   }
-  
-@override
-void initState() {
-  // TODO: implement initState
-  super.initState();
-  // Step 2 <- SEE HERE
-  numberController.text = 'Complete the story from here...';
-}
+
   @override
   Widget build(BuildContext context) {
+    if (_loadUserData) {
+      nameController.text = Provider.of<Api>(context).user.name.toString();
+      phoneNumberController.text =
+          Provider.of<Api>(context).user.phoneNumber.toString();
+      emailController.text = Provider.of<Api>(context).user.email.toString();
+      userPrivilegeLevelController.text =
+          Provider.of<Api>(context).user.userPrivilegeLevel.toString();
+      _loadUserData = !_loadUserData;
+    }
+    passwordController.text =
+        Provider.of<Api>(context).user.password.toString();
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      //backgroundColor: Colors.blueGrey[200],
       body: Form(
         key: _formKey,
         child: SizedBox(
@@ -79,37 +101,88 @@ void initState() {
               ),
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    //   SizedBox(height: size.height * 0.08),
                     Center(
                       child: Text(
-                        AppLocalizations.of(context)!.hello + ", " + Provider.of<Api>(context).user.name.toString(),
+                        AppLocalizations.of(context)!.hello +
+                            ", " +
+                            Provider.of<Api>(context).user.name.toString(),
                         style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    SizedBox(height: size.height * 0.05),
-
-                    SizedBox(height: size.height * 0.03),
+                    SizedBox(height: size.height * 0.06),
+                    Text(AppLocalizations.of(context)!.phonenumber),
                     TextFormField(
-                      //initialValue: "sss",
                       validator: (value) =>
                           Validator.validatePhoneNumber(value ?? "", context),
-                      controller: numberController,
+                      controller: phoneNumberController,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.phonenumber,
                         isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
                       ),
                     ),
                     SizedBox(height: size.height * 0.03),
+                    Text("Email"),
                     TextFormField(
+                      validator: (value) =>
+                          Validator.validateEmail(value ?? "", context),
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (_newEmail) {
+                                emailController.text = "";
+                              } else {
+                                emailController.text =
+                                    Provider.of<Api>(context, listen: false)
+                                        .user
+                                        .email
+                                        .toString();
+                              }
+                              _newEmail = !_newEmail;
+                            });
+                          },
+                          child: Icon(
+                            _newEmail
+                                ? Icons.update_disabled_outlined
+                                : Icons.system_update_alt,
+                          ),
+                        ),
+                        hintText: "Email",
+                        isDense: true,
+                      ),
+                    ),
+                    if (_newEmail)
+                      Container(
+                        child: Column(
+                          children: [
+                            SizedBox(height: size.height * 0.01),
+                            TextFormField(
+                              obscureText: _newEmail,
+                              validator: (value) =>
+                                  Validator.validateEmail(value ?? "", context),
+                              controller: emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                isDense: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    SizedBox(height: size.height * 0.03),
+                    Text(AppLocalizations.of(context)!.password),
+                    TextFormField(
+                      enableInteractiveSelection: false,
+                      focusNode: FocusNode(),
                       obscureText: _showPassword,
                       validator: (value) =>
                           Validator.validatePassword(value ?? "", context),
@@ -121,43 +194,66 @@ void initState() {
                           onTap: () {
                             setState(() {
                               _showPassword = !_showPassword;
+                              _newPassword = !_newPassword;
                             });
                           },
                           child: Icon(
                             _showPassword
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            //color: Colors.grey,
                           ),
                         ),
                         isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
                       ),
                     ),
-                    SizedBox(height: size.height * 0.06),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: loginUser,
-                        child: Text(
-                          AppLocalizations.of(context)!.login,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                    if (_newPassword) //////////////////// hasło
+                      Container(
+                          child: Column(
+                        children: [
+                          SizedBox(height: size.height * 0.01),
+                          TextFormField(
+                            obscureText: _showPassword,
+                            validator: (value) =>
+                                Validator.validatePasswordRegister(value ?? "",
+                                    secondpasswordController.text, context),
+                            controller: firstpasswordController,
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecoration(
+                              hintText:
+                                  AppLocalizations.of(context)!.newpassword,
+                              isDense: true,
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(
-                      width: double.infinity,
-                      child: TextButton(
-                          onPressed: () => Navigator.of(context).pushNamed(
-                              "/profile/register"), //Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen())),
-                          child: Text(AppLocalizations.of(context)!.register)),
-                    )
+                          SizedBox(height: size.height * 0.01),
+                          TextFormField(
+                            obscureText: _showPassword,
+                            validator: (value) =>
+                                Validator.validatePasswordRegister(value ?? "",
+                                    firstpasswordController.text, context),
+                            controller: secondpasswordController,
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!
+                                  .newpasswordrepeat,
+                              isDense: true,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.01),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: UpdatePassword,
+                              child: Text(
+                                AppLocalizations.of(context)!.updateStation,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
                   ],
                 ),
               ),
