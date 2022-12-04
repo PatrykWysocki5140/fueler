@@ -1,48 +1,8 @@
 import "dart:convert";
 import "UserPrivilegeLevel.dart";
 
-/*
-class User {
-  final int id;
-  final String name;
-  final String password;
-  final String phoneNumber;
-  final String email;
-  final DateTime created;
-  final bool isConfirmed;
-  final bool isBanned;
-  final UserPrivilegeLevel userPrivilegeLevel;
-
-  User({
-    required this.id,
-    required this.name,
-    required this.password,
-    required this.phoneNumber,
-    required this.email,
-    required this.created,
-    required this.isConfirmed,
-    required this.isBanned,
-    required this.userPrivilegeLevel,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-        id: json["id"],
-        name: json["name"],
-        password: json["password"],
-        phoneNumber: json["phoneNumber"],
-        email: json["email"],
-        created: json["created"],
-        isConfirmed: json["isConfirmed"],
-        isBanned: json["isBanned"],
-        userPrivilegeLevel: json["userPrivilegeLevel"]);
-  }
-}
-*/
-
 List<User> userModelFromJson(String str) =>
     List<User>.from(json.decode(str)((x) => User.fromJson(x)));
-// List<User>.from(json.decode(str));
 
 String userModelToJson(List<User> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -60,27 +20,25 @@ class User {
     userPrivilegeLevel,
   });
   int? id;
-  String? name;
-  String? email;
-  String? password;
-  String? phoneNumber;
+  String? name; //
+  String? email; //
+  String? password; //
+  String? phoneNumber; //
   DateTime? created;
   bool? isConfirmed;
   bool? isBanned;
   UserPrivilegeLevel? userPrivilegeLevel;
-  // ignore: non_constant_identifier_names
 
   void SetValues(
-    int _id, 
-    String _name, 
-    String _password, 
-    String _phoneNumber, 
-    String _email,
-    DateTime? _created,  
-    bool? _isConfirmed,
-    bool? _isBanned,
-    UserPrivilegeLevel? _userPrivilegeLevel)
-    {
+      int _id,
+      String _name,
+      String _password,
+      String _phoneNumber,
+      String _email,
+      DateTime? _created,
+      bool? _isConfirmed,
+      bool? _isBanned,
+      UserPrivilegeLevel? _userPrivilegeLevel) {
     id = _id;
     name = _name;
     password = _password;
@@ -92,17 +50,38 @@ class User {
     userPrivilegeLevel = _userPrivilegeLevel;
   }
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-      id: json["id"],
-      name: json["name"],
-      password: json["password"],
-      phoneNumber: json["phoneNumber"],
-      email: json["email"],
-      created: json["created"],
-      isConfirmed: json["isConfirmed"],
-      isBanned: json["isBanned"],
-      userPrivilegeLevel:
-          UserPrivilegeLevel.values.elementAt(json["userPrivilegeLevel"]));
+  void SetNewPassword(
+    String _password,
+  ) {
+    password = _password;
+  }
+
+  void SetNewEmail(
+    String _email,
+  ) {
+    email = _email;
+  }
+
+  void SetNewPhoneNumber(
+    String _phonenumber,
+  ) {
+    phoneNumber = _phonenumber;
+  }
+
+  factory User.fromJson(dynamic json) {
+    User _user = User();
+    _user.SetValues(
+        json["id"],
+        json["name"],
+        json["password"],
+        json["phoneNumber"],
+        json["email"],
+        json["created"],
+        json["isConfirmed"],
+        json["isBanned"],
+        UserPrivilegeLevel.values.elementAt(1 /*json["userPrivilegeLevel"]*/));
+    return _user;
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -116,7 +95,5 @@ class User {
         "userPrivilegeLevel": userPrivilegeLevel,
       };
 
-      setVal(int _id) =>{
-        this.id = _id
-      };
+  setVal(int _id) => {this.id = _id};
 }
