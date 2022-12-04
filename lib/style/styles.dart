@@ -120,15 +120,11 @@ class Styles {
         filled: true,
         fillColor: isDarkTheme ? GetColors.darkAccent : GetColors.lightAccent,
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide(
-            color: isDarkTheme
-                ? GetColors.mainColorDark
-                : GetColors.mainColorLight,
-          ),
+          //borderRadius: BorderRadius.circular(25.0),
+          borderSide: BorderSide(color: GetColors.black),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: BorderSide(
             color: isDarkTheme
                 ? GetColors.mainColorDark
