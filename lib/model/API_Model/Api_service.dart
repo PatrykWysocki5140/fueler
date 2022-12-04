@@ -10,6 +10,8 @@ import 'UserPrivilegeLevel.dart';
 
 class ApiService {
   ///////////////////////// http
+  ///
+
   Future<List<User>?> apiService_getUsers(context) async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.usersEndpoint);
@@ -24,6 +26,7 @@ class ApiService {
     return null;
   }
 
+/*
   Future<User?> apiService_login(String login, password) async {
     try {
       http.Response response = await http.post(
@@ -57,7 +60,7 @@ class ApiService {
     }
     return null;
   }
-
+*/
   ///////////////////////// dio
   final Dio _dio = Dio();
 
@@ -84,10 +87,38 @@ class ApiService {
     return response.statusCode == 200 ? User.fromJson(response.data) : null;
   }
 
+  Future<dynamic> apiService_updateUser(Map<String, dynamic>? data) async {
+    /*
+    Response response;
+    try {
+      response = await _dio.post(
+          ApiConstants.baseUrl + ApiConstants.userEndpoint,
+          data: data,
+          queryParameters: {'apikey': ApiConstants.apiKey},
+          options: Options(headers: {}));
+      //return User.fromJson(response.data);
+    } on DioError catch (e) {
+      //return e.response!.data;
+      response = e.response ??
+          Response(
+            requestOptions: RequestOptions(
+                method: "GET",
+                path: ApiConstants.baseUrl + ApiConstants.userEndpoint),
+            statusCode: 400,
+          );
+    }
+    return response.statusCode == 200 ? User.fromJson(response.data) : null;
+    */
+    log(data.toString());
+    User _u = User.fromJson(data!);
+    log("_U " + _u.toJson().toString());
+    return _u;
+  }
+
   // ignore: non_constant_identifier_names
   Future<dynamic> apiService_loginUser(String login, String password) async {
-       log(login + " " + password);
-       Response response;
+    log(login + " " + password);
+    Response response;
     try {
       response = await _dio.post(
         ApiConstants.baseUrl + ApiConstants.userEndpoint,
@@ -131,13 +162,21 @@ class ApiService {
     */
 
     //testy
-    //User _user = new User(id: 1);
     User u = User();
-   // u.SetValues(id,"test1","pass123","123456789",);
-   u.SetValues(id, "test", "pass123", "123456789", "email@wp.pl", DateTime.parse('1969-07-20 20:18:04Z'), true, false, UserPrivilegeLevel.USER);
-    //log("apiService_getUserById: "+u.id.toString()); 
+    u.SetValues(
+        id,
+        "test",
+        "pass123",
+        "123456789",
+        "email@wp.pl",
+        DateTime.parse('1969-07-20 20:18:04Z'),
+        true,
+        false,
+        UserPrivilegeLevel.USER);
+    //log("apiService_getUserById: "+u.id.toString());
     return u;
-  ///
+
+    ///
   }
 
   // ignore: non_constant_identifier_names
