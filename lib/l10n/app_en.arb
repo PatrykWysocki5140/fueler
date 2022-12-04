@@ -48,5 +48,10 @@
     "validText": "Text is too short.",
     "validPhone": "Phone number is not valid.",
     "userCreationError": "User creation has failed.",
-    "hello": "Hello"
+    "hello": "Hello",
+    "newpassword": "New password",
+    "newpasswordrepeat": "Repeat new password",
+    "newemail": "New email",
+    "newphone": "New phone number",
+    "update": "Update"
 }
