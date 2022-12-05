@@ -33,19 +33,13 @@ class Api with ChangeNotifier {
       } else {
         val = 0;
       }
-      dev.log("//API//GetLocalUser// Local UserID:" + val.toString());
+      dev.log("Class-API //GetLocalUser// Local UserID:" +
+          val.toString() +
+          "  prefs.getString(\"UserID\"): " +
+          prefs.getString("UserID").toString());
       user = (await api.apiService_getUserById(int.parse(val.toString())))!;
-      //dev.log("GetLocalUser"+user.id.toString());
       if (user.id != null) SaveLocalUser(user);
-
-      //prefs.getString("UserID");
     });
-/*
-    var _prefs = await SharedPreferences.getInstance();   
-    user =
-        (await api.apiService_getUserById(_prefs.getString("UserID") as int))!;
-    if (user.id != null) SaveLocalUser(user);*/
-    //return user;
   }
 
   // ignore: non_constant_identifier_names
@@ -73,6 +67,15 @@ class Api with ChangeNotifier {
     if (_user?.id != null) SaveLocalUser(_user!);
 
     return _user;
+  }
+
+  Future<bool> LogOut() async {
+    user.Clear();
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString("UserID", "null");
+    });
+    notifyListeners();
+    return true;
   }
 
   Future<User?> RegisterUser(User user) async {

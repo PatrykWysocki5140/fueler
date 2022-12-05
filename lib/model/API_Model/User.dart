@@ -50,22 +50,38 @@ class User {
     userPrivilegeLevel = _userPrivilegeLevel;
   }
 
+  // ignore: non_constant_identifier_names
   void SetNewPassword(
     String _password,
   ) {
     password = _password;
   }
 
+  // ignore: non_constant_identifier_names
   void SetNewEmail(
     String _email,
   ) {
     email = _email;
   }
 
+  // ignore: non_constant_identifier_names
   void SetNewPhoneNumber(
     String _phonenumber,
   ) {
     phoneNumber = _phonenumber;
+  }
+
+  // ignore: non_constant_identifier_names
+  void Clear() {
+    id = null;
+    name = null;
+    password = null;
+    phoneNumber = null;
+    email = null;
+    created = null;
+    isConfirmed = null;
+    isBanned = null;
+    userPrivilegeLevel = null;
   }
 
   factory User.fromJson(dynamic json) {
