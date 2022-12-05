@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fueler/routes/UI/user_screen/widgets/user_data.dart';
+import 'package:fueler/routes/UI/user_screen/widgets/logout_dialog.dart';
 import 'package:fueler/settings/Get_colors.dart';
 
 import 'package:provider/provider.dart';
@@ -368,6 +368,32 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                         ],
                       )),
+                    SizedBox(height: size.height * 0.03),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          //width: double.infinity,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll<Color>(
+                                        GetColors.red)),
+                            onPressed: () => showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const LogOutDialog()),
+                            child: Text(
+                              AppLocalizations.of(context)!.logout,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
