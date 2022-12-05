@@ -162,6 +162,7 @@ class ApiService {
     */
 
     //testy
+    id = 2;
     User u = User();
     u.SetValues(
         id,
@@ -173,6 +174,8 @@ class ApiService {
         true,
         false,
         UserPrivilegeLevel.USER);
+    if (id == 0) u.Clear();
+    //u.Clear();
     //log("apiService_getUserById: "+u.id.toString());
     return u;
 
