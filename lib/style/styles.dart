@@ -115,13 +115,13 @@ class Styles {
         labelStyle: TextStyle(
           color: isDarkTheme ? GetColors.darkMainFont : GetColors.lightMainFont,
         ),
-        suffixIconColor:
-            isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight,
+        suffixIconColor: GetColors.error,
+        // isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight,
         filled: true,
         fillColor: isDarkTheme ? GetColors.darkAccent : GetColors.lightAccent,
         focusedBorder: OutlineInputBorder(
           //borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide(color: GetColors.black),
+          borderSide: BorderSide(width: 3, color: GetColors.warning),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -133,6 +133,7 @@ class Styles {
           ),
         ),
       ),
+
       ////////////////////////////////////////////////////////////////////
       ///
       ///
