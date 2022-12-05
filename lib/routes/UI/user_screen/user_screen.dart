@@ -9,6 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../model/API_Model/User.dart';
 import '../../../model/API_Model/UserPrivilegeLevel.dart';
 import '../../../notifiers/APINotifier.dart';
+import '../../../settings/Get_colors.dart';
 import '../../../settings/validator.dart';
 
 class UserScreen extends StatefulWidget {
@@ -23,6 +24,7 @@ class _UserScreenState extends State<UserScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController newemailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController userPrivilegeLevelController =
@@ -35,7 +37,6 @@ class _UserScreenState extends State<UserScreen> {
   bool _loadUserData = true;
   bool _showPassword = true;
   bool _newPassword = false;
-  bool _newPhone = false;
   bool _newEmail = false;
 
   Future<void> UpdatePassword() async {
@@ -70,6 +71,37 @@ class _UserScreenState extends State<UserScreen> {
     }
   }
 
+  Future<void> UpdateEmail() async {
+    if (_formKey.currentState!.validate()) {
+      User _newUserEmail = Provider.of<Api>(context, listen: false).user;
+      emailController.text = newemailController.text;
+
+      _newUserEmail.SetNewEmail(emailController.text);
+      User? _user = await Provider.of<Api>(context, listen: false)
+          .UpdateUser(_newUserEmail, context);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.procesing),
+        backgroundColor: GetColors.success,
+      ));
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      if (_user?.email == _newUserEmail.email) {
+        _newEmail = false;
+        newemailController.clear();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.success),
+          backgroundColor: GetColors.success,
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.error),
+          backgroundColor: GetColors.error,
+        ));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_loadUserData) {
@@ -77,12 +109,13 @@ class _UserScreenState extends State<UserScreen> {
       phoneNumberController.text =
           Provider.of<Api>(context).user.phoneNumber.toString();
       emailController.text = Provider.of<Api>(context).user.email.toString();
+      newemailController.text = Provider.of<Api>(context).user.email.toString();
       userPrivilegeLevelController.text =
           Provider.of<Api>(context).user.userPrivilegeLevel.toString();
       _loadUserData = !_loadUserData;
+      passwordController.text =
+          Provider.of<Api>(context).user.password.toString();
     }
-    passwordController.text =
-        Provider.of<Api>(context).user.password.toString();
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -118,6 +151,10 @@ class _UserScreenState extends State<UserScreen> {
                     SizedBox(height: size.height * 0.06),
                     Text(AppLocalizations.of(context)!.phonenumber),
                     TextFormField(
+                      showCursor: false,
+                      readOnly: true,
+                      //enableInteractiveSelection: false,
+                      focusNode: FocusNode(),
                       validator: (value) =>
                           Validator.validatePhoneNumber(value ?? "", context),
                       controller: phoneNumberController,
@@ -126,10 +163,21 @@ class _UserScreenState extends State<UserScreen> {
                         hintText: AppLocalizations.of(context)!.phonenumber,
                         isDense: true,
                       ),
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              Text(AppLocalizations.of(context)!.noteditable),
+                          backgroundColor: GetColors.warning,
+                        ));
+                      },
                     ),
                     SizedBox(height: size.height * 0.03),
                     Text("Email"),
                     TextFormField(
+                      showCursor: false,
+                      readOnly: true,
+                      enableInteractiveSelection: false,
+                      focusNode: FocusNode(),
                       validator: (value) =>
                           Validator.validateEmail(value ?? "", context),
                       controller: emailController,
@@ -139,9 +187,15 @@ class _UserScreenState extends State<UserScreen> {
                           onTap: () {
                             setState(() {
                               if (_newEmail) {
-                                emailController.text = "";
+                                //emailController.text = "";
+                                newemailController.text = "";
                               } else {
                                 emailController.text =
+                                    Provider.of<Api>(context, listen: false)
+                                        .user
+                                        .email
+                                        .toString();
+                                newemailController.text =
                                     Provider.of<Api>(context, listen: false)
                                         .user
                                         .email
@@ -151,9 +205,7 @@ class _UserScreenState extends State<UserScreen> {
                             });
                           },
                           child: Icon(
-                            _newEmail
-                                ? Icons.update_disabled_outlined
-                                : Icons.system_update_alt,
+                            _newEmail ? Icons.cancel : Icons.mode_edit_outline,
                           ),
                         ),
                         hintText: "Email",
@@ -163,16 +215,55 @@ class _UserScreenState extends State<UserScreen> {
                     if (_newEmail)
                       Container(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: size.height * 0.01),
+                            Text(AppLocalizations.of(context)!.newemail),
                             TextFormField(
-                              obscureText: _newEmail,
+                              //obscureText: _newEmail,
                               validator: (value) =>
                                   Validator.validateEmail(value ?? "", context),
-                              controller: emailController,
+                              controller: newemailController,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
+                                hintText:
+                                    AppLocalizations.of(context)!.newemail,
                                 isDense: true,
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.01),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStatePropertyAll<Color>(
+                                            (emailController.text !=
+                                                    newemailController.text)
+                                                ? GetColors.red
+                                                : GetColors.gray)),
+                                onPressed: () {
+                                  if (emailController.text !=
+                                      newemailController.text) {
+                                    UpdateEmail();
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                AppLocalizations.of(context)!
+                                                    .setnewemail),
+                                            backgroundColor:
+                                                GetColors.warning));
+                                  }
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.updateEmail,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -181,6 +272,8 @@ class _UserScreenState extends State<UserScreen> {
                     SizedBox(height: size.height * 0.03),
                     Text(AppLocalizations.of(context)!.password),
                     TextFormField(
+                      showCursor: false,
+                      readOnly: true,
                       enableInteractiveSelection: false,
                       focusNode: FocusNode(),
                       obscureText: _showPassword,
@@ -198,9 +291,9 @@ class _UserScreenState extends State<UserScreen> {
                             });
                           },
                           child: Icon(
-                            _showPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                            !_showPassword
+                                ? Icons.cancel
+                                : Icons.mode_edit_outline,
                           ),
                         ),
                         isDense: true,
@@ -242,9 +335,30 @@ class _UserScreenState extends State<UserScreen> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: UpdatePassword,
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll<Color>(
+                                          (firstpasswordController
+                                                      .text.isNotEmpty &&
+                                                  secondpasswordController
+                                                      .text.isNotEmpty)
+                                              ? GetColors.red
+                                              : GetColors.gray)),
+                              onPressed: () {
+                                if (firstpasswordController.text.isNotEmpty &&
+                                    secondpasswordController.text.isNotEmpty) {
+                                  UpdatePassword();
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              AppLocalizations.of(context)!
+                                                  .setnewpassword),
+                                          backgroundColor: GetColors.warning));
+                                }
+                              },
                               child: Text(
-                                AppLocalizations.of(context)!.updateStation,
+                                AppLocalizations.of(context)!.updatePassword,
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
