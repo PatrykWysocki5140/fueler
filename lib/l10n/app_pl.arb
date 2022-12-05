@@ -59,5 +59,11 @@
     "updatePassword": "Aktualizuj hasło",
     "updateEmail": "Aktualizuj email",
     "logout": "Wyloguj",
-    "noteditable": "Nie można edytować tego pola"  
+    "noteditable": "Nie można edytować tego pola",
+    "alertdialogtitlewarning": "Uwaga",
+    "alertdialogtitlemessage": "Komunikat",
+    "alertdialogtitleerror": "Błąd",
+    "alertdialogdescriptionlogout": "Czy na pewno chcesz wylogować użytkownika?",
+    "cancel": "Anuluj",
+    "ok": "Ok"
 }
