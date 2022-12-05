@@ -110,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    //   SizedBox(height: size.height * 0.08),
+                    SizedBox(height: size.height * 0.08),
                     Center(
                       child: Text(
                         AppLocalizations.of(context)!.register,
@@ -121,7 +121,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     SizedBox(height: size.height * 0.05),
-
                     SizedBox(height: size.height * 0.03),
                     TextFormField(
                       validator: (value) =>
@@ -234,7 +233,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       width: double.infinity,
                       child: TextButton(
