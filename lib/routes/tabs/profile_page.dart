@@ -62,11 +62,10 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
   @override
   Widget build(BuildContext context) {
     Provider.of<Api>(context).GetLocalUser();
-    log("////  user password:" +
-        Provider.of<Api>(context).user.password.toString());
     /*
       log("//profile_page//  user id:" + Provider.of<Api>(context).user.id.toString());
       log("////  user name:" + Provider.of<Api>(context).user.name.toString());
+      log("////  user password:" +Provider.of<Api>(context).user.password.toString());
       log("////  user email:" + Provider.of<Api>(context).user.email.toString());
       log("////  user phoneNumber:" + Provider.of<Api>(context).user.phoneNumber.toString());
       log("////  user userPrivilegeLevel:" + Provider.of<Api>(context).user.userPrivilegeLevel.toString());*/
