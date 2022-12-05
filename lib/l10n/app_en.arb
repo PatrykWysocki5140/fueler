@@ -51,7 +51,13 @@
     "hello": "Hello",
     "newpassword": "New password",
     "newpasswordrepeat": "Repeat new password",
+    "setnewpassword": "Set new password",
     "newemail": "New email",
+    "setnewemail": "Set new email",
     "newphone": "New phone number",
-    "update": "Update"
+    "update": "Update",
+    "updatePassword": "Update Password",
+    "updateEmail": "Update Email",
+    "logout": "Logout",
+    "noteditable": "Cannot edit field"  
 }

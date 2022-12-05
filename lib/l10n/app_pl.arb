@@ -51,7 +51,13 @@
     "hello": "Cześć",
     "newpassword": "Nowe hasło",
     "newpasswordrepeat": "Powtórz nowe hasło",
+    "setnewpassword": "Wpisz nowe hasło",
     "newemail": "Nowy email",
+    "setnewemail": "Wpisz nowy email",
     "newphone": "Nowy numer telefonu",
-    "update": "Aktualizuj"
+    "update": "Aktualizuj",
+    "updatePassword": "Aktualizuj hasło",
+    "updateEmail": "Aktualizuj email",
+    "logout": "Wyloguj",
+    "noteditable": "Nie można edytować tego pola"  
 }
