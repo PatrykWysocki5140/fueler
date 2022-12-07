@@ -68,6 +68,8 @@ class MyApp extends StatelessWidget {
                               //const SplashScreen("/main");
                               //Parentcontext = context;
                               //setContext(context);
+                              Provider.of<Api>(context).GetLocalUser();
+
                               return MaterialApp(
                                 title: 'Fueler',
                                 onGenerateRoute: routes,
