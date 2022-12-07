@@ -162,7 +162,7 @@ class ApiService {
     */
 
     //testy
-    id = 2;
+    //id = 2;
     User u = User();
     u.SetValues(
         id,
@@ -233,4 +233,48 @@ class ApiService {
       return e.response!.data;
     }
   }
+
+//////////////////////////////////////////////////////////////////////////// new
+  ///
+  Future<dynamic> getUserToken(String login, String password) async {
+    log("Class: ApiService //apiLoginUser//: " + login + " " + password);
+    Response response;
+    try {
+      response = await _dio.get(
+        ApiConstants.baseUrl +
+            ApiConstants.userEndpoint +
+            ApiConstants.userlogin,
+        queryParameters: {'name': login, 'password': password},
+      );
+    } on DioError catch (e) {
+      response = e.response ??
+          Response(
+            requestOptions: RequestOptions(
+                method: "GET",
+                path: ApiConstants.baseUrl + ApiConstants.userEndpoint),
+            statusCode: 400,
+          );
+    }
+    return response.statusCode == 200 ? response.data : null;
+  }
+
+  Future<dynamic> getLoginUserData(String accessToken) async {
+    Response response;
+    try {
+      response = await _dio.get(
+        ApiConstants.baseUrl + ApiConstants.userEndpoint + ApiConstants.me,
+        queryParameters: {'apikey': ApiConstants.apiKey},
+        options: Options(
+          headers: {'Authorization': 'Bearer $accessToken'},
+        ),
+      );
+      //return response.data;
+    } on DioError catch (e) {
+      response = e.response!.data;
+    }
+    return response.statusCode == 200 ? User.fromJson(response.data) : null;
+  }
 }
+/*
+"{"userName": "Dawid", "phoneNumber": "1234567890", "email": "test@test.com", "isConfirmed": "false", "isBanned": "false", "userPrivilegeLevel": "USER"}"
+*/
