@@ -127,6 +127,31 @@ class SettingsPage extends StatelessWidget with AppBarNotifier {
                     ),
                   )
                 ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    // width: GetSize.floatingActionButtonWidth,
+                    child: FloatingActionButton.extended(
+                      label: Text(AppLocalizations.of(context)!.resetcache,
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
+                      tooltip: AppLocalizations.of(context)!.resetcache,
+                      onPressed: () {
+                        Provider.of<Api>(context, listen: false)
+                            .DeleteAllPreferences();
+                      },
+                      icon: const Icon(
+                        Icons.restart_alt,
+                        size: 15,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  )
+                ],
               )
             ],
           ),
