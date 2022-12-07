@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:bart/bart.dart';
+import 'package:fueler/model/API_Model/UserPrivilegeLevel.dart';
 import 'package:fueler/notifiers/APINotifier.dart';
+import 'package:fueler/routes/UI/admin_screen/admin_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../UI/login_screen/login_screen.dart';
@@ -30,7 +32,6 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
   @override
   void initState() {
     super.initState();
-
     updateAppBar(
       context,
       AppBar(
@@ -61,18 +62,49 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Api>(context).GetLocalUser();
-    /*
-      log("//profile_page//  user id:" + Provider.of<Api>(context).user.id.toString());
-      log("////  user name:" + Provider.of<Api>(context).user.name.toString());
-      log("////  user password:" +Provider.of<Api>(context).user.password.toString());
-      log("////  user email:" + Provider.of<Api>(context).user.email.toString());
-      log("////  user phoneNumber:" + Provider.of<Api>(context).user.phoneNumber.toString());
-      log("////  user userPrivilegeLevel:" + Provider.of<Api>(context).user.userPrivilegeLevel.toString());*/
+    // Provider.of<Api>(context).GetLocalUser();
+
+    log("//profile_page//  user id:" +
+        Provider.of<Api>(context).user.id.toString() +
+        "\n////  user name:" +
+        Provider.of<Api>(context).user.name.toString() +
+        "\n////  user password:" +
+        Provider.of<Api>(context).user.password.toString() +
+        "\n////  user email:" +
+        Provider.of<Api>(context).user.email.toString() +
+        "\n////  user phoneNumber:" +
+        Provider.of<Api>(context).user.phoneNumber.toString() +
+        "\n////  user userPrivilegeLevel:" +
+        Provider.of<Api>(context).user.userPrivilegeLevel.toString());
     if (Provider.of<Api>(context).user.id == null) {
       return const RegisterScreen();
     } else {
-      return const UserScreen();
+      if ((Provider.of<Api>(context).user.userPrivilegeLevel ==
+              UserPrivilegeLevel.VERIFIED_USER) ||
+          (Provider.of<Api>(context).user.userPrivilegeLevel ==
+              UserPrivilegeLevel.USER)) {
+        return const UserScreen();
+      } else if (Provider.of<Api>(context).user.userPrivilegeLevel ==
+          UserPrivilegeLevel.ADMINISTRATOR) {
+        //return const AdminScreen();
+        return const Scaffold(
+          body: Center(
+            child: Text(
+              'Admin',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      } else {
+        return const Scaffold(
+          body: Center(
+            child: Text(
+              'User error undefined',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
     }
 
     //return const Text("profile page");
