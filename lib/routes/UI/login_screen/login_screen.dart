@@ -20,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController numberController = TextEditingController();
+  final TextEditingController loginController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   //final ApiClient _apiClient = Provider.of<Api>(context, listen: true);
   bool _showPassword = true;
@@ -33,18 +33,18 @@ class _LoginScreenState extends State<LoginScreen> {
       ));
 
       User? _user = await Provider.of<Api>(context, listen: false)
-          .LogIn(numberController.text, passwordController.text);
+          .login(loginController.text, passwordController.text);
+      //.LogIn(numberController.text, passwordController.text);
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       // ignore: unnecessary_null_comparison
       if (_user != null) {
         //Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
-        Navigator.of(context).pushNamed("/home/inner");
+        Navigator.of(context).pushNamed("/profile");
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-              Text('${AppLocalizations.of(context)!.error}'),
+          content: Text('${AppLocalizations.of(context)!.error}'),
           backgroundColor: GetColors.error, //Colors.red.shade300,
         ));
       }
@@ -53,6 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    loginController.text = "Adam";
+    passwordController.text = "TEST";
     var size = MediaQuery.of(context).size;
     return Scaffold(
       //backgroundColor: Colors.blueGrey[200],
@@ -88,11 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: size.height * 0.03),
                     TextFormField(
                       validator: (value) =>
-                          Validator.validatePhoneNumber(value ?? "", context),
-                      controller: numberController,
-                      keyboardType: TextInputType.phone,
+                          Validator.validateName(value ?? "", context),
+                      controller: loginController,
+                      keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.phonenumber,
+                        hintText: AppLocalizations.of(context)!.username,
                         isDense: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
