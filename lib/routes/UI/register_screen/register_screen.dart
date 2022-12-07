@@ -128,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: nameController,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.account,
+                        hintText: AppLocalizations.of(context)!.username,
                         isDense: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
