@@ -34,7 +34,8 @@ class Validator {
   }
 
   static String? validatePassword(String value, BuildContext context) {
-    Pattern pattern = r'^.{6,}$';
+    //Pattern pattern = r'^.{6,}$';
+    Pattern pattern = r'^.{4,}$';
     RegExp regex = RegExp(pattern as String);
     if (!regex.hasMatch(value)) {
       return '🚩 ${AppLocalizations.of(context)!.validPassLeng}.';
