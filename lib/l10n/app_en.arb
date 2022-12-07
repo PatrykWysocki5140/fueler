@@ -65,5 +65,6 @@
     "alertdialogtitleerror": "Error",
     "alertdialogdescriptionlogout": "Are you sure to log out ?",
     "cancel": "Cancel",
-    "ok": "Ok"
+    "ok": "Ok",
+    "resetcache": "Reset stored data"
 }
