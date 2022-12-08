@@ -5,11 +5,23 @@ import 'package:fueler/model/API_Model/MyJson.dart';
 import "UserPrivilegeLevel.dart";
 import 'dart:convert';
 
+MyJson myjson = MyJson();
+/*
 List<User> userModelFromJson(String str) =>
     List<User>.from(json.decode(str)((x) => User.fromJson(x)));
+*/
 
 String userModelToJson(List<User> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+List<User> userModelFromJson(String str) {
+  String _json = myjson.JsonDecoder(str);
+  _json = myjson.JsonDecoderList(_json);
+  List<dynamic> parsedListJson = jsonDecode(_json) as List;
+  List<User> itemsList = List<User>.from(
+      parsedListJson.map<User>((dynamic i) => User.fromJsonList(i)));
+  return itemsList;
+}
 
 class User {
   User({
@@ -75,6 +87,12 @@ class User {
     phoneNumber = _phonenumber;
   }
 
+  void SetNewName(
+    String _name,
+  ) {
+    name = _name;
+  }
+
   // ignore: non_constant_identifier_names
   void Clear() {
     id = null;
@@ -89,33 +107,22 @@ class User {
   }
 
   factory User.fromJson(dynamic myJSON) {
-    //const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    //String result = encoder.convert(myJSON);
-    MyJson _json = MyJson();
-    String result = _json.JsonDecoder(myJSON);
-    log("JsonEncoder:" + result.toString());
+    //String xyz = myjson.JsonDecoder(myJSON);
+    User _user = User();
+
+    String result = myjson.JsonDecoder(myJSON);
     //result ="{\"userName\": \"Dawid\", \"phoneNumber\": \"1234567890\", \"email\": \"test@test.com\", \"isConfirmed\": \"false\", \"isBanned\": \"false\", \"userPrivilegeLevel\": \"USER\"}";
+    log("JsonEncoder:" + result.toString());
     final jsondecode = json.decode(result.toString());
     log("User.fromJson:" + json.toString());
     log("json[userPrivilegeLevel].toString():" +
         jsondecode['userPrivilegeLevel'].toString());
-    UserPrivilegeLevel _up = UserPrivilegeLevel.USER;
-    if (jsondecode['userPrivilegeLevel'].toString() ==
-        "UserPrivilegeLevel.ADMINISTRATOR") {
-      _up = UserPrivilegeLevel.ADMINISTRATOR;
-    } else if (jsondecode['userPrivilegeLevel'].toString() ==
-        "UserPrivilegeLevel.VERIFIED_USER") {
-      _up = UserPrivilegeLevel.VERIFIED_USER;
-    } else if (jsondecode['userPrivilegeLevel'].toString() ==
-        "UserPrivilegeLevel.USER") {
-      _up = UserPrivilegeLevel.USER;
-    } else {
-      _up = UserPrivilegeLevel.UNDEFINED;
-    }
+
+    UserPrivilegeLevel _up = _user
+        .getUserPrivilegeLevel(jsondecode['userPrivilegeLevel'].toString());
 
     int _id = int.parse(jsondecode["id"] ?? 1.toString());
 
-    User _user = User();
     _user.SetValues(
         _id,
         jsondecode["userName"] ?? jsondecode["name"],
@@ -133,32 +140,30 @@ class User {
     return _user;
   }
 
-  /*
-  factory User.fromJson(dynamic json) {
-    log("User.fromJson:" +  json);
-    UserPrivilegeLevel _up;
-    if (json["userPrivilegeLevel"] == "ADMINISTRATOR") {
-      _up = UserPrivilegeLevel.ADMINISTRATOR;
-    } else if (json["userPrivilegeLevel"] == "VERIFIED_USER") {
-      _up = UserPrivilegeLevel.VERIFIED_USER;
-    } else {
-      _up = UserPrivilegeLevel.USER;
-    }
-
+  factory User.fromJsonList(dynamic data) {
+    Map<String, dynamic> json = Map<String, dynamic>.from(data);
     User _user = User();
+
+    UserPrivilegeLevel _up =
+        _user.getUserPrivilegeLevel(json['userPrivilegeLevel'].toString());
+
+    int _id = int.parse(json["id"] ?? 1.toString());
+
     _user.SetValues(
-        json["id"],
-        json["userName"],
-        json["password"],
+        _id,
+        json["userName"] ?? json["name"],
+        json["password"] ?? "yourpassword123",
         json["phoneNumber"],
         json["email"],
-        json["created"],
-        json["isConfirmed"],
-        json["isBanned"],
+        json["created"] == "null"
+            ? DateTime.parse('1969-07-20 20:18:04Z')
+            : json["created"],
+        json["isConfirmed"] == "false" ? false : true,
+        json["isBanned"] == "false" ? false : true,
         _up);
     return _user;
   }
-*/
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
@@ -172,4 +177,20 @@ class User {
       };
 
   setVal(int _id) => {this.id = _id};
+
+  UserPrivilegeLevel getUserPrivilegeLevel(String up) {
+    UserPrivilegeLevel _up = UserPrivilegeLevel.USER;
+    if ((up == "ADMINISTRATOR") || (up == "UserPrivilegeLevel.ADMINISTRATOR")) {
+      _up = UserPrivilegeLevel.ADMINISTRATOR;
+    } else if ((up == "VERIFIED_USER") ||
+        (up == "UserPrivilegeLevel.VERIFIED_USER")) {
+      _up = UserPrivilegeLevel.VERIFIED_USER;
+    } else if ((up == "USER") || (up == "UserPrivilegeLevel.USER")) {
+      _up = UserPrivilegeLevel.USER;
+    } else {
+      _up = UserPrivilegeLevel.UNDEFINED;
+    }
+
+    return _up;
+  }
 }
