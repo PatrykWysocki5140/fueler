@@ -13,6 +13,7 @@ class ApiService {
   ///
 
   Future<List<User>?> apiService_getUsers(context) async {
+    /*
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.usersEndpoint);
       var response = await http.get(url);
@@ -23,7 +24,7 @@ class ApiService {
     } catch (e) {
       log(e.toString());
     }
-    return null;
+    return null;*/
   }
 
 /*
