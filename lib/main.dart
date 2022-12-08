@@ -114,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 */
 Route<dynamic> routes(RouteSettings settings) {
+  log("routes" + settings.name.toString());
   switch (settings.name) {
     case '/':
       return MaterialPageRoute(
