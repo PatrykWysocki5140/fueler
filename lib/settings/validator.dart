@@ -61,10 +61,10 @@ class Validator {
   }
 
   static String? validatePhoneNumber(String value, BuildContext context) {
-    if (value.length != 9) {
+    /* if (value.length != 9) {
       return '🚩 ${AppLocalizations.of(context)!.validPhone}';
     } else {
       return null;
-    }
+    }*/
   }
 }
