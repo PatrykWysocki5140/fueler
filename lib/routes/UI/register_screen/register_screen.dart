@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fueler/settings/Get_colors.dart';
@@ -37,10 +38,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.procesing),
-        backgroundColor: GetColors.success, //Colors.green.shade300,
+        backgroundColor: GetColors.warning, //Colors.green.shade300,
       ));
-
+      Response? _response = await Provider.of<Api>(context, listen: false)
+          .registerUser(nameController.text, phoneController.text,
+              emailController.text, firstpasswordController.text);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      if (_response?.statusCode == 204) {
+        //Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context)!.success}'),
+          backgroundColor: GetColors.success, //Colors.red.shade300,
+        ));
+        Navigator.of(context).pushNamed("/profile");
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context)!.error}'),
+          backgroundColor: GetColors.error, //Colors.red.shade300,
+        ));
+      }
 /*
       Map<String, dynamic> userData = {
         "Email": [
@@ -56,7 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "FullName": "Test Account",
         "BirthDate": "10-12-1985",
         "Gender": "M",
-      };*/
+      };
 
       User user = User(
         id: 0,
@@ -84,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               '${AppLocalizations.of(context)!.error}: ${AppLocalizations.of(context)!.userCreationError}'),
           backgroundColor: GetColors.error, //Colors.red.shade300,
         ));
-      }
+      }*/
     }
   }
 
