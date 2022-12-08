@@ -52,6 +52,7 @@
     "newpassword": "New password",
     "newpasswordrepeat": "Repeat new password",
     "setnewpassword": "Set new password",
+    "setcurrentpassword": "Set current password",
     "newemail": "New email",
     "setnewemail": "Set new email",
     "newphone": "New phone number",
@@ -64,7 +65,11 @@
     "alertdialogtitlemessage": "Message",
     "alertdialogtitleerror": "Error",
     "alertdialogdescriptionlogout": "Are you sure to log out ?",
+    "alertdialogdescriptiondeleteuser": "Are you sure to delete user ?",
     "cancel": "Cancel",
     "ok": "Ok",
-    "resetcache": "Reset stored data"
+    "resetcache": "Reset stored data",
+    "currentpassword": "Current password",
+    "deleteaccount": "Delete account",
+    "deleteaccountfinish": "Account has been deleted"
 }

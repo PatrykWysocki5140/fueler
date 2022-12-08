@@ -52,6 +52,7 @@
     "newpassword": "Nowe hasło",
     "newpasswordrepeat": "Powtórz nowe hasło",
     "setnewpassword": "Wpisz nowe hasło",
+    "setcurrentpassword": "Wpisz obecne hasło",
     "newemail": "Nowy email",
     "setnewemail": "Wpisz nowy email",
     "newphone": "Nowy numer telefonu",
@@ -64,7 +65,11 @@
     "alertdialogtitlemessage": "Komunikat",
     "alertdialogtitleerror": "Błąd",
     "alertdialogdescriptionlogout": "Czy na pewno chcesz wylogować użytkownika?",
+    "alertdialogdescriptiondeleteuser": "Czy na pewno chcesz usunąć użytkownika?",  
     "cancel": "Anuluj",
     "ok": "Ok",
-    "resetcache": "Resetuj zapisane ustawienia"
+    "resetcache": "Resetuj zapisane ustawienia",
+    "currentpassword": "Obecne hasło",
+    "deleteaccount": "Usuń konto",
+    "deleteaccountfinish": "Konto zostało usunięte"
 }
