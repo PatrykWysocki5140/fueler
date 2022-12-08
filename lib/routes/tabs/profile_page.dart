@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:bart/bart.dart';
 import 'package:fueler/model/API_Model/UserPrivilegeLevel.dart';
 import 'package:fueler/notifiers/APINotifier.dart';
-import 'package:fueler/routes/UI/admin_screen/admin_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../UI/login_screen/login_screen.dart';
 import '../UI/register_screen/register_screen.dart';
+import '../UI/user_admin_screen/user_admin_screen.dart';
 import '../UI/user_screen/user_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -36,21 +36,23 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
       context,
       AppBar(
         title: const Text('Flueler'),
-        leading: FloatingActionButton(
-          heroTag: "/inner",
+        leading: GestureDetector(
+          //FloatingActionButton
+          //heroTag: "/inner",
           child: const Icon(Icons.refresh),
-          onPressed: () {
+          onTap: () {
+            //onPressed
             // Navigator.of(parentContext).pushNamed("/parent");
-            Navigator.of(context).pushNamed("/profile/inner");
+            Navigator.of(context).pushNamed("/");
           },
         ),
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
-              child: FloatingActionButton(
-                heroTag: "/settingsss",
+              child: GestureDetector(
+                //heroTag: "/settingsss",
                 child: const Icon(Icons.refresh),
-                onPressed: () {
+                onTap: () {
                   Navigator.of(context).pushNamed("/profile/inner");
                 },
               )),
@@ -62,7 +64,7 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
-    // Provider.of<Api>(context).GetLocalUser();
+    //Provider.of<Api>(context).GetLocalUser();
 
     log("//profile_page//  user id:" +
         Provider.of<Api>(context).user.id.toString() +
@@ -75,7 +77,9 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
         "\n////  user phoneNumber:" +
         Provider.of<Api>(context).user.phoneNumber.toString() +
         "\n////  user userPrivilegeLevel:" +
-        Provider.of<Api>(context).user.userPrivilegeLevel.toString());
+        Provider.of<Api>(context).user.userPrivilegeLevel.toString() +
+        "\n////  user token:" +
+        Provider.of<Api>(context).token);
     if (Provider.of<Api>(context).user.id == null) {
       return const RegisterScreen();
     } else {
@@ -83,18 +87,18 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
               UserPrivilegeLevel.VERIFIED_USER) ||
           (Provider.of<Api>(context).user.userPrivilegeLevel ==
               UserPrivilegeLevel.USER)) {
-        return const UserScreen();
+        return UserScreen();
       } else if (Provider.of<Api>(context).user.userPrivilegeLevel ==
           UserPrivilegeLevel.ADMINISTRATOR) {
-        //return const AdminScreen();
+        Provider.of<Api>(context).getAllUsers();
+        return const AdminScreen(); /*
         return const Scaffold(
           body: Center(
             child: Text(
               'Admin',
               textAlign: TextAlign.center,
             ),
-          ),
-        );
+          ),);*/
       } else {
         return const Scaffold(
           body: Center(
