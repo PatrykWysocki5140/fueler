@@ -29,8 +29,7 @@ class LogOutDialog extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStatePropertyAll<Color>(GetColors.success)),
-                    onPressed: () => Navigator.pop(
-                        context, AppLocalizations.of(context)!.cancel),
+                    onPressed: () => Navigator.pop(context, false),
                     child: Text(AppLocalizations.of(context)!.cancel),
                   ),
                 ],
@@ -49,7 +48,12 @@ class LogOutDialog extends StatelessWidget {
                             MaterialStatePropertyAll<Color>(GetColors.red)),
                     onPressed: () => {
                       Provider.of<Api>(context, listen: false).LogOut(),
-                      Navigator.pop(context, AppLocalizations.of(context)!.ok)
+
+                      // Navigator.of(context).pushNamed("/profile/inner")
+                      //Navigator.of(context).pushNamed("/logout")
+                      Navigator.pop(context, true),
+                      // Navigator.of(context).pushNamed("/profile/inner")
+                      //Navigator.of(context).pushNamed("/main")
                     },
                     child: Text(AppLocalizations.of(context)!.ok),
                   ),
