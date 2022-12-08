@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/settings/Get_colors.dart';
 
@@ -29,18 +31,22 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.procesing),
-        backgroundColor: GetColors.success, //Colors.green.shade300,
+        backgroundColor: GetColors.warning, //Colors.green.shade300,
       ));
 
-      User? _user = await Provider.of<Api>(context, listen: false)
+      Response? _response = await Provider.of<Api>(context, listen: false)
           .login(loginController.text, passwordController.text);
       //.LogIn(numberController.text, passwordController.text);
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       // ignore: unnecessary_null_comparison
-      if (_user != null) {
+      if (_response?.statusCode == 200) {
         //Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context)!.success}'),
+          backgroundColor: GetColors.success, //Colors.red.shade300,
+        ));
         Navigator.of(context).pushNamed("/profile");
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
