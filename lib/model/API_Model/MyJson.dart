@@ -1,10 +1,17 @@
+// ignore: file_names
 class MyJson {
   // ignore: non_constant_identifier_names
-  String JsonDecoder(json) {
+  String JsonDecoder(String json) {
     json = json.replaceAll('{', '{"');
     json = json.replaceAll(': ', '": "');
     json = json.replaceAll(', ', '", "');
     json = json.replaceAll('}', '"}');
+    return json;
+  }
+
+  // ignore: non_constant_identifier_names
+  String JsonDecoderList(String json) {
+    json = json.replaceAll('"}", "{"', '"}, {"');
     return json;
   }
 }
