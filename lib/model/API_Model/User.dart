@@ -161,6 +161,7 @@ class User {
         json["isConfirmed"] == "false" ? false : true,
         json["isBanned"] == "false" ? false : true,
         _up);
+    log("User from JSON: ${_user.id} ${_user.name} ${_user.email} ${_user.phoneNumber}");
     return _user;
   }
 
@@ -192,5 +193,21 @@ class User {
     }
 
     return _up;
+  }
+
+  void setUserPrivilegeLevel(String up) {
+    UserPrivilegeLevel _up = UserPrivilegeLevel.USER;
+    if ((up == "ADMINISTRATOR") || (up == "UserPrivilegeLevel.ADMINISTRATOR")) {
+      _up = UserPrivilegeLevel.ADMINISTRATOR;
+    } else if ((up == "VERIFIED_USER") ||
+        (up == "UserPrivilegeLevel.VERIFIED_USER")) {
+      _up = UserPrivilegeLevel.VERIFIED_USER;
+    } else if ((up == "USER") || (up == "UserPrivilegeLevel.USER")) {
+      _up = UserPrivilegeLevel.USER;
+    } else {
+      _up = UserPrivilegeLevel.UNDEFINED;
+    }
+
+    userPrivilegeLevel = _up;
   }
 }
