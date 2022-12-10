@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fueler/model/API_Model/User.dart';
+import 'package:fueler/model/API_Model/UserPrivilegeLevel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,6 +41,62 @@ class Api with ChangeNotifier {
       token = _token!;
       log("SharedPreferences save user: " + jsonString + " token: " + token);
       user = User.fromJson(jsonString);
+      if (user.userPrivilegeLevel == UserPrivilegeLevel.ADMINISTRATOR) {
+        await getAllUsers();
+        /*
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);
+        users.add(user);*/
+      }
     }
   }
 
@@ -91,7 +148,9 @@ class Api with ChangeNotifier {
       // Wyświetl odpowiedź
       log("status:" + response.statusCode.toString());
       if (response.statusCode == 204) {
-        await login(_name, _password);
+        if (user.userPrivilegeLevel != UserPrivilegeLevel.ADMINISTRATOR) {
+          await login(_name, _password);
+        }
         dio.close();
         return await response;
       }
