@@ -58,6 +58,7 @@
     "newphone": "Nowy numer telefonu",
     "update": "Aktualizuj",
     "updatePassword": "Aktualizuj hasło",
+    "updatePasswordError": "Błąd edycji hasła",
     "updateEmail": "Aktualizuj email",
     "logout": "Wyloguj",
     "noteditable": "Nie można edytować tego pola",
@@ -71,5 +72,19 @@
     "resetcache": "Resetuj zapisane ustawienia",
     "currentpassword": "Obecne hasło",
     "deleteaccount": "Usuń konto",
-    "deleteaccountfinish": "Konto zostało usunięte"
+    "deleteaccountfinish": "Konto zostało usunięte",
+    "confirmuser": "Zatwierdź użytkownika",
+    "confirmuserinto": "Użytkownik potwierdzony",
+    "banusertrue": "Użytkownik zbanowany",
+    "banuserfalse": "Użytkownik aktywny",
+    "banusertrueinfo": "Zbanuj użytkownika",
+    "banuserfalseinfo": "Aktywuj użytkownika",
+    "setadmin": "Ustaw Administratorem",
+    "meprofile": "Mój profil",
+    "adminpanel": "Panel administratora",
+    "searchtoedit": "Wybierz użytkownika aby edytować jego profil",
+    "createnewuser": "Stwórz nowego użytkownika",
+    "create": "Stwórz",
+    "ifuserslistisemptyerror": "Wystąpił błąd z ładowaniem listy użytkowników, spróbuj odświeżyć stronę",
+    "search": "Szukaj"
 }

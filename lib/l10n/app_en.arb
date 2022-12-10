@@ -58,6 +58,7 @@
     "newphone": "New phone number",
     "update": "Update",
     "updatePassword": "Update Password",
+    "updatePasswordError": "Error Update Password",
     "updateEmail": "Update Email",
     "logout": "Logout",
     "noteditable": "Cannot edit field",
@@ -71,5 +72,19 @@
     "resetcache": "Reset stored data",
     "currentpassword": "Current password",
     "deleteaccount": "Delete account",
-    "deleteaccountfinish": "Account has been deleted"
+    "deleteaccountfinish": "Account has been deleted",
+    "confirmuser": "Confirm user",
+    "confirmuserinto": "User is Confirmed",
+    "banusertrue": "User is banned",
+    "banuserfalse": "User is active",
+    "banusertrueinfo": "Ban user",
+    "banuserfalseinfo": "Activate user",
+    "setadmin": "Set Admin",
+    "meprofile": "My profile",
+    "adminpanel": "Admin panel",
+    "searchtoedit": "Select a user to edit his profile",
+    "createnewuser": "Create new user",
+    "create": "Create",
+    "ifuserslistisemptyerror": "There was an error with loading the user list, try refreshing the page",
+    "search": "Search"
 }
