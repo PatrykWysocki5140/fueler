@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:bart/bart.dart';
 import 'package:fueler/model/API_Model/UserPrivilegeLevel.dart';
 import 'package:fueler/notifiers/APINotifier.dart';
+import 'package:fueler/routes/UI/user_admin_screen/admin_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../UI/login_screen/login_screen.dart';
 import '../UI/register_screen/register_screen.dart';
-import '../UI/user_admin_screen/user_admin_screen.dart';
+
 import '../UI/user_screen/user_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -90,7 +91,6 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
         return UserScreen();
       } else if (Provider.of<Api>(context).user.userPrivilegeLevel ==
           UserPrivilegeLevel.ADMINISTRATOR) {
-        Provider.of<Api>(context).getAllUsers();
         return const AdminScreen(); /*
         return const Scaffold(
           body: Center(

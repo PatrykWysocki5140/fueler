@@ -59,8 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    loginController.text = "Adam";
-    passwordController.text = "TEST";
+    //loginController.text = "Adam";
+    //passwordController.text = "TEST";
     var size = MediaQuery.of(context).size;
     return Scaffold(
       //backgroundColor: Colors.blueGrey[200],

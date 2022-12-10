@@ -58,50 +58,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           backgroundColor: GetColors.error, //Colors.red.shade300,
         ));
       }
-/*
-      Map<String, dynamic> userData = {
-        "Email": [
-          {
-            "Type": "Primary",
-            "Value": emailController.text,
-          }
-        ],
-        "Password": passwordController.text,
-        "About": 'I am a new user :smile:',
-        "FirstName": "Test",
-        "LastName": "Account",
-        "FullName": "Test Account",
-        "BirthDate": "10-12-1985",
-        "Gender": "M",
-      };
-
-      User user = User(
-        id: 0,
-        name: "name",
-        password: firstpasswordController.text,
-        phoneNumber: "phoneNumber",
-        email: emailController.text,
-        created: null,
-        isConfirmed: null,
-        isBanned: null,
-        userPrivilegeLevel: UserPrivilegeLevel.USER,
-      );
-
-      User? _user =
-          await Provider.of<Api>(context, listen: false).RegisterUser(user);
-      //_apiClient.registerUser(userData);
-
-      // ignore: unnecessary_null_comparison
-      if (_user != null) {
-        //Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
-        Navigator.of(context).pushNamed("/home/inner");
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              '${AppLocalizations.of(context)!.error}: ${AppLocalizations.of(context)!.userCreationError}'),
-          backgroundColor: GetColors.error, //Colors.red.shade300,
-        ));
-      }*/
     }
   }
 
