@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:fueler/settings/Get_colors.dart';
 
@@ -25,10 +27,68 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
-  bool _showPassword = false;
+  final bool _showPassword = true;
   //String _searchString = "";
-  TextEditingController _searchString = TextEditingController();
+  final TextEditingController _searchString = TextEditingController();
   List<User> objects = List.empty(growable: true);
+
+  Future<bool> showResponse(Response _response) async {
+    if (_response.statusCode == 204) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.success),
+        backgroundColor: GetColors.success,
+      ));
+      return true;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.error),
+        backgroundColor: GetColors.error,
+      ));
+      return false;
+    }
+  }
+
+  Future<bool> setAdminUser(User _u) async {
+    _u.setUserPrivilegeLevel("ADMINISTRATOR");
+    Response? _response =
+        await Provider.of<Api>(context, listen: false).updateUserById(_u);
+    return showResponse(_response!);
+  }
+
+  Future<bool> confirmUsers(User _u) async {
+    _u.SetConfirm(true);
+    Response? _response =
+        await Provider.of<Api>(context, listen: false).updateUserById(_u);
+    return showResponse(_response!);
+  }
+
+  Future<bool> banUser(User _u) async {
+    _u.SetBann(!_u.isBanned!);
+    Response? _response =
+        await Provider.of<Api>(context, listen: false).updateUserById(_u);
+    return showResponse(_response!);
+  }
+
+  Future<bool> deleteUser(User _u) async {
+    Response? _response =
+        await Provider.of<Api>(context, listen: false).deleteUserById(_u);
+    return showResponse(_response!);
+  }
+
+  Future<bool> updateUser(
+    User _u,
+    String _newname,
+    String _newphoneNumber,
+    String _newemail,
+  ) async {
+    _u.SetNewName(_newname);
+    _u.SetNewPhoneNumber(_newphoneNumber);
+    _u.SetNewEmail(_newemail);
+    Response? _response =
+        await Provider.of<Api>(context, listen: false).updateUserById(_u);
+    return showResponse(_response!);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +96,7 @@ class _UserListScreenState extends State<UserListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<Api>(context).getAllUsers();
     List<User> _usersToSearch = Provider.of<Api>(context).users;
     _searchString.text = _searchString.text.replaceAll(" ", "");
     log("_searchString: '" + _searchString.text + "'");
@@ -161,26 +222,57 @@ class _UserListScreenState extends State<UserListScreen> {
                                 ),
                                 child: Column(
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        ElevatedButton(
-                                          /*
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStatePropertyAll<Color>(
-                                                          GetColors.warning)),*/
-                                          onPressed: updateUsers,
-                                          child: Text(
-                                            AppLocalizations.of(context)!
-                                                .update,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              if (await updateUser(
+                                                  objects[index],
+                                                  nameController.text,
+                                                  phoneNumberController.text,
+                                                  emailController.text)) {
+                                                _isBanned = !_isBanned;
+                                              }
+                                            },
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .update,
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          ElevatedButton(
+                                            /*
+                                                style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStatePropertyAll<Color>(
+                                                            GetColors.warning)),*/
+                                            onPressed: () async {
+                                              if (await deleteUser(
+                                                objects[index],
+                                              )) {
+                                                objects[index].Clear();
+                                                //objects.removeAt(index);
+                                                Navigator.of(context).pop();
+                                              }
+                                            },
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .deleteaccount,
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Form(
                                         child: Column(
@@ -312,9 +404,11 @@ class _UserListScreenState extends State<UserListScreen> {
                                             SizedBox(
                                               width: double.infinity,
                                               child: ElevatedButton(
-                                                onPressed: () {
-                                                  banUser(!objects[index]
-                                                      .isBanned!);
+                                                onPressed: () async {
+                                                  if (await banUser(
+                                                      objects[index])) {
+                                                    _isBanned = !_isBanned;
+                                                  }
                                                 },
                                                 child: Text(
                                                   objects[index].isBanned ==
@@ -342,7 +436,12 @@ class _UserListScreenState extends State<UserListScreen> {
                                               SizedBox(
                                                 width: double.infinity,
                                                 child: ElevatedButton(
-                                                  onPressed: confirmUsers,
+                                                  onPressed: () async {
+                                                    if (await confirmUsers(
+                                                        objects[index])) {
+                                                      _isConfirmed = true;
+                                                    }
+                                                  },
                                                   child: Text(
                                                     AppLocalizations.of(
                                                             context)!
@@ -385,8 +484,12 @@ class _UserListScreenState extends State<UserListScreen> {
                                               SizedBox(
                                                 width: double.infinity,
                                                 child: ElevatedButton(
-                                                  onPressed: () {
-                                                    setAdminUser();
+                                                  onPressed: () async {
+                                                    if (await setAdminUser(
+                                                        objects[index])) {
+                                                      _up = UserPrivilegeLevel
+                                                          .ADMINISTRATOR;
+                                                    } else {}
                                                   },
                                                   child: Text(
                                                     AppLocalizations.of(
@@ -453,16 +556,17 @@ class _UserListScreenState extends State<UserListScreen> {
         ),
       );*/
   }
-
-  void registerUsers() {}
-
-  void confirmUsers() {}
-
-  void updateUsers() {}
-
-  void banUser(bool bool) {
-    bool = !bool;
-  }
-
-  void setAdminUser() {}
 }
+
+
+
+/*
+_up 
+_isConfirmed
+_isBanned
+idController 
+phoneNumberController 
+ nameController
+ firstpasswordController 
+emailController 
+*/

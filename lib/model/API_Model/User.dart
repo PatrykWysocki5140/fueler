@@ -93,6 +93,18 @@ class User {
     name = _name;
   }
 
+  void SetConfirm(
+    bool _isConfirmed,
+  ) {
+    isConfirmed = _isConfirmed;
+  }
+
+  void SetBann(
+    bool _isBanned,
+  ) {
+    isBanned = _isBanned;
+  }
+
   // ignore: non_constant_identifier_names
   void Clear() {
     id = null;

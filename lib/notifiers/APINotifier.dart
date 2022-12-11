@@ -425,4 +425,88 @@ class Api with ChangeNotifier {
       return await (e.response);
     }
   }
+
+  Future<Response?> updateUserById(User _user) async {
+    Response response;
+    String _uId = _user.id.toString();
+    ////// test
+    ///
+
+    //_uId = "6";
+
+    ///
+    String url = '$baseUrl/api/users/$_uId';
+    Dio dio = Dio();
+
+    try {
+      log(url);
+      response = await dio.put(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: {
+          'userName': _user.name,
+          'phoneNumber': _user.phoneNumber,
+          'email': _user.email,
+          'created': _user.created,
+          'isConfirmed': _user.isConfirmed,
+          'isBanned': _user.isBanned,
+          'userPrivilegeLevel': _user
+              .getUserPrivilegeLevel(_user.userPrivilegeLevel.toString())
+              .name
+        },
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if (response.statusCode == 204) {
+        dio.close();
+        return await response;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+  }
+
+  Future<Response?> deleteUserById(User _user) async {
+    Response response;
+    String _uId = _user.id.toString();
+    ////// test
+    ///
+
+    //_uId = "2";
+
+    ///
+    String url = '$baseUrl/api/users/$_uId';
+    Dio dio = Dio();
+
+    try {
+      log(url);
+      response = await dio.delete(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: {
+          'userName': _user.name,
+          'phoneNumber': _user.phoneNumber,
+          'email': _user.email,
+          'created': _user.created,
+          'isConfirmed': _user.isConfirmed,
+          'isBanned': _user.isBanned,
+          'userPrivilegeLevel': _user
+              .getUserPrivilegeLevel(_user.userPrivilegeLevel.toString())
+              .name
+        },
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if (response.statusCode == 204) {
+        dio.close();
+        return await response;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+  }
 }
