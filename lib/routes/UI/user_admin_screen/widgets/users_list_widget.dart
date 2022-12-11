@@ -28,6 +28,7 @@ class _UserListScreenState extends State<UserListScreen> {
   bool _showPassword = false;
   //String _searchString = "";
   TextEditingController _searchString = TextEditingController();
+  List<User> objects = List.empty(growable: true);
   @override
   void initState() {
     super.initState();
@@ -35,8 +36,34 @@ class _UserListScreenState extends State<UserListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log(_searchString.text);
-    final List<User> objects = Provider.of<Api>(context).users;
+    List<User> _usersToSearch = Provider.of<Api>(context).users;
+    _searchString.text = _searchString.text.replaceAll(" ", "");
+    log("_searchString: '" + _searchString.text + "'");
+    if (_searchString.text == "") {
+      objects = Provider.of<Api>(context).users;
+    } else {
+      Iterable<User> _users = _usersToSearch.where((element) =>
+          element.name!
+              .toLowerCase()
+              .contains(_searchString.text.toLowerCase()) ||
+          element.phoneNumber!
+              .toLowerCase()
+              .contains(_searchString.text.toLowerCase()) ||
+          element.email!
+              .toLowerCase()
+              .contains(_searchString.text.toLowerCase()) ||
+          element.userPrivilegeLevel
+              .toString()
+              .toLowerCase()
+              .contains(_searchString.text.toLowerCase()));
+      objects = List.empty(growable: true);
+
+      for (User obj in _users) {
+        log("find user: " + obj.name.toString());
+        objects.add(obj);
+      }
+    }
+    //final List<User> objects = Provider.of<Api>(context).users;
     var size = MediaQuery.of(context).size;
     //Provider.of<Api>(context).getAllUsers();
     return Column(
@@ -393,10 +420,10 @@ class _UserListScreenState extends State<UserListScreen> {
                     key: ValueKey(objects[index]),
                     //margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                     child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(objects[index].name.toString() +
-                            " " +
-                            objects[index].email.toString())),
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                          "${AppLocalizations.of(context)!.username}: ${objects[index].name.toString()}\nEmail: ${objects[index].email.toString()}\n${AppLocalizations.of(context)!.phonenumber}: ${objects[index].phoneNumber.toString()}\n${AppLocalizations.of(context)!.type}: ${objects[index].getUserPrivilegeLevel(objects[index].userPrivilegeLevel.toString()).name}"),
+                    ),
                   ),
                 );
               }),
