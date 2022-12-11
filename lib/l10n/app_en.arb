@@ -86,5 +86,7 @@
     "createnewuser": "Create new user",
     "create": "Create",
     "ifuserslistisemptyerror": "There was an error with loading the user list, try refreshing the page",
-    "search": "Search"
+    "search": "Search",
+    "name": "Name",
+    "type": "Type"
 }

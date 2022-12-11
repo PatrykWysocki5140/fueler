@@ -86,5 +86,7 @@
     "createnewuser": "Stwórz nowego użytkownika",
     "create": "Stwórz",
     "ifuserslistisemptyerror": "Wystąpił błąd z ładowaniem listy użytkowników, spróbuj odświeżyć stronę",
-    "search": "Szukaj"
+    "search": "Szukaj",
+    "name": "Nazwa",
+    "type": "Typ"
 }
