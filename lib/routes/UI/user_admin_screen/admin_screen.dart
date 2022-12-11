@@ -33,7 +33,7 @@ class _AdminScreenState extends State<AdminScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Api>(context).getAllUsers();
+    //Provider.of<Api>(context).getAllUsers();
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
