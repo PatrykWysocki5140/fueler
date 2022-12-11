@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fueler/model/API_Model/PriceEntries.dart';
 import 'package:fueler/model/API_Model/User.dart';
 import 'package:fueler/model/API_Model/UserPrivilegeLevel.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +19,11 @@ class Api with ChangeNotifier {
   String preferencesKeyToken = "token";
   String preferencesKeyUser = "userData";
   User user = User();
+  PriceEntries priceEntry = PriceEntries();
   String token = "";
   List<User> users = List.empty();
+  List<PriceEntries> mePriceEntries = List.empty();
+  List<PriceEntries> priceEntrie = List.empty();
 
   ////
   ApiService api = ApiService();
@@ -43,59 +47,6 @@ class Api with ChangeNotifier {
       user = User.fromJson(jsonString);
       if (user.userPrivilegeLevel == UserPrivilegeLevel.ADMINISTRATOR) {
         await getAllUsers();
-        /*
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);
-        users.add(user);*/
       }
     }
   }
@@ -388,6 +339,36 @@ class Api with ChangeNotifier {
       dio.close();
       // Jeśli status inny niż 200, zwróć pusty
       return "";
+    }
+  }
+
+  Future<Response?> getMyPriceEntries() async {
+    Response response;
+    String url = '$baseUrl/api/users/me/price-entries';
+    Dio dio = Dio();
+
+    try {
+      log(url);
+      response = await dio.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if (response.statusCode == 200) {
+        List<PriceEntries> _model =
+            priceEntriesModelFromJson(response.data.toString());
+        for (var obj in _model) {
+          log("PriceEntries:" + obj.toJson().toString());
+        }
+        if (_model.isNotEmpty) mePriceEntries = _model;
+        dio.close();
+        return await response;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
     }
   }
 
