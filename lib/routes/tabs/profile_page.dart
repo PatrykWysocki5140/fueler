@@ -65,7 +65,7 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
-    //Provider.of<Api>(context).GetLocalUser();
+    Provider.of<Api>(context).GetLocalUser();
 
     log("//profile_page//  user id:" +
         Provider.of<Api>(context).user.id.toString() +
@@ -82,7 +82,11 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
         "\n////  user token:" +
         Provider.of<Api>(context).token);
     if (Provider.of<Api>(context).user.id == null) {
-      return const RegisterScreen();
+      if (Provider.of<Api>(context).userExist == true) {
+        return const LoginScreen();
+      } else {
+        return const RegisterScreen();
+      }
     } else {
       if ((Provider.of<Api>(context).user.userPrivilegeLevel ==
               UserPrivilegeLevel.VERIFIED_USER) ||
