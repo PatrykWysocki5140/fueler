@@ -80,11 +80,11 @@ List<BartMenuRoute> subRoutes() {
       path: '/profile/login',
       pageBuilder: (parentContext, tabContext, settings) => const LoginScreen(),
     ),
-    /*
+
     BartMenuRoute.innerRoute(
       path: '/profile/user',
       pageBuilder: (parentContext, tabContext, settings) => const UserScreen(),
-    ),*/
+    ),
     BartMenuRoute.innerRoute(
       path: '/profile/createnewuser',
       pageBuilder: (parentContext, tabContext, settings) =>
