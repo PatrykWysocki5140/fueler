@@ -88,5 +88,12 @@
     "ifuserslistisemptyerror": "There was an error with loading the user list, try refreshing the page",
     "search": "Search",
     "name": "Name",
-    "type": "Type"
+    "type": "Type",
+    "mypriceentries": "History of my price entries",
+    "mypriceentriesempty": "The history of my price entries is empty",
+    "price": "Price",
+    "fueltype": "Fuel Type",
+    "addedby": "Added By",
+    "fuelstation": "Fuel Station",
+    "history": "My history"
 }

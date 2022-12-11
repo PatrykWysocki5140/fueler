@@ -88,5 +88,12 @@
     "ifuserslistisemptyerror": "Wystąpił błąd z ładowaniem listy użytkowników, spróbuj odświeżyć stronę",
     "search": "Szukaj",
     "name": "Nazwa",
-    "type": "Typ"
+    "type": "Typ",
+    "mypriceentries": "Historia moich wpisów cen",
+    "mypriceentriesempty": "Historia moich wpisów cen jest pusta",
+    "price": "Cena",
+    "fueltype": "Typ paliwa",
+    "addedby": "Dodany przez",
+    "fuelstation": "Stacja paliw",
+    "history": "Moja historia"
 }
