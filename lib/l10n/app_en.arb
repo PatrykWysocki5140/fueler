@@ -95,5 +95,6 @@
     "fueltype": "Fuel Type",
     "addedby": "Added By",
     "fuelstation": "Fuel Station",
-    "history": "My history"
+    "history": "My history",
+    "nulluser": "User has not logged in correctly"
 }

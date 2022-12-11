@@ -95,5 +95,6 @@
     "fueltype": "Typ paliwa",
     "addedby": "Dodany przez",
     "fuelstation": "Stacja paliw",
-    "history": "Moja historia"
+    "history": "Moja historia",
+    "nulluser": "Użytkownik nie został poprawnie zalogowany"
 }
