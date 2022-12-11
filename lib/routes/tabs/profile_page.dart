@@ -88,7 +88,7 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
               UserPrivilegeLevel.VERIFIED_USER) ||
           (Provider.of<Api>(context).user.userPrivilegeLevel ==
               UserPrivilegeLevel.USER)) {
-        return UserScreen();
+        return const UserScreen();
       } else if (Provider.of<Api>(context).user.userPrivilegeLevel ==
           UserPrivilegeLevel.ADMINISTRATOR) {
         return const AdminScreen(); /*
