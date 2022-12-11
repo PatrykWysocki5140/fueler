@@ -7,6 +7,7 @@ import 'UI/register_screen/register_screen.dart';
 import 'UI/splash_screen/splash_screen_page.dart';
 import 'UI/user_admin_screen/widgets/create_user_screen.dart';
 import 'UI/user_screen/user_screen.dart';
+import 'UI/user_screen/widgets/price_entries_list_widget.dart';
 import 'tabs/profile_page.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -79,14 +80,20 @@ List<BartMenuRoute> subRoutes() {
       path: '/profile/login',
       pageBuilder: (parentContext, tabContext, settings) => const LoginScreen(),
     ),
+    /*
     BartMenuRoute.innerRoute(
       path: '/profile/user',
       pageBuilder: (parentContext, tabContext, settings) => const UserScreen(),
-    ),
+    ),*/
     BartMenuRoute.innerRoute(
       path: '/profile/createnewuser',
       pageBuilder: (parentContext, tabContext, settings) =>
           const CreateUserScreen(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/profile/mypriceentries',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const PriceEntriesScreen(),
     ),
   ];
 }
