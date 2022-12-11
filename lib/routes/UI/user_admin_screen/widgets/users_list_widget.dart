@@ -96,7 +96,10 @@ class _UserListScreenState extends State<UserListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Api>(context).getAllUsers();
+    if (Provider.of<Api>(context).user.userPrivilegeLevel ==
+        UserPrivilegeLevel.ADMINISTRATOR) {
+      Provider.of<Api>(context).getAllUsers();
+    }
     List<User> _usersToSearch = Provider.of<Api>(context).users;
     _searchString.text = _searchString.text.replaceAll(" ", "");
     log("_searchString: '" + _searchString.text + "'");
