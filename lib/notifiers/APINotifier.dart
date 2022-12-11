@@ -18,17 +18,19 @@ class Api with ChangeNotifier {
   String baseUrl = "http://fueler.data.awrzawinski.xyz";
   String preferencesKeyToken = "token";
   String preferencesKeyUser = "userData";
+  String preferencesKeyUserExist = "userExist";
   User user = User();
   PriceEntries priceEntry = PriceEntries();
   String token = "";
   List<User> users = List.empty();
   List<PriceEntries> mePriceEntries = List.empty();
   List<PriceEntries> priceEntrie = List.empty();
+  bool userExist = false;
 
   ////
   ApiService api = ApiService();
-  bool loading = false;
   bool savedUser = false;
+  bool loading = false;
 
   // ignore: non_constant_identifier_names
   Future<dynamic> GetLocalUser() async {
@@ -36,13 +38,20 @@ class Api with ChangeNotifier {
 
     final jsonString = prefs.getString(preferencesKeyUser);
     final _token = prefs.getString(preferencesKeyToken);
-
+    final _userExist = prefs.getString(preferencesKeyUserExist);
+    if (_userExist == "true") {
+      userExist = true;
+    }
+    log(" userExist: " + userExist.toString());
     if (jsonString == null) {
       if (user.id != null) {
         user.Clear();
       }
     } else {
       token = _token!;
+      if (_userExist == "true") {
+        userExist = true;
+      }
       log("SharedPreferences save user: " + jsonString + " token: " + token);
       user = User.fromJson(jsonString);
       if (user.userPrivilegeLevel == UserPrivilegeLevel.ADMINISTRATOR) {
@@ -282,6 +291,7 @@ class Api with ChangeNotifier {
             _user = await User.fromJson(await _userFromJson);
             await prefs.setString(
                 preferencesKeyUser, _user.toJson().toString());
+            await prefs.setString(preferencesKeyUserExist, true.toString());
             token = _token;
             user = _user;
             dio.close();
