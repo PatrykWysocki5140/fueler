@@ -35,7 +35,7 @@ class User {
     isBanned,
     userPrivilegeLevel,
   });
-  int? id;
+  String? id;
   String? name; //
   String? email; //
   String? password; //
@@ -46,7 +46,7 @@ class User {
   UserPrivilegeLevel? userPrivilegeLevel;
 
   void SetValues(
-      int _id,
+      String _id,
       String _name,
       String _password,
       String _phoneNumber,
@@ -133,10 +133,10 @@ class User {
     UserPrivilegeLevel _up = _user
         .getUserPrivilegeLevel(jsondecode['userPrivilegeLevel'].toString());
 
-    int _id = int.parse(jsondecode["id"] ?? 1.toString());
+    //int _id = int.parse(jsondecode["id"] ?? 1.toString());
 
     _user.SetValues(
-        _id,
+        jsondecode["id"],
         jsondecode["userName"] ?? jsondecode["name"],
         jsondecode["password"] ?? "yourpassword123",
         jsondecode["phoneNumber"],
@@ -159,10 +159,10 @@ class User {
     UserPrivilegeLevel _up =
         _user.getUserPrivilegeLevel(json['userPrivilegeLevel'].toString());
 
-    int _id = int.parse(json["id"] ?? 1.toString());
+    //int _id = int.parse(json["id"] ?? 1.toString());
 
     _user.SetValues(
-        _id,
+        json["id"],
         json["userName"] ?? json["name"],
         json["password"] ?? "yourpassword123",
         json["phoneNumber"],
@@ -189,7 +189,7 @@ class User {
         "userPrivilegeLevel": userPrivilegeLevel,
       };
 
-  setVal(int _id) => {this.id = _id};
+  //setVal(int _id) => {this.id = _id};
 
   UserPrivilegeLevel getUserPrivilegeLevel(String up) {
     UserPrivilegeLevel _up = UserPrivilegeLevel.USER;

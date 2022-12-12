@@ -144,7 +144,7 @@ class ApiService {
   }
 
   // ignore: non_constant_identifier_names
-  Future<User?> apiService_getUserById(int id) async {
+  Future<User?> apiService_getUserById(String id) async {
     /*
     //// to jest ok
     try {

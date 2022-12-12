@@ -27,12 +27,31 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
+  bool firstload = true;
   final bool _showPassword = true;
   //String _searchString = "";
   final TextEditingController _searchString = TextEditingController();
   List<User> objects = List.empty(growable: true);
 
+  Future<User?> updateUserListObject(String _uId, int _i) async {
+    User _u;
+    Response? _response =
+        await Provider.of<Api>(context, listen: false).getUserById(_uId);
+    if (_response?.statusCode == 200) {
+      _u = User.fromJson(await _response?.data);
+      objects[_i].name = _u.name.toString();
+      objects[_i].phoneNumber = _u.phoneNumber.toString();
+      objects[_i].email = _u.email.toString();
+      objects[_i].name = _u.name.toString();
+
+      return _u;
+    } else {
+      return null;
+    }
+  }
+
   Future<bool> showResponse(Response _response) async {
+    firstload = false;
     if (_response.statusCode == 204) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.success),
@@ -176,6 +195,12 @@ class _UserListScreenState extends State<UserListScreen> {
                             TextEditingController();
                         final TextEditingController emailController =
                             TextEditingController();
+
+                        //// update list object
+                        if (firstload == false) {
+                          Future<User?> _u = updateUserListObject(
+                              objects[index].id.toString(), index);
+                        }
 
                         _up = Provider.of<Api>(context)
                             .user

@@ -459,6 +459,32 @@ class Api with ChangeNotifier {
     }
   }
 
+  Future<Response?> getUserById(String _uId) async {
+    User _user = User();
+    Response response;
+    String url = '$baseUrl/api/users/$_uId';
+    Dio dio = Dio();
+
+    try {
+      log(url);
+      response = await dio.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if (response.statusCode == 200) {
+        _user = User.fromJson(await response.data);
+        dio.close();
+        return response.data;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return e.response;
+    }
+  }
+
   Future<Response?> deleteUserById(User _user) async {
     Response response;
     String _uId = _user.id.toString();
