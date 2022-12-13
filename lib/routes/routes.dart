@@ -93,7 +93,7 @@ List<BartMenuRoute> subRoutes() {
     BartMenuRoute.innerRoute(
       path: '/profile/mypriceentries',
       pageBuilder: (parentContext, tabContext, settings) =>
-          const PriceEntriesScreen(),
+          const MyPriceEntriesScreen(),
     ),
   ];
 }
