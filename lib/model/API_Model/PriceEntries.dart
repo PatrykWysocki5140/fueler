@@ -23,12 +23,12 @@ List<PriceEntries> priceEntriesModelFromJson(String str) {
 class PriceEntries {
   PriceEntries({id, price, fuelType, addedBy, fuelStation});
   String? id;
-  double? price;
+  String? price;
   FuelType? fuelType;
   String? addedBy;
   String? fuelStation;
 
-  void setValues(String _id, double _price, FuelType _fuelType, String _addedBy,
+  void setValues(String _id, String _price, FuelType _fuelType, String _addedBy,
       String _fuelStation) {
     id = _id;
     price = _price;
