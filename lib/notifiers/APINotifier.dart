@@ -24,7 +24,7 @@ class Api with ChangeNotifier {
   String token = "";
   List<User> users = List.empty();
   List<PriceEntries> mePriceEntries = List.empty();
-  List<PriceEntries> priceEntrie = List.empty();
+  List<PriceEntries> searchpriceEntrie = List.empty();
   bool userExist = false;
 
   ////
@@ -459,7 +459,7 @@ class Api with ChangeNotifier {
     }
   }
 
-  Future<Response?> getUserById(String _uId) async {
+  Future<User?> getUserById(String _uId) async {
     User _user = User();
     Response response;
     String url = '$baseUrl/api/users/$_uId';
@@ -476,13 +476,14 @@ class Api with ChangeNotifier {
       if (response.statusCode == 200) {
         _user = User.fromJson(await response.data);
         dio.close();
-        return response.data;
+        // return response.data;
       }
     } on DioError catch (e) {
       log("e.response!.data: " + e.response!.data.toString());
       dio.close();
-      return e.response;
+      //return e.response;
     }
+    return _user;
   }
 
   Future<Response?> deleteUserById(User _user) async {
@@ -517,6 +518,40 @@ class Api with ChangeNotifier {
       // Wyświetl odpowiedź
       log("status:" + response.statusCode.toString());
       if (response.statusCode == 204) {
+        dio.close();
+        return await response;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+  }
+
+  Future<Response?> getPriceEntriesByUserId(String _uId) async {
+    Response response;
+    String url = '$baseUrl/api/users/$_uId/price-entries';
+    Dio dio = Dio();
+
+    try {
+      log(url);
+      response = await dio.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if (response.statusCode == 200) {
+        List<PriceEntries> _model =
+            priceEntriesModelFromJson(response.data.toString());
+        for (var obj in _model) {
+          log("PriceEntriesById:" + obj.toJson().toString());
+        }
+        if (_model.isNotEmpty) {
+          searchpriceEntrie = _model;
+        } else {
+          searchpriceEntrie = List.empty();
+        }
         dio.close();
         return await response;
       }
