@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fueler/model/API_Model/FuelType.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
+import 'package:fueler/routes/UI/widgets/price_entry_widget.dart';
 
 import 'package:fueler/settings/Get_colors.dart';
 
@@ -18,17 +19,17 @@ import '../../../../notifiers/APINotifier.dart';
 import '../../../../settings/Get_colors.dart';
 import '../../../../settings/validator.dart';
 
-class PriceEntriesScreen extends StatefulWidget {
+class MyPriceEntriesScreen extends StatefulWidget {
   static String id = "user_screen";
-  const PriceEntriesScreen({
+  const MyPriceEntriesScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<PriceEntriesScreen> createState() => _PriceEntriesScreenState();
+  State<MyPriceEntriesScreen> createState() => _PriceEntriesScreenState();
 }
 
-class _PriceEntriesScreenState extends State<PriceEntriesScreen> {
+class _PriceEntriesScreenState extends State<MyPriceEntriesScreen> {
   final bool _showPassword = true;
   //String _searchString = "";
   final TextEditingController _searchString = TextEditingController();
@@ -52,7 +53,16 @@ class _PriceEntriesScreenState extends State<PriceEntriesScreen> {
       objects = Provider.of<Api>(context).mePriceEntries;
     } else {
       Iterable<PriceEntries> _pe = _priceEntriesToSearch.where((element) =>
-          element.id!.toLowerCase().contains(_searchString.text.toLowerCase()));
+          element.id!
+              .toLowerCase()
+              .contains(_searchString.text.toLowerCase()) ||
+          element.price!
+              .toLowerCase()
+              .contains(_searchString.text.toLowerCase()) ||
+          element.fuelType!
+              .toString()
+              .toLowerCase()
+              .contains(_searchString.text.toLowerCase()));
       objects = List.empty(growable: true);
 
       for (PriceEntries obj in _pe) {
@@ -74,127 +84,138 @@ class _PriceEntriesScreenState extends State<PriceEntriesScreen> {
           },
         ),
       ),
-      body: Column(
-        children: [
-          Center(
-            child: Text(
-              Provider.of<Api>(context).mePriceEntries.isEmpty == true
-                  ? AppLocalizations.of(context)!.mypriceentriesempty
-                  : AppLocalizations.of(context)!.mypriceentries,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+      body: Align(
+        alignment: Alignment.center,
+        child: Container(
+          width: size.width * 0.85,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
           ),
-          SizedBox(height: size.height * 0.03),
-          if (Provider.of<Api>(context).mePriceEntries.isEmpty == false)
-            TextField(
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.search,
-                suffixIcon: IconButton(
-                  onPressed: _searchString.clear,
-                  icon: const Icon(Icons.search),
+          child: Column(
+            children: [
+              SizedBox(height: size.height * 0.06),
+              Center(
+                child: Text(
+                  Provider.of<Api>(context).mePriceEntries.isEmpty == true
+                      ? AppLocalizations.of(context)!.mypriceentriesempty
+                      : AppLocalizations.of(context)!.mypriceentries,
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              onChanged: (String value) {
-                setState(() {
-                  // Aktualizacja listy po wpisaniu frazy
-                  log(_searchString.text);
-                  _searchString.text = value;
-                });
-              },
-            ),
-          Expanded(
-            child: ListView.builder(
-                // the number of items in the list
-                itemCount: objects.length,
-                shrinkWrap: false,
-                scrollDirection: Axis.vertical,
-                //physics: NeverScrollableScrollPhysics(),
-                // display each item of the product list
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          FuelType _ft = FuelType.UNDEFINED;
-                          final TextEditingController idController =
-                              TextEditingController();
-                          final TextEditingController priceController =
-                              TextEditingController();
-
-                          final TextEditingController addedByController =
-                              TextEditingController();
-                          final TextEditingController fuelStationController =
-                              TextEditingController();
-
-                          _ft = Provider.of<Api>(context)
-                              .priceEntry
-                              .getFuelType(objects[index].fuelType.toString());
-
-                          idController.text = objects[index].id.toString();
-                          priceController.text =
-                              objects[index].price.toString();
-                          addedByController.text =
-                              objects[index].addedBy.toString();
-                          fuelStationController.text =
-                              objects[index].fuelStation.toString();
-
-                          return Scaffold(
-                            appBar: AppBar(
-                              leading: IconButton(
-                                icon: const Icon(
-                                  Icons.arrow_back,
-                                ),
-                                onPressed: () => {
-                                  idController.clear(),
-                                  priceController.clear(),
-                                  addedByController.clear(),
-                                  fuelStationController.clear(),
-                                  Navigator.of(context).pop(),
-                                },
-                              ),
-                              title:
-                                  Text(" ID:" + objects[index].id.toString()),
-                              centerTitle: true,
-                            ),
-                            body: SingleChildScrollView(
-                              child: Container(
-                                  //width: size.width * 0.85,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 30),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(60),
-                                  ),
-                                  child: Column(
-                                    children: const [
-                                      Text("data"),
-                                      Text("data"),
-                                    ],
-                                  )),
-                            ),
-                          );
-
-                          //return Text("gggg");
-                        },
-                      );
-                    },
-                    child: Card(
-                      // In many cases, the key isn't mandatory
-                      key: ValueKey(objects[index]),
-                      //margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(
-                            "${AppLocalizations.of(context)!.price}: ${objects[index].price.toString()}\n${AppLocalizations.of(context)!.fueltype}: ${objects[index].fuelType.toString()}\n${AppLocalizations.of(context)!.addedby}: ${objects[index].addedBy.toString()}\n${AppLocalizations.of(context)!.fuelstation}: ${objects[index].fuelStation.toString()}"),
-                      ),
+              SizedBox(height: size.height * 0.03),
+              if (Provider.of<Api>(context).mePriceEntries.isEmpty == false)
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.search,
+                    suffixIcon: IconButton(
+                      onPressed: _searchString.clear,
+                      icon: const Icon(Icons.search),
                     ),
-                  );
-                }),
+                  ),
+                  onChanged: (String value) {
+                    setState(() {
+                      // Aktualizacja listy po wpisaniu frazy
+                      log(_searchString.text);
+                      _searchString.text = value;
+                    });
+                  },
+                ),
+              Expanded(
+                child: ListView.builder(
+                    // the number of items in the list
+                    itemCount: objects.length,
+                    shrinkWrap: false,
+                    scrollDirection: Axis.vertical,
+                    //physics: NeverScrollableScrollPhysics(),
+                    // display each item of the product list
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              FuelType _ft = FuelType.UNDEFINED;
+                              final TextEditingController idController =
+                                  TextEditingController();
+                              final TextEditingController priceController =
+                                  TextEditingController();
+
+                              final TextEditingController addedByController =
+                                  TextEditingController();
+                              final TextEditingController
+                                  fuelStationController =
+                                  TextEditingController();
+
+                              _ft = Provider.of<Api>(context)
+                                  .priceEntry
+                                  .getFuelType(
+                                      objects[index].fuelType.toString());
+
+                              idController.text = objects[index].id.toString();
+                              priceController.text =
+                                  objects[index].price.toString();
+                              addedByController.text =
+                                  objects[index].addedBy.toString();
+                              fuelStationController.text =
+                                  objects[index].fuelStation.toString();
+
+                              return Scaffold(
+                                appBar: AppBar(
+                                  leading: IconButton(
+                                    icon: const Icon(
+                                      Icons.arrow_back,
+                                    ),
+                                    onPressed: () => {
+                                      idController.clear(),
+                                      priceController.clear(),
+                                      addedByController.clear(),
+                                      fuelStationController.clear(),
+                                      Navigator.of(context).pop(),
+                                    },
+                                  ),
+                                  title: Text(
+                                      " ID:" + objects[index].id.toString()),
+                                  centerTitle: true,
+                                ),
+                                body: SingleChildScrollView(
+                                  child: Container(
+                                      //width: size.width * 0.85,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 30),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(60),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          PriceEntryWidget(objects[index])
+                                        ],
+                                      )),
+                                ),
+                              );
+
+                              //return Text("gggg");
+                            },
+                          );
+                        },
+                        child: Card(
+                          // In many cases, the key isn't mandatory
+                          key: ValueKey(objects[index]),
+                          //margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Text(
+                                "${AppLocalizations.of(context)!.price}: ${objects[index].price.toString()}\n${AppLocalizations.of(context)!.fueltype}: ${objects[index].getFuelType(objects[index].fuelType.toString()).name}\n${AppLocalizations.of(context)!.addedby}: ${objects[index].addedBy.toString()}\n${AppLocalizations.of(context)!.fuelstation}: ${objects[index].fuelStation.toString()}"),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
 /*
