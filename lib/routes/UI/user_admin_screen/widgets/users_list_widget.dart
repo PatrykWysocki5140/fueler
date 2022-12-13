@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fueler/routes/UI/user_admin_screen/widgets/price_entries_list_widget.dart';
 
 import 'package:fueler/settings/Get_colors.dart';
 
@@ -32,7 +33,7 @@ class _UserListScreenState extends State<UserListScreen> {
   //String _searchString = "";
   final TextEditingController _searchString = TextEditingController();
   List<User> objects = List.empty(growable: true);
-
+/*
   Future<User?> updateUserListObject(String _uId, int _i) async {
     User _u;
     Response? _response =
@@ -48,6 +49,15 @@ class _UserListScreenState extends State<UserListScreen> {
     } else {
       return null;
     }
+  }*/
+  Future<User?> updateUserListObject(String _uId, int _i) async {
+    User? _u = await Provider.of<Api>(context, listen: false).getUserById(_uId);
+
+    objects[_i].name = _u?.name.toString();
+    objects[_i].phoneNumber = _u?.phoneNumber.toString();
+    objects[_i].email = _u?.email.toString();
+    objects[_i].name = _u?.name.toString();
+    return _u;
   }
 
   Future<bool> showResponse(Response _response) async {
@@ -534,6 +544,45 @@ class _UserListScreenState extends State<UserListScreen> {
                                             ],
                                           ),
 
+                                        SizedBox(height: size.height * 0.01),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              setState(() {
+                                                Provider.of<Api>(context,
+                                                        listen: false)
+                                                    .getPriceEntriesByUserId(
+                                                        objects[index]
+                                                            .id
+                                                            .toString());
+                                                (context as Element)
+                                                    .reassemble();
+                                              });
+
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    log(objects[index]
+                                                        .id
+                                                        .toString());
+                                                    return PriceEntriesScreen(
+                                                      objects[index]
+                                                          .id
+                                                          .toString(),
+                                                    );
+                                                  });
+                                            },
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .priceentrieshistory,
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                         SizedBox(height: size.height * 0.01),
                                       ],
                                     ))
