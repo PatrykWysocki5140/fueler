@@ -96,5 +96,6 @@
     "addedby": "Added By",
     "fuelstation": "Fuel Station",
     "history": "My history",
-    "nulluser": "User has not logged in correctly"
+    "nulluser": "User has not logged in correctly",
+    "priceentrieshistory": "Price entries history"
 }

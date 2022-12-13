@@ -96,5 +96,6 @@
     "addedby": "Dodany przez",
     "fuelstation": "Stacja paliw",
     "history": "Moja historia",
-    "nulluser": "Użytkownik nie został poprawnie zalogowany"
+    "nulluser": "Użytkownik nie został poprawnie zalogowany",
+    "priceentrieshistory": "Historia wpisów cen"
 }
