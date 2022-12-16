@@ -277,6 +277,7 @@ class Api with ChangeNotifier {
       if (response.statusCode != 401) {
         // Pobierz token z odpowiedzi
         var _token = response.data;
+        token = _token;
         log("token:" + token);
 
         // Jeśli status 200 i token różny od null
@@ -379,6 +380,45 @@ class Api with ChangeNotifier {
       log("e.response!.data: " + e.response!.data.toString());
       dio.close();
       return await (e.response);
+    }
+  }
+
+  Future<Response?> veryfication(String _code) async {
+    Response response;
+    String url = '$baseUrl/api/users/me/confirmation-code';
+    Dio dio = Dio();
+
+    try {
+      log(url);
+      // Dodaj token do nagłówka autoryzacji
+
+      log("code:" + _code + " token: " + token);
+      // Zaktualizuj dane użytkownika za pomocą metody PUT na adresie /api/users/me/password
+      response = await dio.put(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: {
+          'Code': _code,
+        },
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if (response.statusCode == 204) {
+        dio.close();
+        return await response;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+    log("status:" + response.statusCode.toString());
+    if (response.statusCode == 204) {
+      dio.close();
+      return await response;
+    } else {
+      dio.close();
+      return await response;
     }
   }
 
