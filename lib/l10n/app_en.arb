@@ -97,5 +97,15 @@
     "fuelstation": "Fuel Station",
     "history": "My history",
     "nulluser": "User has not logged in correctly",
-    "priceentrieshistory": "Price entries history"
+    "priceentrieshistory": "Price entries history",
+    "userisnotconfirmed": "Your account has not been confirmed",
+    "enterconfirmcode": "Enter the verification code",
+    "validVeryfiCodeLeng": "The verification code must be 6 characters long",
+    "veryfiCode": "Verification code",
+    "veryfi": "Verification",
+    "veryfiphonenumber": "Phone Number Verification",
+    "numbersendsms": "Enter the code sent to ",
+    "nosms": "Didn't receive the code? ",
+    "resend": "RESEND",
+    "clear": "Clear"
 }

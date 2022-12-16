@@ -97,5 +97,15 @@
     "fuelstation": "Stacja paliw",
     "history": "Moja historia",
     "nulluser": "Użytkownik nie został poprawnie zalogowany",
-    "priceentrieshistory": "Historia wpisów cen"
+    "priceentrieshistory": "Historia wpisów cen",
+    "userisnotconfirmed": "Twoje konto nie zostało potwierdzone",
+    "enterconfirmcode": "Wpisz kod weryfikacyjny",
+    "validVeryfiCodeLeng": "Kod weryfikacyjny musi mieć 6 znaków",
+    "veryfiCode": "Kod weryfikacyjny",
+    "veryfi": "Weryfikacja",
+    "veryfiphonenumber": "Weryfikacja numeru telefonu",
+    "numbersendsms": "Wpisz kod wysłany na numer ",
+    "nosms": "Nie otrzymałem kodu ",
+    "resend": "PONÓW",
+    "clear": "Wyczyść"
 }
