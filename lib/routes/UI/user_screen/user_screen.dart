@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fueler/routes/UI/user_screen/widgets/deleteUser_dialog.dart';
 import 'package:fueler/routes/UI/user_screen/widgets/logout_dialog.dart';
 import 'package:fueler/routes/UI/user_screen/widgets/price_entries_list_widget.dart';
+import 'package:fueler/routes/UI/user_screen/widgets/veryfication_widget.dart';
 import 'package:fueler/settings/Get_colors.dart';
 
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController veryfiCodeController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController newemailController = TextEditingController();
@@ -164,6 +166,132 @@ class _UserScreenState extends State<UserScreen> {
                               ),
                             ),
                             SizedBox(height: size.height * 0.06),
+                            if (Provider.of<Api>(context).user.isConfirmed ==
+                                false)
+                              Center(
+                                // margin: EdgeInsets.all(10),
+                                // padding: EdgeInsets.all(5),
+                                //color: GetColors.mainColorLight,
+/*
+                                decoration: BoxDecoration(
+                                    color: GetColors.warning,
+                                    border: Border.all(
+                                      color: GetColors.error,
+                                      width: 5,
+                                    )),
+                                    */
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            Provider.of<Api>(context)
+                                                    .user
+                                                    .name
+                                                    .toString() +
+                                                ", " +
+                                                AppLocalizations.of(context)!
+                                                    .userisnotconfirmed,
+                                            style: TextStyle(
+                                              color: GetColors.error,
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    /*
+                                    SizedBox(height: size.height * 0.01),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .enterconfirmcode,
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),*/
+                                    /*
+                                    Row(
+                                      children: [
+                                        Container(
+                                          //margin: EdgeInsets.all(10),
+                                          // padding: EdgeInsets.all(5),
+                                          child: Expanded(
+                                            child: TextFormField(
+                                              //showCursor: false,
+                                              //readOnly: true,
+                                              //enableInteractiveSelection: false,
+                                              //focusNode: FocusNode(),
+                                              validator: (value) => Validator
+                                                  .validateVeryficationCode(
+                                                      value ?? "", context),
+                                              controller: veryfiCodeController,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              decoration: InputDecoration(
+                                                hintText: AppLocalizations.of(
+                                                        context)!
+                                                    .veryfiCode,
+                                                isDense: true,
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),*/
+                                    SizedBox(height: size.height * 0.01),
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: ElevatedButton(
+                                        /*
+                                        onPressed: () {
+                                          Navigator.of(context).pushNamed(
+                                              "/profile/verification");
+                                              if (val == true)
+                                              setState(() {
+                                                
+                                              });
+                                        },*/
+                                        onPressed: (() async {
+                                          bool? val = await showDialog<bool>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  const PinCodeVerificationScreen());
+                                          log("PinCodeVerificationScreen " +
+                                              val.toString());
+                                          if (val == true) {
+                                            setState(() {
+                                              Provider.of<Api>(context,
+                                                      listen: false)
+                                                  .user
+                                                  .SetConfirm(true);
+                                            });
+                                          }
+                                        }),
+                                        child: Text(
+                                          AppLocalizations.of(context)!.veryfi,
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: size.height * 0.06),
+                                  ],
+                                ),
+                              ),
                             Text(AppLocalizations.of(context)!.phonenumber),
                             TextFormField(
                               showCursor: false,
