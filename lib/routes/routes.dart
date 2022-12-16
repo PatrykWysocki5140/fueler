@@ -1,5 +1,6 @@
 import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
+import 'package:fueler/routes/UI/user_screen/widgets/veryfication_widget.dart';
 import 'package:fueler/routes/tabs/map_page.dart';
 import 'package:fueler/routes/tabs/settings_page.dart';
 import 'UI/login_screen/login_screen.dart';
@@ -94,6 +95,11 @@ List<BartMenuRoute> subRoutes() {
       path: '/profile/mypriceentries',
       pageBuilder: (parentContext, tabContext, settings) =>
           const MyPriceEntriesScreen(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/profile/verification',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const PinCodeVerificationScreen(),
     ),
   ];
 }
