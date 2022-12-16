@@ -122,7 +122,7 @@ class User {
     //String xyz = myjson.JsonDecoder(myJSON);
     User _user = User();
 
-    String result = myjson.JsonDecoder(myJSON.toString());
+    String result = myjson.JsonDecoder(myJSON);
     //result ="{\"userName\": \"Dawid\", \"phoneNumber\": \"1234567890\", \"email\": \"test@test.com\", \"isConfirmed\": \"false\", \"isBanned\": \"false\", \"userPrivilegeLevel\": \"USER\"}";
     log("JsonEncoder:" + result.toString());
     final jsondecode = json.decode(result.toString());
