@@ -44,6 +44,17 @@ class Validator {
     }
   }
 
+  static String? validateVeryficationCode(String value, BuildContext context) {
+    //Pattern pattern = r'^.{6,}$';
+    Pattern pattern = r'^.{6,}$';
+    RegExp regex = RegExp(pattern as String);
+    if (!regex.hasMatch(value)) {
+      return '🚩 ${AppLocalizations.of(context)!.validVeryfiCodeLeng}.';
+    } else {
+      return null;
+    }
+  }
+
   static String? validateName(String value, BuildContext context) {
     if (value.length < 3) {
       return '🚩 ${AppLocalizations.of(context)!.validName}';
