@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bart/bart.dart';
+import 'package:fueler/routes/UI/map_screen/map_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,43 +24,36 @@ class _MapPage extends State<MapPage> with AppBarNotifier {
   _MapPage(BuildContext parentContext);
 
   BuildContext get parentContext => parentContext;
-/*
-  GoogleMapController mapController;
-  Position _currentPosition;*/
-  static final LatLng _kMapCenter =
-      LatLng(19.018255973653343, 72.84793849278007);
-
-  static final CameraPosition _kInitialPosition =
-      CameraPosition(target: _kMapCenter, zoom: 11.0, tilt: 0, bearing: 0);
 
   @override
   void initState() {
     super.initState();
-    // _getCurrentLocation();
 
     updateAppBar(
       context,
       AppBar(
         title: const Text('Flueler'),
-        leading: FloatingActionButton(
-          heroTag: "/inner",
+        leading: GestureDetector(
+          //FloatingActionButton
+          //heroTag: "/inner",
           child: const Icon(Icons.refresh),
-          onPressed: () {
+          onTap: () {
+            //onPressed
             // Navigator.of(parentContext).pushNamed("/parent");
-            Navigator.of(context).pushNamed("/profile/inner");
+            Navigator.of(context).pushNamed("/map");
           },
-        ),
+        ), /*
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
-              child: FloatingActionButton(
-                heroTag: "/settingsss",
+              child: GestureDetector(
+                //heroTag: "/settingsss",
                 child: const Icon(Icons.refresh),
-                onPressed: () {
+                onTap: () {
                   Navigator.of(context).pushNamed("/profile/inner");
                 },
               )),
-        ],
+        ],*/
       ),
     );
     showAppBar(context);
@@ -67,38 +61,7 @@ class _MapPage extends State<MapPage> with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
-    //return Text("data");
-    //_getCurrentLocation();
-    //if (await Permission.location.serviceStatus.isDisabled)
-
-    return Scaffold(
-      body: GoogleMap(
-        initialCameraPosition: _kInitialPosition,
-      ), /*GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: LatLng(
-            _currentPosition.latitude,
-            _currentPosition.longitude,
-          ),
-          zoom: 14.0,
-        ),
-        onMapCreated: (GoogleMapController controller) {
-          mapController = controller;
-        },
-      ),*/
-    );
-  }
-
-  void _getCurrentLocation() async {
-    //Geolocator geolocator = await Geolocator();
-
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best,
-        forceAndroidLocationManager: true);
-    //Position position = await Geolocator.
-    setState(() {
-      //_currentPosition = position;
-    });
+    return const MapScreen();
   }
 }
 

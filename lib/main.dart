@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fueler/notifiers/LanguageNotifier.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
 import 'package:fueler/routes/navigation.dart';
 import 'package:fueler/routes/routes.dart';
@@ -31,7 +32,8 @@ void main() async {
       ChangeNotifierProvider(create: (context) => LanguageNotifier()),
       ChangeNotifierProvider<NightMode>.value(value: NightMode()),
       ChangeNotifierProvider<AuthModel>.value(value: _auth),
-      ChangeNotifierProvider<Api>(create: (context) => api)
+      ChangeNotifierProvider<Api>(create: (context) => api),
+      ChangeNotifierProvider<GoogleMaps>(create: (context) => GoogleMaps())
     ],
     child: const MyApp(),
   ));
@@ -55,47 +57,49 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<Api>(
-      builder: (context, apimodel, child) => Consumer<AuthModel>(
-          builder: (context, model, child) => Consumer<NightMode>(
-              builder: (context, nightMode, child) =>
-                  Consumer<LanguageNotifier>(
-                    builder: (context, languages, child) =>
-                        FutureBuilder<ThemeData>(
-                            future: nightMode.getTheme(),
-                            initialData: Styles.themeData(false),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<ThemeData> themeData) {
-                              //const SplashScreen("/main");
-                              //Parentcontext = context;
-                              //setContext(context);
-                              Provider.of<Api>(context).GetLocalUser();
+      builder: (context, apimodel, child) => Consumer<GoogleMaps>(
+          builder: (context, maps, child) => Consumer<AuthModel>(
+              builder: (context, model, child) => Consumer<NightMode>(
+                  builder: (context, nightMode, child) =>
+                      Consumer<LanguageNotifier>(
+                        builder: (context, languages, child) =>
+                            FutureBuilder<ThemeData>(
+                                future: nightMode.getTheme(),
+                                initialData: Styles.themeData(false),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<ThemeData> themeData) {
+                                  //const SplashScreen("/main");
+                                  //Parentcontext = context;
+                                  //setContext(context);
+                                  Provider.of<Api>(context).GetLocalUser();
 
-                              return MaterialApp(
-                                title: 'Fueler',
-                                onGenerateRoute: routes,
-                                theme: themeData.data,
-                                localizationsDelegates: const [
-                                  AppLocalizations.delegate,
-                                  GlobalMaterialLocalizations.delegate,
-                                  GlobalWidgetsLocalizations.delegate,
-                                  GlobalCupertinoLocalizations.delegate,
-                                ],
-                                supportedLocales: languages.languages.entries
-                                    .map((e) => Locale(e.key)),
-                                locale: Locale(languages.language.key),
-                                initialRoute: '/',
-                                //home: child ?? const SizedBox.shrink()
-                                home:
-                                    /*
+                                  return MaterialApp(
+                                    title: 'Fueler',
+                                    onGenerateRoute: routes,
+                                    theme: themeData.data,
+                                    localizationsDelegates: const [
+                                      AppLocalizations.delegate,
+                                      GlobalMaterialLocalizations.delegate,
+                                      GlobalWidgetsLocalizations.delegate,
+                                      GlobalCupertinoLocalizations.delegate,
+                                    ],
+                                    supportedLocales: languages
+                                        .languages.entries
+                                        .map((e) => Locale(e.key)),
+                                    locale: Locale(languages.language.key),
+                                    initialRoute: '/',
+                                    //home: child ?? const SizedBox.shrink()
+                                    home:
+                                        /*
                           Consumer<AuthModel>(builder: (context, model, child) {
                         if (model.user != null) return SplashScreen("/main");
                         return SplashScreen("/main");
                       })*/
-                                    SplashScreen("/main"),
-                              );
-                            }),
-                    //child: const MyHomePage(title: '')
-                  ))));
+                                        const SplashScreen("/main"),
+                                  );
+                                }),
+                        //child: const MyHomePage(title: '')
+                      )))));
 }
 
 /*
