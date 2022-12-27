@@ -1,8 +1,10 @@
 import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
+import 'package:fueler/notifiers/APINotifier.dart';
 import 'package:fueler/routes/UI/user_screen/widgets/veryfication_widget.dart';
 import 'package:fueler/routes/tabs/map_page.dart';
 import 'package:fueler/routes/tabs/settings_page.dart';
+import 'package:provider/provider.dart';
 import 'UI/login_screen/login_screen.dart';
 import 'UI/register_screen/register_screen.dart';
 import 'UI/splash_screen/splash_screen_page.dart';

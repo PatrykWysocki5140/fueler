@@ -46,7 +46,7 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
             // Navigator.of(parentContext).pushNamed("/parent");
             Navigator.of(context).pushNamed("/");
           },
-        ),
+        ), /*
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -57,7 +57,7 @@ class _ProfilePage extends State<ProfilePage> with AppBarNotifier {
                   Navigator.of(context).pushNamed("/profile/inner");
                 },
               )),
-        ],
+        ],*/
       ),
     );
     showAppBar(context);
