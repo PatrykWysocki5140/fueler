@@ -107,5 +107,7 @@
     "numbersendsms": "Enter the code sent to ",
     "nosms": "Didn't receive the code? ",
     "resend": "RESEND",
-    "clear": "Clear"
+    "clear": "Clear",
+    "me": "Me",
+    "melocation": "My localization"
 }

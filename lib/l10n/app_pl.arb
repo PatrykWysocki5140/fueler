@@ -107,5 +107,7 @@
     "numbersendsms": "Wpisz kod wysłany na numer ",
     "nosms": "Nie otrzymałem kodu ",
     "resend": "PONÓW",
-    "clear": "Wyczyść"
+    "clear": "Wyczyść",
+    "me": "Ja",
+    "melocation": "Moja lokalizacja"
 }
