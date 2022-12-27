@@ -28,7 +28,7 @@ class _MapPage extends State<MapPage> with AppBarNotifier {
   @override
   void initState() {
     super.initState();
-
+/*
     updateAppBar(
       context,
       AppBar(
@@ -56,6 +56,8 @@ class _MapPage extends State<MapPage> with AppBarNotifier {
         ],*/
       ),
     );
+    */
+
     showAppBar(context);
   }
 
