@@ -21,6 +21,7 @@ class GoogleMaps with ChangeNotifier {
   //String preferencesKeyUserExist = "userExist";
   String preferencesKeyNightMode = "dark_mode_enabled";
   String mapTheme = "";
+  late bool isDarkTheme;
 
   setMapTheme() async {
     final prefs = await SharedPreferences.getInstance();
@@ -29,10 +30,27 @@ class GoogleMaps with ChangeNotifier {
 
     log(" _darkmode: " + _darkmode.toString());
     if (_darkmode == true) {
+      isDarkTheme = true;
       mapTheme = "assets/mapstyle/map_style_dark.json";
     } else {
+      isDarkTheme = false;
       mapTheme = "assets/mapstyle/map_style_main.json";
     }
     log(" mapTheme: " + mapTheme);
+  }
+
+  Future<bool> getMapThemeValue() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    bool? _darkmode = prefs.getBool(preferencesKeyNightMode);
+
+    log("get _darkmode: " + _darkmode.toString());
+    if (_darkmode == true) {
+      log("get _darkmode: return true");
+      return true;
+    } else {
+      log("get _darkmode: return false");
+      return false;
+    }
   }
 }
