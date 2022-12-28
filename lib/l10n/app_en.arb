@@ -110,5 +110,9 @@
     "clear": "Clear",
     "me": "Me",
     "melocation": "My localization",
-    "station": "Petrol stations"
+    "station": "Petrol stations",
+    "add": "Add",
+    "lastprices": "Latest prices",
+    "back": "Back",
+    "priceentrieshistoryempty": "Price entries history is empty"
 }

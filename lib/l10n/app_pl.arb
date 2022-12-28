@@ -110,5 +110,9 @@
     "clear": "Wyczyść",
     "me": "Ja",
     "melocation": "Moja lokalizacja",
-    "station": "Stacje benzynowe"
+    "station": "Stacje benzynowe",
+    "add": "Dodaj",
+    "lastprices": "Ostatnie ceny",
+    "back": "Powrót",
+    "priceentrieshistoryempty": "Historia wpisów cen jest pusta"
 }
