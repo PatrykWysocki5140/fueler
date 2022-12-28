@@ -2,6 +2,7 @@ import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/notifiers/APINotifier.dart';
 import 'package:fueler/routes/UI/user_screen/widgets/veryfication_widget.dart';
+import 'package:fueler/routes/UI/widgets/add_price_entry_widget.dart';
 import 'package:fueler/routes/tabs/map_page.dart';
 import 'package:fueler/routes/tabs/settings_page.dart';
 import 'package:provider/provider.dart';
@@ -102,6 +103,11 @@ List<BartMenuRoute> subRoutes() {
       path: '/profile/verification',
       pageBuilder: (parentContext, tabContext, settings) =>
           const PinCodeVerificationScreen(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/map/addpriceentry',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const AddPriceEntryWidget(),
     ),
   ];
 }
