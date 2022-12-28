@@ -1,6 +1,7 @@
 import "dart:convert";
 import 'dart:developer';
 import 'package:fueler/model/API_Model/MyJson.dart';
+import 'package:fueler/model/API_Model/PriceEntries.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'FuelType.dart';
@@ -29,6 +30,7 @@ class FuelStation {
   late String name;
   late String brand;
   late String marker;
+  List<PriceEntries>? prices = List.empty(growable: true);
 
   setValues(String _id, String _coordinates, String _name, String _brand) {
     id = _id;
@@ -108,6 +110,10 @@ class FuelStation {
 
   void setMarker(String _marker) {
     marker = _marker;
+  }
+
+  void addPrice(PriceEntries _price) {
+    prices?.add(_price);
   }
 
   factory FuelStation.fromJson(dynamic myJSON) {
