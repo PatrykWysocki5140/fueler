@@ -60,6 +60,8 @@ class _PriceEntryWidgetState extends State<PriceEntryWidget> {
     } else {
       _user = Provider.of<Api>(context).user;
     }
+    assets = pe.icon;
+    /*
     if (pe.fuelType == FuelType.CNG) {
       assets = 'assets/cng.png';
     } else if (pe.fuelType == FuelType.DIESEL) {
@@ -74,7 +76,7 @@ class _PriceEntryWidgetState extends State<PriceEntryWidget> {
       assets = 'assets/premiumpb.png';
     } else if (pe.fuelType == FuelType.LPG) {
       assets = 'assets/lpg.png';
-    }
+    }*/
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
