@@ -109,5 +109,6 @@
     "resend": "PONÓW",
     "clear": "Wyczyść",
     "me": "Ja",
-    "melocation": "Moja lokalizacja"
+    "melocation": "Moja lokalizacja",
+    "station": "Stacje benzynowe"
 }

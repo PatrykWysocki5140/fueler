@@ -64,6 +64,12 @@ class FuelStation {
       val = 'assets/markers/marker-Auchan.png';
     } else if (_brand == "Amic") {
       val = 'assets/markers/marker-Amic.png';
+    } else if (_brand == "Huzar") {
+      val = 'assets/markers/marker-Huzar.png';
+    } else if (_brand == "Moya") {
+      val = 'assets/markers/marker-Moya.png';
+    } else if (_brand == "Statoil") {
+      val = 'assets/markers/marker-Statoil.png';
     } else {
       val = 'assets/location_default.png';
     }
@@ -88,6 +94,12 @@ class FuelStation {
       val = 'assets/stationslogo/Auchan.png';
     } else if (_brand == "Amic") {
       val = 'assets/stationslogo/Amic.png';
+    } else if (_brand == "Huzar") {
+      val = 'assets/stationslogo/Huzar.png';
+    } else if (_brand == "Moya") {
+      val = 'assets/stationslogo/Moya.png';
+    } else if (_brand == "Statoil") {
+      val = 'assets/stationslogo/Statoil.png';
     } else {
       val = 'assets/stationslogo/default.png';
     }

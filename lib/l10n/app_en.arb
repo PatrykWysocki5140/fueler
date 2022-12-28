@@ -109,5 +109,6 @@
     "resend": "RESEND",
     "clear": "Clear",
     "me": "Me",
-    "melocation": "My localization"
+    "melocation": "My localization",
+    "station": "Petrol stations"
 }

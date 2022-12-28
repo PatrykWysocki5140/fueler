@@ -195,57 +195,72 @@ class _MapScreenState extends State<MapScreen> {
               // _controller.showMarkerInfoWindow(MarkerId("me"));
             },
           ),
-          Positioned(
-            bottom: 80,
-            left: 20,
-            right: 20,
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 120,
-                decoration: BoxDecoration(
-                    color:
-                        // ignore: unrelated_type_equality_checks
-                        _darkmode == true
-                            ? GetColors.darkAccent
-                            : GetColors.lightAccent,
-                    borderRadius: BorderRadius.circular(20)),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _locations.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        updateCameraPosition(_locations[index].coordinates);
-
-                        //_controller.moveCamera(CameraUpdate.newLatLng(_locations[index].coordinates));
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              _locations[index].brand,
-                              width: 60,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              _locations[index].name,
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                            )
-                          ],
+          if (_locations.isNotEmpty)
+            Positioned(
+              bottom: 80,
+              left: 20,
+              right: 20,
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 160,
+                  decoration: BoxDecoration(
+                      color:
+                          // ignore: unrelated_type_equality_checks
+                          _darkmode == true
+                              ? GetColors.darkAccent
+                              : GetColors.lightAccent,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.account,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    );
-                  },
-                )),
-          )
+                      Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _locations.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                updateCameraPosition(
+                                    _locations[index].coordinates);
+
+                                //_controller.moveCamera(CameraUpdate.newLatLng(_locations[index].coordinates));
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                margin: const EdgeInsets.only(right: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      _locations[index].brand,
+                                      width: 60,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      _locations[index].name,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  )),
+            )
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
