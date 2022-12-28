@@ -55,13 +55,11 @@ class _VeryficationScreenState extends State<VeryficationScreen> {
       objects = Provider.of<Api>(context).mePriceEntries;
     } else {
       Iterable<PriceEntries> _pe = _priceEntriesToSearch.where((element) =>
-          element.id!
+          element.id.toLowerCase().contains(_searchString.text.toLowerCase()) ||
+          element.price
               .toLowerCase()
               .contains(_searchString.text.toLowerCase()) ||
-          element.price!
-              .toLowerCase()
-              .contains(_searchString.text.toLowerCase()) ||
-          element.fuelType!
+          element.fuelType
               .toString()
               .toLowerCase()
               .contains(_searchString.text.toLowerCase()));
