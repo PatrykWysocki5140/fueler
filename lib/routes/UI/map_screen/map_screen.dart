@@ -8,8 +8,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fueler/model/API_Model/FuelStation.dart';
+import 'package:fueler/model/API_Model/PriceEntries.dart';
 import 'package:fueler/notifiers/MapNotifier.dart';
 import 'package:fueler/notifiers/ThemeNotifier.dart';
+import 'package:fueler/routes/UI/map_screen/widgets/station_dialog.dart';
+import 'package:fueler/routes/UI/user_screen/widgets/logout_dialog.dart';
 import 'package:fueler/settings/Get_colors.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -90,6 +93,17 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  loadLocations() async {
+    _locations.clear;
+
+    for (PriceEntries obj
+        in Provider.of<Api>(context, listen: false).mePriceEntries) {
+      _locations[0].addPrice(obj);
+      _locations[1].addPrice(obj);
+      _locations[2].addPrice(obj);
+    }
+  }
+
   updateCameraPosition(LatLng value) async {
     CameraPosition cameraPosition = CameraPosition(
       target: LatLng(value.latitude, value.longitude),
@@ -121,6 +135,7 @@ class _MapScreenState extends State<MapScreen> {
     _fs3.setValues("3", "52.378720, 16.975102", "Shell", "Shell");
     _locations.add(_fs3);
 
+/*
     FuelStation _fs4 = FuelStation();
     _fs4.setValues("4", "52.415611, 16.907161", "Auchan", "Auchan");
     _locations.add(_fs4);
@@ -140,8 +155,9 @@ class _MapScreenState extends State<MapScreen> {
     FuelStation _fs8 = FuelStation();
     _fs8.setValues("7", "52.381497, 17.106219", "Amic", "Amic");
     _locations.add(_fs8);
-
+*/
     getCurrentPosition();
+    loadLocations();
   }
 
   @override
@@ -149,7 +165,9 @@ class _MapScreenState extends State<MapScreen> {
     //loginController.text = "Adam";
     //passwordController.text = "TEST";
     //_darkmode = Provider.of<GoogleMaps>(context).isDarkTheme;
+
     var size = MediaQuery.of(context).size;
+
     createMarkers(context);
     return Scaffold(
       appBar: AppBar(
@@ -163,18 +181,29 @@ class _MapScreenState extends State<MapScreen> {
             // Navigator.of(parentContext).pushNamed("/parent");
             Navigator.of(context).pushNamed("/map");
           },
-        ), /*
+        ),
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 //heroTag: "/settingsss",
-                child: const Icon(Icons.refresh),
+                child: Row(
+                  children: [
+                    const Icon(Icons.addchart_rounded),
+                    Text(
+                      AppLocalizations.of(context)!.add,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
                 onTap: () {
-                  Navigator.of(context).pushNamed("/profile/inner");
+                  Navigator.of(context).pushNamed("/map/addpriceentry");
                 },
               )),
-        ],*/
+        ],
       ),
       body: Stack(
         children: [
@@ -188,6 +217,7 @@ class _MapScreenState extends State<MapScreen> {
             myLocationButtonEnabled: true,
             zoomControlsEnabled: false,
             markers: markers,
+            onCameraMove: (position) {},
             onLongPress: (argument) {
               // _controller.showMarkerInfoWindow(const MarkerId("me"));
             },
@@ -213,7 +243,7 @@ class _MapScreenState extends State<MapScreen> {
                   child: Column(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.account,
+                        AppLocalizations.of(context)!.station,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -275,16 +305,35 @@ class _MapScreenState extends State<MapScreen> {
 
   createMarkers(BuildContext context) {
     Marker marker;
-
-    _locations.forEach((contact) async {
+    _locations.forEach((loaction) async {
+      String _snippet = "";
+      if (loaction.prices != null) {
+        for (PriceEntries obj in loaction.prices!.toList()) {
+          _snippet += obj.getFuelType(obj.fuelType.toString()).name +
+              ": " +
+              obj.price.toString() +
+              "\n";
+        }
+      }
       marker = Marker(
-        markerId: MarkerId(contact.coordinates.toString()),
-        position: contact.coordinates,
-        icon:
-            await _getAssetIcon(context, contact.marker).then((value) => value),
+        markerId: MarkerId(loaction.coordinates.toString()),
+        position: loaction.coordinates,
+        icon: await _getAssetIcon(context, loaction.marker)
+            .then((value) => value),
         infoWindow: InfoWindow(
-          title: contact.name,
+          title: loaction.name,
+          snippet: (_snippet),
         ),
+        onTap: (() async {
+          bool? val = await showDialog<bool>(
+              context: context,
+              builder: (BuildContext context) =>
+                  StationDialog(fuelstation: loaction));
+
+          if (val == true) {
+            setState(() {});
+          }
+        }),
       );
 
       setState(() {
