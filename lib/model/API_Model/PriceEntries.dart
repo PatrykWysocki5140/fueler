@@ -22,11 +22,12 @@ List<PriceEntries> priceEntriesModelFromJson(String str) {
 
 class PriceEntries {
   PriceEntries({id, price, fuelType, addedBy, fuelStation});
-  String? id;
-  String? price;
-  FuelType? fuelType;
-  String? addedBy;
-  String? fuelStation;
+  late String id;
+  late String price;
+  late FuelType fuelType;
+  late String addedBy;
+  late String fuelStation;
+  late String icon;
 
   void setValues(String _id, String _price, FuelType _fuelType, String _addedBy,
       String _fuelStation) {
@@ -35,14 +36,22 @@ class PriceEntries {
     fuelType = _fuelType;
     addedBy = _addedBy;
     fuelStation = _fuelStation;
-  }
 
-  void clear() {
-    id = null;
-    price = null;
-    fuelType = null;
-    addedBy = null;
-    fuelStation = null;
+    if (_fuelType == FuelType.CNG) {
+      icon = 'assets/cng.png';
+    } else if (_fuelType == FuelType.DIESEL) {
+      icon = 'assets/on.png';
+    } else if (_fuelType == FuelType.DIESEL_PREMIUM) {
+      icon = 'assets/premiumon.png';
+    } else if (_fuelType == FuelType.GASOLINE95) {
+      icon = 'assets/pb95.png';
+    } else if (_fuelType == FuelType.GASOLINE98) {
+      icon = 'assets/pb98.png';
+    } else if (_fuelType == FuelType.GASOLINE_PREMIUM) {
+      icon = 'assets/premiumpb.png';
+    } else if (_fuelType == FuelType.LPG) {
+      icon = 'assets/lpg.png';
+    }
   }
 
   factory PriceEntries.fromJson(dynamic myJSON) {
@@ -95,31 +104,17 @@ class PriceEntries {
       };
 
   FuelType getFuelType(String ft) {
-    FuelType _ft = FuelType.DIESEL;
-    if ((ft == "GASOLINE95") || (ft == "FuelType.GASOLINE95")) {
-      _ft = FuelType.GASOLINE95;
-    } else if ((ft == "GASOLINE98") || (ft == "FuelType.GASOLINE98")) {
-      _ft = FuelType.GASOLINE98;
-    } else if ((ft == "GASOLINE_PREMIUM") ||
-        (ft == "FuelType.GASOLINE_PREMIUM")) {
-      _ft = FuelType.GASOLINE_PREMIUM;
-    } else if ((ft == "DIESEL") || (ft == "FuelType.DIESEL")) {
-      _ft = FuelType.DIESEL;
-    } else if ((ft == "DIESEL_PREMIUM") || (ft == "FuelType.DIESEL_PREMIUM")) {
-      _ft = FuelType.DIESEL_PREMIUM;
-    } else if ((ft == "LPG") || (ft == "FuelType.LPG")) {
-      _ft = FuelType.LPG;
-    } else if ((ft == "CNG") || (ft == "FuelType.CNG")) {
-      _ft = FuelType.CNG;
-    } else {
-      _ft = FuelType.UNDEFINED;
-    }
-
+    FuelType _ft = returnfuelType(ft);
     return _ft;
   }
 
   void setFuelType(String ft) {
-    FuelType _ft = FuelType.DIESEL;
+    FuelType _ft = returnfuelType(ft);
+    fuelType = _ft;
+  }
+
+  FuelType returnfuelType(String ft) {
+    FuelType _ft = FuelType.UNDEFINED;
     if ((ft == "GASOLINE95") || (ft == "FuelType.GASOLINE95")) {
       _ft = FuelType.GASOLINE95;
     } else if ((ft == "GASOLINE98") || (ft == "FuelType.GASOLINE98")) {
@@ -138,7 +133,6 @@ class PriceEntries {
     } else {
       _ft = FuelType.UNDEFINED;
     }
-
-    fuelType = _ft;
+    return _ft;
   }
 }
