@@ -133,6 +133,10 @@ class _PriceEntryWidgetState extends State<PriceEntryWidget> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Image.asset(
+                      assets,
+                      width: 60,
+                    ), /*
                     CircleAvatar(
                       radius: 18,
                       child: ClipOval(
@@ -142,7 +146,7 @@ class _PriceEntryWidgetState extends State<PriceEntryWidget> {
                           height: 250,
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ],
