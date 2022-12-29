@@ -1,28 +1,24 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:ui' as ui;
 import 'dart:ui';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:dio/dio.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fueler/model/API_Model/FuelStation.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
 import 'package:fueler/notifiers/MapNotifier.dart';
-import 'package:fueler/notifiers/ThemeNotifier.dart';
+
 import 'package:fueler/routes/UI/map_screen/widgets/station_dialog.dart';
-import 'package:fueler/routes/UI/user_screen/widgets/logout_dialog.dart';
+
 import 'package:fueler/settings/Get_colors.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../model/API_Model/User.dart';
-import '../../../model/API_Model/UserPrivilegeLevel.dart';
+
 import '../../../notifiers/APINotifier.dart';
-import '../../../settings/validator.dart';
 
 class MapScreen extends StatefulWidget {
   static String id = "login_screen";
@@ -43,6 +39,7 @@ class _MapScreenState extends State<MapScreen> {
   Set<Marker> markers = {};
   late BitmapDescriptor customIcon;
   late bool _darkmode = false;
+
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
         .then((value) {})
@@ -68,7 +65,19 @@ class _MapScreenState extends State<MapScreen> {
 
   getCurrentPosition() async {
     getUserCurrentLocation().then((value) async {
+      /*
+      final coordinates = Coordinates(value.latitude, value.longitude);
+      var addresses =
+          await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      var first = addresses.first;
+      log("${first.featureName} : ${first.addressLine}");
+*/
       LatLng location = LatLng(value.latitude, value.longitude);
+
+////// nie działa
+      String? _formattedAddress =
+          await Provider.of<GoogleMaps>(context, listen: false)
+              .getAddressFromLatLng(value.latitude, value.longitude);
 
       BitmapDescriptor customIcon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(),
@@ -80,7 +89,9 @@ class _MapScreenState extends State<MapScreen> {
         position: location,
         infoWindow: InfoWindow(
           title: Provider.of<Api>(context, listen: false).user.name,
-          snippet: AppLocalizations.of(context)!.melocation,
+          snippet: AppLocalizations.of(context)!.melocation +
+              ": " +
+              _formattedAddress!,
         ),
         icon: customIcon,
         onTap: () async {
@@ -216,6 +227,9 @@ class _MapScreenState extends State<MapScreen> {
             compassEnabled: true,
             myLocationButtonEnabled: true,
             zoomControlsEnabled: false,
+            mapToolbarEnabled: true,
+            buildingsEnabled: true,
+            indoorViewEnabled: true,
             markers: markers,
             onCameraMove: (position) {},
             onLongPress: (argument) {
@@ -227,19 +241,21 @@ class _MapScreenState extends State<MapScreen> {
           ),
           if (_locations.isNotEmpty)
             Positioned(
-              bottom: 80,
+              bottom: 85,
               left: 20,
               right: 20,
               child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 160,
+                  height: 180,
                   decoration: BoxDecoration(
-                      color:
-                          // ignore: unrelated_type_equality_checks
-                          _darkmode == true
-                              ? GetColors.darkAccent
-                              : GetColors.lightAccent,
-                      borderRadius: BorderRadius.circular(20)),
+                    color:
+                        // ignore: unrelated_type_equality_checks
+                        _darkmode == true
+                            ? GetColors.darkAccent
+                            : GetColors.lightAccent,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(),
+                  ),
                   child: Column(
                     children: [
                       Text(
@@ -249,6 +265,7 @@ class _MapScreenState extends State<MapScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      SizedBox(height: size.height * 0.01),
                       Expanded(
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -262,23 +279,45 @@ class _MapScreenState extends State<MapScreen> {
                                 //_controller.moveCamera(CameraUpdate.newLatLng(_locations[index].coordinates));
                               },
                               child: Container(
-                                width: 100,
-                                height: 100,
-                                margin: const EdgeInsets.only(right: 10),
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                  color:
+                                      // ignore: unrelated_type_equality_checks
+                                      _darkmode == true
+                                          ? GetColors.darkShades
+                                          : GetColors.lightShades,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(),
+                                ),
+                                //color: GetColors.black,
+                                //width: 100,
+                                //height: 100,
+                                margin:
+                                    const EdgeInsets.only(right: 10, left: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    //SizedBox(height: size.height * 0.01),
                                     Image.asset(
                                       _locations[index].brand,
                                       width: 60,
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
                                     Text(
                                       _locations[index].name,
                                       style: const TextStyle(
-                                          color: Colors.black,
+                                          fontSize: 20,
+                                          // color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(height: size.height * 0.01),
+                                    Text(
+                                      _locations[index].address == null
+                                          ? ""
+                                          : _locations[index]
+                                              .address
+                                              .toString(),
+                                      style: const TextStyle(
+                                          //color: Colors.black,
                                           fontWeight: FontWeight.w600),
                                     )
                                   ],
@@ -288,6 +327,7 @@ class _MapScreenState extends State<MapScreen> {
                           },
                         ),
                       ),
+                      SizedBox(height: size.height * 0.01),
                     ],
                   )),
             )
