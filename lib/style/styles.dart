@@ -135,13 +135,19 @@ class Styles {
             ),
           ),
         ),
+
         ////////////////////////////////////////////////////////////////////
         ///
         /// styl listy
 
         cardTheme: CardTheme(
           color: isDarkTheme ? GetColors.darkAccent : GetColors.lightAccent,
-        )
+        ),
+        ////////////////////////////////////////////////////////////////////
+        ///
+        /// styl listy rozwijanej
+        canvasColor:
+            isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight
         ////////////////////////////////////////////////////////////////////
         ///
         ///
