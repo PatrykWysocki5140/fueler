@@ -59,6 +59,7 @@ dependencies:
   google_maps_flutter: ^2.2.1
   pin_code_fields: ^7.4.0
   permission_handler: ^10.2.0
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +89,7 @@ flutter:
     - assets/mapstyle/
     - assets/markers/
     - assets/stationslogo/
+    - assets/fueltypes/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
