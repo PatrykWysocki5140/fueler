@@ -114,5 +114,17 @@
     "add": "Dodaj",
     "lastprices": "Ostatnie ceny",
     "back": "Powrót",
-    "priceentrieshistoryempty": "Historia wpisów cen jest pusta"
+    "priceentrieshistoryempty": "Historia wpisów cen jest pusta",
+    "validPrice": "Wprowadź poprawną cenę.",
+    "cng": "CNG",
+    "on": "ON",
+    "onpremium": "ON PREMIUM",
+    "pb95": "PB 95",
+    "pb98": "PB 98",
+    "pbpremium": "PB PREMIUM",
+    "lpg": "LPG",
+    "send": "Wyślij",
+    "sendrequest": "Wyślij zgłoszenie",
+    "validEmptyField": "Pole nie może być puste.",
+    "notificationfuelprice": "Zgłoszenie nowej ceny paliwa"
 }

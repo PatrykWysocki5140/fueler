@@ -114,5 +114,17 @@
     "add": "Add",
     "lastprices": "Latest prices",
     "back": "Back",
-    "priceentrieshistoryempty": "Price entries history is empty"
+    "priceentrieshistoryempty": "Price entries history is empty",
+    "validPrice": "Enter the correct price.",
+    "cng": "CNG",
+    "on": "ON",
+    "onpremium": "ON PREMIUM",
+    "pb95": "PB 95",
+    "pb98": "PB 98",
+    "pbpremium": "PB PREMIUM",
+    "lpg": "LPG",
+    "send": "Send",
+    "sendrequest": "Send a request",
+    "validEmptyField": "The field must not be empty.",
+    "notificationfuelprice": "Notification of new fuel price"
 }
