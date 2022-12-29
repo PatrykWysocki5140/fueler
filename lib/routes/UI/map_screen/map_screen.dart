@@ -31,8 +31,12 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   static final LatLng _kMapCenter = LatLng(52.418542, 16.920900);
 
-  static final CameraPosition _kInitialPosition =
-      CameraPosition(target: _kMapCenter, zoom: 11.0, tilt: 0, bearing: 0);
+  static final CameraPosition _kInitialPosition = CameraPosition(
+    target: _kMapCenter,
+    zoom: 11.0,
+    tilt: 60.0,
+    bearing: 0,
+  );
 
   late GoogleMapController _controller;
 
@@ -118,6 +122,7 @@ class _MapScreenState extends State<MapScreen> {
   updateCameraPosition(LatLng value) async {
     CameraPosition cameraPosition = CameraPosition(
       target: LatLng(value.latitude, value.longitude),
+      tilt: 30.0,
       zoom: 18,
     );
     LatLng location = LatLng(value.latitude, value.longitude);
@@ -231,6 +236,8 @@ class _MapScreenState extends State<MapScreen> {
             buildingsEnabled: true,
             indoorViewEnabled: true,
             markers: markers,
+            tiltGesturesEnabled: true,
+
             onCameraMove: (position) {},
             onLongPress: (argument) {
               // _controller.showMarkerInfoWindow(const MarkerId("me"));
