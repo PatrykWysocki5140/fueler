@@ -222,7 +222,7 @@ class _MapScreenState extends State<MapScreen> {
             mapType: MapType.normal,
             initialCameraPosition: _kInitialPosition,
             onMapCreated: onMapCreated,
-            trafficEnabled: true,
+            // trafficEnabled: true,
             //myLocationEnabled: true,
             compassEnabled: true,
             myLocationButtonEnabled: true,
