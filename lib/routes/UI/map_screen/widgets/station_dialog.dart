@@ -8,6 +8,7 @@ import '../../../../settings/validator.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StationDialog extends StatelessWidget {
   final FuelStation fuelstation;
@@ -26,8 +27,19 @@ class StationDialog extends StatelessWidget {
       }
     }
     FuelStation _fs = fuelstation;
-
     var size = MediaQuery.of(context).size;
+
+    String googleMapsUrl;
+
+    if (fuelstation.address != null) {
+      String address = fuelstation.address.toString();
+      googleMapsUrl =
+          "https://www.google.com/maps/dir/?api=1&destination=$address";
+    } else {
+      double latitude = fuelstation.coordinates.latitude;
+      double longitude = fuelstation.coordinates.longitude;
+      googleMapsUrl = "google.navigation:q=$latitude,$longitude";
+    }
     return Scaffold(
       body: Column(
         children: [
@@ -49,6 +61,7 @@ class StationDialog extends StatelessWidget {
                   ],
                 ),
               ),
+              //if (fuelstation.address != null)
               Flexible(
                 fit: FlexFit.tight,
                 child: Column(
@@ -58,8 +71,10 @@ class StationDialog extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       //style: ButtonStyle(backgroundColor:MaterialStatePropertyAll<Color>(GetColors.red)),
-                      onPressed: () => {
-                        Navigator.pop(context, true),
+                      onPressed: () async => {
+                        //Navigator.pop(context, true),
+                        // ignore: deprecated_member_use
+                        await launch(googleMapsUrl),
                       },
                       child: Text(AppLocalizations.of(context)!.navigate),
                     ),
@@ -77,6 +92,13 @@ class StationDialog extends StatelessWidget {
               ),
             ],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(_fs.address == null ? "" : _fs.address.toString()),
+            ],
+          ),
+          SizedBox(height: size.height * 0.01),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
