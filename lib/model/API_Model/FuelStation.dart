@@ -2,6 +2,7 @@ import "dart:convert";
 import 'dart:developer';
 import 'package:fueler/model/API_Model/MyJson.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'FuelType.dart';
@@ -26,18 +27,23 @@ class FuelStation {
   FuelStation({id, coordinates, name, brand});
   late String id;
   late LatLng coordinates;
+  String? address;
   //FuelType? fuelType;
   late String name;
   late String brand;
   late String marker;
   List<PriceEntries>? prices = List.empty(growable: true);
 
-  setValues(String _id, String _coordinates, String _name, String _brand) {
+  setValues(
+      String _id, String _coordinates, String _name, String _brand) async {
+    GoogleMaps mapApi = GoogleMaps();
     id = _id;
     coordinates = convertLocation(_coordinates);
     name = _name;
     brand = getBrand(_brand);
     marker = getMarker(_brand);
+    address = await mapApi.getAddressFromLatLng(
+        coordinates.latitude, coordinates.longitude);
   }
 
   LatLng convertLocation(String _coordinates) {
