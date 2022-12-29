@@ -71,11 +71,23 @@ class Validator {
     }
   }
 
+  static String? validatePrice(String value, BuildContext context) {
+    Pattern pattern = r'(^\d*\.?\d*)$';
+    RegExp regex = RegExp(pattern as String);
+    if (value.isEmpty) {
+      return '🚩 ${AppLocalizations.of(context)!.validEmptyField}';
+    } else if (!regex.hasMatch(value)) {
+      return '🚩 ${AppLocalizations.of(context)!.validPrice}.';
+    } else {
+      return null;
+    }
+  }
+
   static String? validatePhoneNumber(String value, BuildContext context) {
-    /* if (value.length != 9) {
+    if (value.length < 9) {
       return '🚩 ${AppLocalizations.of(context)!.validPhone}';
     } else {
       return null;
-    }*/
+    }
   }
 }
