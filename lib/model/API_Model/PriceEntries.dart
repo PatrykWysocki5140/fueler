@@ -38,19 +38,19 @@ class PriceEntries {
     fuelStation = _fuelStation;
 
     if (_fuelType == FuelType.CNG) {
-      icon = 'assets/cng.png';
+      icon = 'assets/fueltypes/cng.png';
     } else if (_fuelType == FuelType.DIESEL) {
-      icon = 'assets/on.png';
+      icon = 'assets/fueltypes/on.png';
     } else if (_fuelType == FuelType.DIESEL_PREMIUM) {
-      icon = 'assets/premiumon.png';
+      icon = 'assets/fueltypes/premiumon.png';
     } else if (_fuelType == FuelType.GASOLINE95) {
-      icon = 'assets/pb95.png';
+      icon = 'assets/fueltypes/pb95.png';
     } else if (_fuelType == FuelType.GASOLINE98) {
-      icon = 'assets/pb98.png';
+      icon = 'assets/fueltypes/pb98.png';
     } else if (_fuelType == FuelType.GASOLINE_PREMIUM) {
-      icon = 'assets/premiumpb.png';
+      icon = 'assets/fueltypes/premiumpb.png';
     } else if (_fuelType == FuelType.LPG) {
-      icon = 'assets/lpg.png';
+      icon = 'assets/fueltypes/lpg.png';
     }
   }
 
