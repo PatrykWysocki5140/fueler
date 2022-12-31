@@ -382,10 +382,12 @@ class _MapScreenState extends State<MapScreen> {
           }
         }),
       );
-
+      markers.add(marker);
+/*
       setState(() {
         markers.add(marker);
-      });
+        super.dispose();
+      });*/
     });
   }
 
