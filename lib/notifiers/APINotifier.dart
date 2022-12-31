@@ -422,6 +422,40 @@ class Api with ChangeNotifier {
     }
   }
 
+  Future<Response?> resendEmail() async {
+    Response response;
+    String url = '$baseUrl/api/users/me/confirmation-code';
+    Dio dio = Dio();
+
+    try {
+      log(url);
+      // Dodaj token do nagłówka autoryzacji
+
+      response = await dio.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if ((response.statusCode == 204) || (response.statusCode == 200)) {
+        dio.close();
+        return await response;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+    log("status:" + response.statusCode.toString());
+    if (response.statusCode == 204) {
+      dio.close();
+      return await response;
+    } else {
+      dio.close();
+      return await response;
+    }
+  }
+
 ///////////////////////////////////////////////////////////
   ///ADMIN
 ///////////////////////////////////////////////////////////
