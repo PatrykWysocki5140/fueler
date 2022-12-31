@@ -290,7 +290,30 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
     );
   }
 
-  resendSMS() {}
+  resendEmail() async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(AppLocalizations.of(context)!.procesing),
+      backgroundColor: GetColors.warning,
+    ));
+
+    Response? _response =
+        await Provider.of<Api>(context, listen: false).resendEmail();
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    if ((_response?.statusCode == 200) || (_response?.statusCode == 204)) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.success),
+        backgroundColor: GetColors.success,
+      ));
+      return true;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.error),
+        backgroundColor: GetColors.error,
+      ));
+      return false;
+    }
+  }
 
   // ignore: non_constant_identifier_names
   Future<bool?> veryfication(String _code) async {
@@ -454,15 +477,15 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.nosms,
-                    style: TextStyle(
+                    style: const TextStyle(
                         //color: Colors.black54,
                         fontSize: 15),
                   ),
                   TextButton(
-                    onPressed: () => resendSMS(),
+                    onPressed: () => resendEmail(),
                     child: Text(
                       AppLocalizations.of(context)!.resend,
-                      style: TextStyle(
+                      style: const TextStyle(
                           // color: Color(0xFF91D3B3),
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
@@ -484,6 +507,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       // conditions for validating
                       // ignore: unrelated_type_equality_checks
                       if (currentText.length != 6 ||
+                          // ignore: unrelated_type_equality_checks
                           veryfication(currentText) != true) {
                         errorController!.add(ErrorAnimationType
                             .shake); // Triggering error shake animation
