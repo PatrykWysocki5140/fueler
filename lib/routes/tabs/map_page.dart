@@ -3,10 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bart/bart.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 import 'package:fueler/routes/UI/map_screen/map_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 class MapPage extends StatefulWidget {
   final BuildContext parentContext;
@@ -63,6 +65,7 @@ class _MapPage extends State<MapPage> with AppBarNotifier {
 
   @override
   Widget build(BuildContext context) {
+    //Provider.of<GoogleMaps>(context).
     return const MapScreen();
   }
 }
