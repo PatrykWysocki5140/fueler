@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 import 'package:fueler/settings/Get_colors.dart';
 
 import 'package:provider/provider.dart';
@@ -36,6 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Response? _response = await Provider.of<Api>(context, listen: false)
           .login(loginController.text, passwordController.text);
+
+      await Provider.of<GoogleMaps>(context, listen: false).setDistance("20");
       //.LogIn(numberController.text, passwordController.text);
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
