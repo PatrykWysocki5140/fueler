@@ -1,5 +1,6 @@
 import "dart:convert";
 import 'dart:developer';
+
 import 'package:fueler/model/API_Model/MyJson.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
 import 'package:fueler/notifiers/MapNotifier.dart';
@@ -11,10 +12,10 @@ import 'dart:convert';
 
 MyJson myjson = MyJson();
 
-String priceEntriesModelToJson(List<FuelStation> data) =>
+String fuelStationModelToJson(List<FuelStation> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-List<FuelStation> priceEntriesModelFromJson(String str) {
+List<FuelStation> fuelStationModelFromJson(String str) {
   String _json = myjson.JsonDecoder(str);
   _json = myjson.JsonDecoderList(_json);
   List<dynamic> parsedListJson = jsonDecode(_json) as List;
@@ -122,6 +123,12 @@ class FuelStation {
     prices?.add(_price);
   }
 
+  void addPrices(List<PriceEntries> _prices) {
+    for (PriceEntries obj in _prices) {
+      prices?.add(obj);
+    }
+  }
+
   factory FuelStation.fromJson(dynamic myJSON) {
     FuelStation _fs = FuelStation();
 
@@ -136,6 +143,9 @@ class FuelStation {
       jsondecode["name"],
       jsondecode["brand"],
     );
+    _fs.addPrices((jsondecode['priceEntries'] as List)
+        .map((e) => PriceEntries.fromJson(e))
+        .toList());
 
     return _fs;
   }
