@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fueler/model/API_Model/FuelStation.dart';
 import 'package:fueler/model/API_Model/FuelType.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
 
@@ -35,6 +36,7 @@ class _AddPriceEntryWidgetState extends State<AddPriceEntryWidget> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController priceController = TextEditingController();
   String _fuelType = '';
+  String _fuelStation = 'Orlen';
   double _price = 0;
 
   Future<void> reportPrice() async {
@@ -77,6 +79,67 @@ class _AddPriceEntryWidgetState extends State<AddPriceEntryWidget> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          AppLocalizations.of(context)!.fuelstation,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        DropdownButtonFormField(
+                          value: _fuelStation,
+                          icon: Icon(Icons.arrow_drop_down),
+                          iconSize: 42,
+                          items: [
+                            "Orlen",
+                            "Lotos",
+                            "Shell",
+                            "BP",
+                            "InterMarche",
+                            "CircleK",
+                            "Auchan",
+                            "Amic",
+                            "Huzar",
+                            "Moya",
+                            "Statoil"
+                          ].map((_fuelStation) {
+                            String icon;
+                            FuelStation _fs = FuelStation();
+                            icon = _fs.getBrand(_fuelStation);
+
+                            return DropdownMenuItem(
+                              value: _fuelStation,
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    icon,
+                                    width: 60,
+                                  ),
+                                  SizedBox(width: size.height * 0.03),
+                                  Text(
+                                    _fuelStation,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _fuelStation = value.toString();
+                            });
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Wybierz rodzaj paliw';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: size.height * 0.03),
                         Text(
                           AppLocalizations.of(context)!.fueltype,
                           style: const TextStyle(
