@@ -97,7 +97,6 @@ class Api with ChangeNotifier {
           token);
       response = await dio.post(
         url,
-        //options: Options(headers: {'Authorization': 'Bearer $token'}),
         data: {
           'userName': _name,
           'password': _password,
@@ -129,7 +128,6 @@ class Api with ChangeNotifier {
 
     try {
       log(url);
-      // Dodaj token do nagłówka autoryzacji
 
       log("_currentPassword:" +
           _currentPassword +
@@ -137,7 +135,6 @@ class Api with ChangeNotifier {
           _newPassword +
           " token: " +
           token);
-      // Zaktualizuj dane użytkownika za pomocą metody PUT na adresie /api/users/me/password
       response = await dio.put(
         url,
         options: Options(headers: {'Authorization': 'Bearer $token'}),
@@ -174,10 +171,7 @@ class Api with ChangeNotifier {
 
     try {
       log(url);
-      // Dodaj token do nagłówka autoryzacji
-
       log(" token: " + token);
-      // Zaktualizuj dane użytkownika za pomocą metody PUT na adresie /api/users/me/password
       response = await dio.delete(
         url,
         options: Options(headers: {'Authorization': 'Bearer $token'}),
@@ -214,8 +208,6 @@ class Api with ChangeNotifier {
 
     try {
       log(url);
-      // Dodaj token do nagłówka autoryzacji
-
       log('userName:' +
           _name +
           ' phoneNumber:' +
@@ -224,7 +216,6 @@ class Api with ChangeNotifier {
           _email +
           " token: " +
           token);
-      // Zaktualizuj dane użytkownika za pomocą metody PUT na adresie /api/users/me/password
       response = await dio.put(
         url,
         options: Options(headers: {'Authorization': 'Bearer $token'}),
@@ -263,19 +254,15 @@ class Api with ChangeNotifier {
   }
 
   Future<Response?> login(String username, String password) async {
-    // Utwórz obiekt Dio z konfiguracją
     var dio = Dio();
     User _user = User();
 
-    // Utwórz adres URL do logowania użytkownika z parametrami zapytania
     var url = '$baseUrl/api/users/login?name=$username&password=$password';
 
     try {
       log(url);
-      // Wyślij żądanie HTTP GET do adresu URL
       Response response = await dio.get(url);
       if (response.statusCode != 401) {
-        // Pobierz token z odpowiedzi
         var _token = response.data;
         token = _token;
         log("token:" + token);
@@ -320,7 +307,6 @@ class Api with ChangeNotifier {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString(preferencesKeyToken);
 
-    // Utwórz obiekt Dio z konfiguracją
     var dio = Dio();
 
     // Utwórz adres URL do pobierania własnych danych użytkownika
@@ -390,10 +376,8 @@ class Api with ChangeNotifier {
 
     try {
       log(url);
-      // Dodaj token do nagłówka autoryzacji
 
       log("code:" + _code + " token: " + token);
-      // Zaktualizuj dane użytkownika za pomocą metody PUT na adresie /api/users/me/password
       response = await dio.put(
         url,
         options: Options(headers: {'Authorization': 'Bearer $token'}),
@@ -429,13 +413,11 @@ class Api with ChangeNotifier {
 
     try {
       log(url);
-      // Dodaj token do nagłówka autoryzacji
 
       response = await dio.get(
         url,
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
-      // Wyświetl odpowiedź
       log("status:" + response.statusCode.toString());
       if ((response.statusCode == 204) || (response.statusCode == 200)) {
         dio.close();
@@ -494,12 +476,6 @@ class Api with ChangeNotifier {
   Future<Response?> updateUserById(User _user) async {
     Response response;
     String _uId = _user.id.toString();
-    ////// test
-    ///
-
-    //_uId = "6";
-
-    ///
     String url = '$baseUrl/api/users/$_uId';
     Dio dio = Dio();
 
@@ -520,7 +496,6 @@ class Api with ChangeNotifier {
               .name
         },
       );
-      // Wyświetl odpowiedź
       log("status:" + response.statusCode.toString());
       if (response.statusCode == 204) {
         dio.close();
@@ -550,12 +525,10 @@ class Api with ChangeNotifier {
       if (response.statusCode == 200) {
         _user = User.fromJson(await response.data);
         dio.close();
-        // return response.data;
       }
     } on DioError catch (e) {
       log("e.response!.data: " + e.response!.data.toString());
       dio.close();
-      //return e.response;
     }
     return _user;
   }
@@ -563,12 +536,6 @@ class Api with ChangeNotifier {
   Future<Response?> deleteUserById(User _user) async {
     Response response;
     String _uId = _user.id.toString();
-    ////// test
-    ///
-
-    //_uId = "2";
-
-    ///
     String url = '$baseUrl/api/users/$_uId';
     Dio dio = Dio();
 
