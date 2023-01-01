@@ -83,6 +83,32 @@ class Validator {
     }
   }
 
+  static String? validateCoordinatesLatitude(
+      String value, BuildContext context) {
+    Pattern pattern = r'^-?([0-8]?[0-9]|90)(\.[0-9]{1,10})$';
+    RegExp regex = RegExp(pattern as String);
+    if (value.isEmpty) {
+      return '🚩 ${AppLocalizations.of(context)!.validEmptyField}';
+    } else if (!regex.hasMatch(value)) {
+      return '🚩 ${AppLocalizations.of(context)!.validCoordinates}.';
+    } else {
+      return null;
+    }
+  }
+
+  static String? validateCoordinatesLongitude(
+      String value, BuildContext context) {
+    Pattern pattern = r'^-?([0-9]{1,2}|1[0-7][0-9]|180)(\.[0-9]{1,10})$';
+    RegExp regex = RegExp(pattern as String);
+    if (value.isEmpty) {
+      return '🚩 ${AppLocalizations.of(context)!.validEmptyField}';
+    } else if (!regex.hasMatch(value)) {
+      return '🚩 ${AppLocalizations.of(context)!.validCoordinates}.';
+    } else {
+      return null;
+    }
+  }
+
   static String? validatePhoneNumber(String value, BuildContext context) {
     if (value.length < 9) {
       return '🚩 ${AppLocalizations.of(context)!.validPhone}';
