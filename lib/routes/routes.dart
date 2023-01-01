@@ -12,6 +12,8 @@ import 'UI/splash_screen/splash_screen_page.dart';
 import 'UI/user_admin_screen/widgets/create_user_screen.dart';
 import 'UI/user_screen/user_screen.dart';
 import 'UI/user_screen/widgets/price_entries_list_widget.dart';
+import 'UI/widgets/add_fuel_station_widget.dart';
+import 'UI/widgets/add_widget.dart';
 import 'tabs/profile_page.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,7 +33,7 @@ List<BartMenuRoute> subRoutes() {
   return [
     // strona profil usera // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "", //AppLocalizations.of(Context)!.account,
+      label: "",
       icon: Icons.person,
       path: '/profile',
       pageBuilder: (parentContext, tabContext, settings) => ProfilePage(
@@ -43,7 +45,7 @@ List<BartMenuRoute> subRoutes() {
     ),
     // strona mapa // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "", //AppLocalizations.of(Context)!.navigate,
+      label: "",
       icon: Icons.navigation,
       path: '/map',
       pageBuilder: (parentContext, tabContext, settings) => MapPage(
@@ -55,7 +57,7 @@ List<BartMenuRoute> subRoutes() {
     ),
     // strona ustawienia // bottom bar menu
     BartMenuRoute.bottomBar(
-      label: "", //AppLocalizations.of(Context)!.settings,
+      label: "",
       icon: Icons.settings,
       path: '/settings',
       pageBuilder: (parentContext, tabContext, settings) => SettingsPage(
@@ -105,9 +107,18 @@ List<BartMenuRoute> subRoutes() {
           const PinCodeVerificationScreen(),
     ),
     BartMenuRoute.innerRoute(
-      path: '/map/addpriceentry',
+      path: '/map/add',
+      pageBuilder: (parentContext, tabContext, settings) => const AddWidget(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/map/add/addpriceentry',
       pageBuilder: (parentContext, tabContext, settings) =>
           const AddPriceEntryWidget(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/map/add/addstation',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const AddFuelStationWidget(),
     ),
   ];
 }
