@@ -126,5 +126,9 @@
     "send": "Send",
     "sendrequest": "Send a request",
     "validEmptyField": "The field must not be empty.",
-    "notificationfuelprice": "Notification of new fuel price"
+    "notificationfuelprice": "Notification of new fuel price",
+    "addprice": "Add new price",
+    "addstation": "Add new station",
+    "validCoordinates": "Enter the correct coordinates.",
+    "brand": "Brand"
 }

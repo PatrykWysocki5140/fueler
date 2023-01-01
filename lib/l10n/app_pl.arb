@@ -126,5 +126,9 @@
     "send": "Wyślij",
     "sendrequest": "Wyślij zgłoszenie",
     "validEmptyField": "Pole nie może być puste.",
-    "notificationfuelprice": "Zgłoszenie nowej ceny paliwa"
+    "notificationfuelprice": "Zgłoszenie nowej ceny paliwa",
+    "addprice": "Dodaj nową cenę",
+    "addstation": "Dodaj nową stację",
+    "validCoordinates": "Wprowadź poprawne koordynaty.",
+    "brand": "Marka"
 }
