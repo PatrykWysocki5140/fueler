@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
+import 'package:dio/dio.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/foundation.dart';
@@ -59,30 +60,20 @@ class _MapScreenState extends State<MapScreen> {
 
     String value;
     await Provider.of<GoogleMaps>(context, listen: false).setMapTheme();
-    // ignore: unrelated_type_equality_checks
     value = await DefaultAssetBundle.of(context)
         .loadString(Provider.of<GoogleMaps>(context, listen: false).mapTheme);
     _darkmode = Provider.of<GoogleMaps>(context, listen: false).isDarkTheme;
     _controller.setMapStyle(value);
-    //_controller.showMarkerInfoWindow(MarkerId("me"));
   }
 
   getCurrentPosition() async {
     getUserCurrentLocation().then((value) async {
-      /*
-      final coordinates = Coordinates(value.latitude, value.longitude);
-      var addresses =
-          await Geocoder.local.findAddressesFromCoordinates(coordinates);
-      var first = addresses.first;
-      log("${first.featureName} : ${first.addressLine}");
-*/
       LatLng location = LatLng(value.latitude, value.longitude);
 
-////// nie działa
       String? _formattedAddress =
           await Provider.of<GoogleMaps>(context, listen: false)
               .getAddressFromLatLng(value.latitude, value.longitude);
-
+      //
       BitmapDescriptor customIcon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(),
         'assets/location_icon.png',
@@ -103,19 +94,51 @@ class _MapScreenState extends State<MapScreen> {
           _controller.showMarkerInfoWindow(const MarkerId("me"));
         },
       ));
-
+      await getFuelStations();
       updateCameraPosition(location);
     });
   }
 
+  getFuelStations() async {
+    Response? _response =
+        await Provider.of<GoogleMaps>(context, listen: false).getFuelStation();
+    if (_response?.statusCode == 204) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('${AppLocalizations.of(context)!.success}'),
+        backgroundColor: GetColors.success,
+      ));
+    } else {
+      ////add fake data
+      FuelStation _fs4 = FuelStation();
+      _fs4.setValues("4", "52.415611, 16.907161", "Auchan", "Auchan");
+      _locations.add(_fs4);
+
+      FuelStation _fs5 = FuelStation();
+      _fs5.setValues("5", "52.358212, 16.926362", "CircleK", "CircleK");
+      _locations.add(_fs5);
+
+      FuelStation _fs6 = FuelStation();
+      _fs6.setValues("6", "52.335164, 16.861898", "InterMarche", "InterMarche");
+      _locations.add(_fs6);
+      for (PriceEntries obj
+          in Provider.of<Api>(context, listen: false).mePriceEntries) {
+        _locations[0].addPrice(obj);
+        _locations[1].addPrice(obj);
+        _locations[2].addPrice(obj);
+      }
+      //////
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('${AppLocalizations.of(context)!.error}'),
+        backgroundColor: GetColors.error,
+      ));
+    }
+  }
+
   loadLocations() async {
     _locations.clear;
-
-    for (PriceEntries obj
-        in Provider.of<Api>(context, listen: false).mePriceEntries) {
-      _locations[0].addPrice(obj);
-      _locations[1].addPrice(obj);
-      _locations[2].addPrice(obj);
+    for (FuelStation obj
+        in Provider.of<GoogleMaps>(context, listen: false).searchFuelStations) {
+      _locations.add(obj);
     }
   }
 
@@ -139,40 +162,8 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
 
-    FuelStation _fs = FuelStation();
-    _fs.setValues("1", "52.370778, 16.867356", "Orlen", "Orlen");
-    _locations.add(_fs);
-
-    FuelStation _fs2 = FuelStation();
-    _fs2.setValues("2", "52.442424, 16.893418", "Lotos", "Lotos");
-    _locations.add(_fs2);
-
-    FuelStation _fs3 = FuelStation();
-    _fs3.setValues("3", "52.378720, 16.975102", "Shell", "Shell");
-    _locations.add(_fs3);
-
-/*
-    FuelStation _fs4 = FuelStation();
-    _fs4.setValues("4", "52.415611, 16.907161", "Auchan", "Auchan");
-    _locations.add(_fs4);
-
-    FuelStation _fs5 = FuelStation();
-    _fs5.setValues("5", "52.358212, 16.926362", "CircleK", "CircleK");
-    _locations.add(_fs5);
-
-    FuelStation _fs6 = FuelStation();
-    _fs6.setValues("6", "52.335164, 16.861898", "InterMarche", "InterMarche");
-    _locations.add(_fs6);
-
-    FuelStation _fs7 = FuelStation();
-    _fs7.setValues("7", "52.411805, 16.810317", "BP", "BP");
-    _locations.add(_fs7);
-
-    FuelStation _fs8 = FuelStation();
-    _fs8.setValues("7", "52.381497, 17.106219", "Amic", "Amic");
-    _locations.add(_fs8);
-*/
     getCurrentPosition();
+    //getFuelStations();
     loadLocations();
   }
 
@@ -216,7 +207,7 @@ class _MapScreenState extends State<MapScreen> {
                   ],
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed("/map/addpriceentry");
+                  Navigator.of(context).pushNamed("/map/add");
                 },
               )),
         ],
