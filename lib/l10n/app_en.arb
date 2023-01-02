@@ -131,5 +131,8 @@
     "addstation": "Add new station",
     "validCoordinates": "Enter the correct coordinates.",
     "brand": "Brand",
-    "distance": "Distance"
+    "distance": "Distance",
+    "fuelstations": "Fuel Stations",
+    "searchtoeditstation": "Select a station to edit",
+    "ifstationslistisemptyerror": "There was an error with loading the fuel station list, try refreshing the page"
 }
