@@ -130,5 +130,6 @@
     "addprice": "Dodaj nową cenę",
     "addstation": "Dodaj nową stację",
     "validCoordinates": "Wprowadź poprawne koordynaty.",
-    "brand": "Marka"
+    "brand": "Marka",
+    "distance": "Odległość"
 }

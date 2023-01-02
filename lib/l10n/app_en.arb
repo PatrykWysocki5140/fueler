@@ -130,5 +130,6 @@
     "addprice": "Add new price",
     "addstation": "Add new station",
     "validCoordinates": "Enter the correct coordinates.",
-    "brand": "Brand"
+    "brand": "Brand",
+    "distance": "Distance"
 }
