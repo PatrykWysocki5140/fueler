@@ -82,6 +82,22 @@ class _AdminScreenState extends State<AdminScreen> {
             ),
           ),
           SizedBox(height: size.height * 0.03),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed("/profile/fuelstations");
+              },
+              child: Text(
+                AppLocalizations.of(context)!.fuelstations,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: size.height * 0.03),
           Center(
             child: Text(
               Provider.of<Api>(context).users.isEmpty == true
