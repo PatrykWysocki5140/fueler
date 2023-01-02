@@ -23,7 +23,8 @@ class GoogleMaps with ChangeNotifier {
   String mapApiKey = "AIzaSyBgTRaSwoKFHa5-pFg6JJOgR5VPw6Cb8Ds";
   late double userlat;
   late double userlng;
-  List<FuelStation> searchFuelStations = List.empty();
+  List<FuelStation> searchFuelStations = List.empty(growable: true);
+  List<FuelStation> allFuelStations = List.empty(growable: true);
 
   Future<bool> setDistance(String _distance) async {
     var prefs = await SharedPreferences.getInstance();
@@ -134,7 +135,7 @@ class GoogleMaps with ChangeNotifier {
     String url = '$baseUrl/api/fuel-stations';
     Dio dio = Dio();
     final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(preferencesKeyToken);
+    String? token = await prefs.getString(preferencesKeyToken);
 
     try {
       log(url);
@@ -157,5 +158,70 @@ class GoogleMaps with ChangeNotifier {
     }
   }
 
-  /////////
+  Future<Response?> addPriceEntry(
+      FuelStation _fuelStation, String _fuelType, String _price) async {
+    Response response;
+    String url = '$baseUrl/api/fuel-stations/${_fuelStation.id}/price-entry';
+    Dio dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString(preferencesKeyToken);
+
+    try {
+      log(url);
+      response = await dio.post(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: {
+          'price': _price,
+          'fuelType': _fuelType,
+          'fuelStation': _fuelStation.id,
+        },
+      );
+      log("status:" + response.statusCode.toString());
+      return await response;
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  /// Admin
+  /// ////////////////////////////////////////////////////////////////
+
+  Future<Response?> getAllFuelStation() async {
+    Response response;
+    String url = '$baseUrl/api/fuel-stations';
+    Dio dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(preferencesKeyToken);
+
+    await getDistance();
+
+    try {
+      log(url);
+      response = await dio.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if (response.statusCode == 200) {
+        List<FuelStation> _model =
+            fuelStationModelFromJson(response.data.toString());
+        for (var obj in _model) {
+          log("FuelStation:" + obj.toJson().toString());
+        }
+        if (_model.isNotEmpty) searchFuelStations = _model;
+        dio.close();
+        return await response;
+      }
+      return await response;
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+  }
 }
