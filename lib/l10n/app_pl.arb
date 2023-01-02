@@ -131,5 +131,8 @@
     "addstation": "Dodaj nową stację",
     "validCoordinates": "Wprowadź poprawne koordynaty.",
     "brand": "Marka",
-    "distance": "Odległość"
+    "distance": "Odległość",
+    "fuelstations": "Stacje paliw",
+    "searchtoeditstation": "Wybierz stację aby edytować jej dane",
+    "ifstationslistisemptyerror": "Nie załadowano żadnej stacji, odśwież stronę"
 }
