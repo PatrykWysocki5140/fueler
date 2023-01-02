@@ -104,16 +104,25 @@ class _MapScreenState extends State<MapScreen> {
     ////add fake data
     FuelStation _fs4 = FuelStation();
     await _fs4.setValues("4", "52.415611, 16.907161", "Auchan", "Auchan");
-    _locations.add(_fs4);
+    //_locations.add(_fs4);
 
     FuelStation _fs5 = FuelStation();
     await _fs5.setValues("5", "52.358212, 16.926362", "CircleK", "CircleK");
-    _locations.add(_fs5);
+    //_locations.add(_fs5);
 
     FuelStation _fs6 = FuelStation();
     await _fs6.setValues(
         "6", "52.335164, 16.861898", "InterMarche", "InterMarche");
-    _locations.add(_fs6);
+    // _locations.add(_fs6);
+    Provider.of<GoogleMaps>(context, listen: false)
+        .searchFuelStations
+        .add(_fs4);
+    Provider.of<GoogleMaps>(context, listen: false)
+        .searchFuelStations
+        .add(_fs5);
+    Provider.of<GoogleMaps>(context, listen: false)
+        .searchFuelStations
+        .add(_fs6);
     for (PriceEntries obj
         in Provider.of<Api>(context, listen: false).mePriceEntries) {
       _locations[0].addPrice(obj);
@@ -136,7 +145,6 @@ class _MapScreenState extends State<MapScreen> {
         backgroundColor: GetColors.error,
       ));
     }*/
-    await loadLocations();
   }
 
   loadLocations() async {
@@ -154,10 +162,10 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   loadData() async {
+    await loadDistance();
     await getCurrentPosition();
     await getFuelStations();
-    await loadDistance();
-    //await loadLocations();
+    await loadLocations();
   }
 
   updateCameraPosition(LatLng value) async {
@@ -258,7 +266,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
           if (_locations.isNotEmpty)
             Positioned(
-              bottom: 85,
+              bottom: 75,
               left: 20,
               right: 20,
               child: Container(
