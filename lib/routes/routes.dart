@@ -1,6 +1,7 @@
 import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/notifiers/APINotifier.dart';
+import 'package:fueler/routes/UI/user_admin_screen/widgets/fuelstations_screen.dart';
 import 'package:fueler/routes/UI/user_screen/widgets/veryfication_widget.dart';
 import 'package:fueler/routes/UI/widgets/add_price_entry_widget.dart';
 import 'package:fueler/routes/tabs/map_page.dart';
@@ -95,6 +96,11 @@ List<BartMenuRoute> subRoutes() {
       path: '/profile/createnewuser',
       pageBuilder: (parentContext, tabContext, settings) =>
           const CreateUserScreen(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/profile/fuelstations',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const FuelStationsAdminScreen(),
     ),
     BartMenuRoute.innerRoute(
       path: '/profile/mypriceentries',
