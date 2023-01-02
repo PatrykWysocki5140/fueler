@@ -18,10 +18,19 @@ String fuelStationModelToJson(List<FuelStation> data) =>
 List<FuelStation> fuelStationModelFromJson(String str) {
   String _json = myjson.JsonDecoder(str);
   _json = myjson.JsonDecoderList(_json);
-  List<dynamic> parsedListJson = jsonDecode(_json) as List;
+
+  List<dynamic> parsedListJson = jsonDecode(_json);
   List<FuelStation> itemsList = List<FuelStation>.from(parsedListJson
       .map<FuelStation>((dynamic i) => FuelStation.fromJsonList(i)));
   return itemsList;
+
+/*
+  List fuelStationsJson = json.decode(_json);
+  List<FuelStation> fuelStations = fuelStationsJson
+      .map((fuelStationJson) => FuelStation.fromJson(fuelStationJson))
+      .toList();
+
+  return fuelStations;*/
 }
 
 class FuelStation {
@@ -143,9 +152,12 @@ class FuelStation {
       jsondecode["name"],
       jsondecode["brand"],
     );
+    _fs.addPrices(priceEntriesModelFromJson(jsondecode['priceEntries']));
+/*
     _fs.addPrices((jsondecode['priceEntries'] as List)
         .map((e) => PriceEntries.fromJson(e))
         .toList());
+        */
 
     return _fs;
   }
@@ -160,6 +172,7 @@ class FuelStation {
       json["name"],
       json["brand"],
     );
+    _fs.addPrices(priceEntriesModelFromJson(json['priceEntries']));
 
     return _fs;
   }
