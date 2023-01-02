@@ -147,10 +147,20 @@ class Styles {
         ///
         /// styl listy rozwijanej
         canvasColor:
-            isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight
+            isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight,
         ////////////////////////////////////////////////////////////////////
         ///
-        ///
+        /// styl suwaka
+        sliderTheme: SliderThemeData(
+          thumbColor:
+              isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight,
+          activeTrackColor:
+              isDarkTheme ? GetColors.mainColorDark : GetColors.mainColorLight,
+          inactiveTrackColor:
+              isDarkTheme ? GetColors.darkAccent : GetColors.lightAccent,
+        )
+
+        ////////////////////////////////////////////////////////////////////
         );
   }
 }
