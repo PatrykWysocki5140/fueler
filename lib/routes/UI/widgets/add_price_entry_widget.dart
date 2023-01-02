@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'dart:developer';
 import 'dart:ffi';
 import 'dart:ui';
@@ -8,6 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:fueler/model/API_Model/FuelStation.dart';
 import 'package:fueler/model/API_Model/FuelType.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 
 import 'package:fueler/settings/Get_colors.dart';
 
@@ -36,21 +39,53 @@ class _AddPriceEntryWidgetState extends State<AddPriceEntryWidget> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController priceController = TextEditingController();
   String _fuelType = '';
-  String _fuelStation = 'Orlen';
   double _price = 0;
+  late FuelStation _selectedFuelStation;
+  late List<FuelStation> _fuelStations;
 
   Future<void> reportPrice() async {
     priceController.text = priceController.text
         .replaceAll(',', ".")
         .replaceAll('-', ".")
         .replaceAll(' ', "");
-    if (_formKey.currentState!.validate()) {}
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.procesing),
+        backgroundColor: GetColors.warning, //Colors.green.shade300,
+      ));
+      PriceEntries pe = PriceEntries();
+
+      Response? _response =
+          await Provider.of<GoogleMaps>(context, listen: false).addPriceEntry(
+              _selectedFuelStation,
+              pe.getFuelType(_fuelType).name,
+              priceController.text);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      if (_response?.statusCode == 204) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context)!.success}'),
+          backgroundColor: GetColors.success,
+        ));
+        Navigator.of(context).pushNamed("/map");
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context)!.error}'),
+          backgroundColor: GetColors.error,
+        ));
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     _fuelType = AppLocalizations.of(context)!.pb95;
+
+    _fuelStations =
+        Provider.of<GoogleMaps>(context, listen: false).searchFuelStations;
+    _selectedFuelStation = _fuelStations[0];
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.notificationfuelprice),
@@ -87,54 +122,45 @@ class _AddPriceEntryWidgetState extends State<AddPriceEntryWidget> {
                           ),
                         ),
                         DropdownButtonFormField(
-                          value: _fuelStation,
-                          icon: Icon(Icons.arrow_drop_down),
+                          value: _selectedFuelStation,
+                          icon: const Icon(Icons.arrow_drop_down),
                           iconSize: 42,
-                          items: [
-                            "Orlen",
-                            "Lotos",
-                            "Shell",
-                            "BP",
-                            "InterMarche",
-                            "CircleK",
-                            "Auchan",
-                            "Amic",
-                            "Huzar",
-                            "Moya",
-                            "Statoil"
-                          ].map((_fuelStation) {
-                            String icon;
-                            FuelStation _fs = FuelStation();
-                            icon = _fs.getBrand(_fuelStation);
-
+                          items: _fuelStations.map((fuelStation) {
                             return DropdownMenuItem(
-                              value: _fuelStation,
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    icon,
-                                    width: 60,
-                                  ),
-                                  SizedBox(width: size.height * 0.03),
-                                  Text(
-                                    _fuelStation,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                              value: fuelStation,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      fuelStation.brand,
+                                      width: 60,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: size.height * 0.03),
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        fuelStation.address.toString(),
+                                        overflow: TextOverflow.clip,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              _fuelStation = value.toString();
+                              _selectedFuelStation = value as FuelStation;
                             });
                           },
                           validator: (value) {
                             if (value == null) {
-                              return 'Wybierz rodzaj paliw';
+                              return 'Wybierz stację paliw';
                             }
                             return null;
                           },
