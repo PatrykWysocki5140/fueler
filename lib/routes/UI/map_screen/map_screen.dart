@@ -44,6 +44,7 @@ class _MapScreenState extends State<MapScreen> {
   Set<Marker> markers = {};
   late BitmapDescriptor customIcon;
   late bool _darkmode = false;
+  double _distance = 0;
 
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
@@ -94,12 +95,34 @@ class _MapScreenState extends State<MapScreen> {
           _controller.showMarkerInfoWindow(const MarkerId("me"));
         },
       ));
-      await getFuelStations();
+      //await getFuelStations();
       updateCameraPosition(location);
     });
   }
 
   getFuelStations() async {
+    ////add fake data
+    FuelStation _fs4 = FuelStation();
+    await _fs4.setValues("4", "52.415611, 16.907161", "Auchan", "Auchan");
+    _locations.add(_fs4);
+
+    FuelStation _fs5 = FuelStation();
+    await _fs5.setValues("5", "52.358212, 16.926362", "CircleK", "CircleK");
+    _locations.add(_fs5);
+
+    FuelStation _fs6 = FuelStation();
+    await _fs6.setValues(
+        "6", "52.335164, 16.861898", "InterMarche", "InterMarche");
+    _locations.add(_fs6);
+    for (PriceEntries obj
+        in Provider.of<Api>(context, listen: false).mePriceEntries) {
+      _locations[0].addPrice(obj);
+      _locations[1].addPrice(obj);
+      _locations[2].addPrice(obj);
+    }
+    //////
+    ///
+/*
     Response? _response =
         await Provider.of<GoogleMaps>(context, listen: false).getFuelStation();
     if (_response?.statusCode == 204) {
@@ -108,38 +131,33 @@ class _MapScreenState extends State<MapScreen> {
         backgroundColor: GetColors.success,
       ));
     } else {
-      ////add fake data
-      FuelStation _fs4 = FuelStation();
-      _fs4.setValues("4", "52.415611, 16.907161", "Auchan", "Auchan");
-      _locations.add(_fs4);
-
-      FuelStation _fs5 = FuelStation();
-      _fs5.setValues("5", "52.358212, 16.926362", "CircleK", "CircleK");
-      _locations.add(_fs5);
-
-      FuelStation _fs6 = FuelStation();
-      _fs6.setValues("6", "52.335164, 16.861898", "InterMarche", "InterMarche");
-      _locations.add(_fs6);
-      for (PriceEntries obj
-          in Provider.of<Api>(context, listen: false).mePriceEntries) {
-        _locations[0].addPrice(obj);
-        _locations[1].addPrice(obj);
-        _locations[2].addPrice(obj);
-      }
-      //////
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('${AppLocalizations.of(context)!.error}'),
         backgroundColor: GetColors.error,
       ));
-    }
+    }*/
+    await loadLocations();
   }
 
   loadLocations() async {
-    _locations.clear;
+    _locations.clear();
+
     for (FuelStation obj
         in Provider.of<GoogleMaps>(context, listen: false).searchFuelStations) {
       _locations.add(obj);
     }
+  }
+
+  loadDistance() async {
+    _distance =
+        (await Provider.of<GoogleMaps>(context, listen: false).getDistance())!;
+  }
+
+  loadData() async {
+    await getCurrentPosition();
+    await getFuelStations();
+    await loadDistance();
+    //await loadLocations();
   }
 
   updateCameraPosition(LatLng value) async {
@@ -161,10 +179,10 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-
-    getCurrentPosition();
+    loadData();
+    //getCurrentPosition();
     //getFuelStations();
-    loadLocations();
+    //loadLocations();
   }
 
   @override
@@ -172,7 +190,8 @@ class _MapScreenState extends State<MapScreen> {
     //loginController.text = "Adam";
     //passwordController.text = "TEST";
     //_darkmode = Provider.of<GoogleMaps>(context).isDarkTheme;
-
+    //double _value =Provider.of<GoogleMaps>(context, listen: false).getDistance();
+    log(_distance.toString());
     var size = MediaQuery.of(context).size;
 
     createMarkers(context);
@@ -328,7 +347,67 @@ class _MapScreenState extends State<MapScreen> {
                       SizedBox(height: size.height * 0.01),
                     ],
                   )),
-            )
+            ),
+          Positioned(
+            top: 2,
+            left: 70,
+            right: 70,
+            child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 75,
+                decoration: BoxDecoration(
+                  color:
+                      // ignore: unrelated_type_equality_checks
+                      _darkmode == true
+                          ? GetColors.darkAccent
+                          : GetColors.lightAccent,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(),
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.distance +
+                                ": " +
+                                ' ${_distance.toStringAsFixed(2)}' +
+                                " km",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Slider(
+                              min: 0.0,
+                              max: 100.0,
+                              value: _distance,
+                              onChanged: (double newValue) async {
+                                await Provider.of<GoogleMaps>(context,
+                                        listen: false)
+                                    .setDistance(newValue.toString());
+
+                                await loadDistance();
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.01),
+                    ],
+                  ),
+                )),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
