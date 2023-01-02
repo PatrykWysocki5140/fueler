@@ -115,16 +115,23 @@ class PriceEntries {
 
   FuelType returnfuelType(String ft) {
     FuelType _ft = FuelType.UNDEFINED;
-    if ((ft == "GASOLINE95") || (ft == "FuelType.GASOLINE95")) {
+    if ((ft == "GASOLINE95") ||
+        (ft == "FuelType.GASOLINE95") ||
+        (ft == "PB 95")) {
       _ft = FuelType.GASOLINE95;
-    } else if ((ft == "GASOLINE98") || (ft == "FuelType.GASOLINE98")) {
+    } else if ((ft == "GASOLINE98") ||
+        (ft == "FuelType.GASOLINE98") ||
+        (ft == "PB 98")) {
       _ft = FuelType.GASOLINE98;
     } else if ((ft == "GASOLINE_PREMIUM") ||
-        (ft == "FuelType.GASOLINE_PREMIUM")) {
+        (ft == "FuelType.GASOLINE_PREMIUM") ||
+        (ft == "PB PREMIUM")) {
       _ft = FuelType.GASOLINE_PREMIUM;
-    } else if ((ft == "DIESEL") || (ft == "FuelType.DIESEL")) {
+    } else if ((ft == "DIESEL") || (ft == "FuelType.DIESEL") || (ft == "ON")) {
       _ft = FuelType.DIESEL;
-    } else if ((ft == "DIESEL_PREMIUM") || (ft == "FuelType.DIESEL_PREMIUM")) {
+    } else if ((ft == "DIESEL_PREMIUM") ||
+        (ft == "FuelType.DIESEL_PREMIUM") ||
+        (ft == "ON PREMIUM")) {
       _ft = FuelType.DIESEL_PREMIUM;
     } else if ((ft == "LPG") || (ft == "FuelType.LPG")) {
       _ft = FuelType.LPG;
@@ -135,4 +142,6 @@ class PriceEntries {
     }
     return _ft;
   }
+
+  static priceEntriesModelFromJson(e) {}
 }
