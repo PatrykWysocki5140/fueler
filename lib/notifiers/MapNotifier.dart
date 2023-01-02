@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:dio/dio.dart';
 import 'dart:developer';
@@ -30,10 +31,10 @@ class GoogleMaps with ChangeNotifier {
     return true;
   }
 
-  Future<bool> getDistance() async {
+  Future<double?> getDistance() async {
     var prefs = await SharedPreferences.getInstance();
     distance = double.parse(prefs.getString(preferencesKeyDistance)!);
-    return true;
+    return distance;
   }
 
   setMapTheme() async {
