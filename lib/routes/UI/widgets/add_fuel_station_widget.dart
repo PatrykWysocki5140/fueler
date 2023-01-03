@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fueler/model/API_Model/Brand.dart';
 import 'package:fueler/model/API_Model/FuelStation.dart';
 import 'package:fueler/model/API_Model/FuelType.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
@@ -40,6 +41,8 @@ class _AddFuelStationWidgetState extends State<AddFuelStationWidget> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController brandController = TextEditingController();
   String _fuelStation = "Orlen";
+  late List<Brand> _brands;
+  late Brand _selectedBrand;
 
   Future<void> addStation() async {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -72,8 +75,20 @@ class _AddFuelStationWidgetState extends State<AddFuelStationWidget> {
     }
   }
 
+  loadData() async {
+    await Provider.of<GoogleMaps>(context, listen: false).getAllBrands();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _brands = Provider.of<GoogleMaps>(context, listen: false).brands;
+    _selectedBrand = _brands[0];
     var size = MediaQuery.of(context).size;
     longitudeController.text =
         Provider.of<GoogleMaps>(context).userlng.toString();
@@ -81,7 +96,7 @@ class _AddFuelStationWidgetState extends State<AddFuelStationWidget> {
         Provider.of<GoogleMaps>(context).userlat.toString();
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.notificationfuelprice),
+        title: Text(AppLocalizations.of(context)!.addStation),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -180,6 +195,7 @@ class _AddFuelStationWidgetState extends State<AddFuelStationWidget> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        /*
                         DropdownButtonFormField(
                           value: _fuelStation,
                           icon: Icon(Icons.arrow_drop_down),
@@ -230,6 +246,60 @@ class _AddFuelStationWidgetState extends State<AddFuelStationWidget> {
                           validator: (value) {
                             if (value == null) {
                               return 'Wybierz rodzaj paliw';
+                            }
+                            return null;
+                          },
+                        ),
+                        */
+                        DropdownButtonFormField(
+                          value: _selectedBrand,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 42,
+                          items: _brands.map((brand) {
+                            FuelStation _fs = FuelStation();
+                            String image = 'assets/stationslogo/default.png';
+                            for (Brand obj in _brands) {
+                              if (brand.image == obj.image) {
+                                image = obj.image;
+                              }
+                            }
+                            return DropdownMenuItem(
+                              value: brand,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    /*
+                                    Image.asset(
+                                      image,
+                                      width: 60,
+                                    ),*/
+                                    SizedBox(width: size.height * 0.03),
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        brand.name.toString(),
+                                        overflow: TextOverflow.clip,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedBrand = value as Brand;
+                              brandController.text = _selectedBrand.id;
+                            });
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Wybierz stację paliw';
                             }
                             return null;
                           },
