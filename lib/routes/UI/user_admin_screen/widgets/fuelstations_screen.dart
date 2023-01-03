@@ -33,6 +33,7 @@ class _FuelStationsAdminScreenState extends State<FuelStationsAdminScreen> {
   List<FuelStation> _allFuelStations = List.empty(growable: true);
   loadData() async {
     await loadAllFuelStation();
+    await loadAllFuelStationBrand();
   }
 
   Future<void> loadAllFuelStation() async {
@@ -42,10 +43,18 @@ class _FuelStationsAdminScreenState extends State<FuelStationsAdminScreen> {
         await Provider.of<GoogleMaps>(context, listen: false).allFuelStations;
   }
 
+  Future<void> loadAllFuelStationBrand() async {
+    for (FuelStation obj
+        in Provider.of<GoogleMaps>(context, listen: false).allFuelStations) {
+      await obj.setBrandObj(obj.brandId!);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     loadData();
+    setState(() {});
   }
 
   @override
@@ -55,7 +64,7 @@ class _FuelStationsAdminScreenState extends State<FuelStationsAdminScreen> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.notificationfuelprice),
+          title: Text(AppLocalizations.of(context)!.fuelstations),
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
