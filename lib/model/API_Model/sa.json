@@ -1,0 +1,18 @@
+"{"id": "fd40eecb-4f08-4c16-888c-f70e6202a749", "coordinates": "{
+    "longitude": "52.41168382092301",
+    "latitude": "16.934043375799575"
+}", "name": "Orlen", "brand": "27ac4c88-551f-437d-a446-8d02c1150056", "priceEntries": "[
+    {
+        "id": "c091a56f-2e5f-4abf-80c7-50cf01946686",
+        "price": "5.1",
+        "fuelType": "GASOLINE95",
+        "addedBy": "1b5770ba-437a-46b1-9ad3-e0955198813a",
+        "fuelStation": "fd40eecb-4f08-4c16-888c-f70e6202a749"
+    }", "{
+        "id": "55276dd0-51b0-4698-837b-3d3490dab710",
+        "price": "8.45",
+        "fuelType": "DIESEL",
+        "addedBy": "b8424a07-bfa5-4104-beaf-ed7c0e1f6237",
+        "fuelStation": "fd40eecb-4f08-4c16-888c-f70e6202a749"
+    }
+]"}"
