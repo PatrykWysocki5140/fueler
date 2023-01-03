@@ -134,5 +134,12 @@
     "distance": "Distance",
     "fuelstations": "Fuel Stations",
     "searchtoeditstation": "Select a station to edit",
-    "ifstationslistisemptyerror": "There was an error with loading the fuel station list, try refreshing the page"
+    "ifstationslistisemptyerror": "There was an error with loading the fuel station list, try refreshing the page",
+    "delete": "Delete",
+    "address": "Address",
+    "getstationssucess": "Stations loaded",
+    "getstationerror": "stations not loaded",
+    "distancetosmall": "Station not retrieved - too short a distance",
+    "brandid": "Brand Id",
+    "searchbrand": "Search Brand"
 }
