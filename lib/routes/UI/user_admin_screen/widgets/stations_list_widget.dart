@@ -5,12 +5,17 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fueler/model/API_Model/Brand.dart';
+import 'package:fueler/model/API_Model/FuelStation.dart';
+import 'package:fueler/model/API_Model/PriceEntries.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 import 'package:fueler/routes/UI/user_admin_screen/widgets/price_entries_list_widget.dart';
 
 import 'package:fueler/settings/Get_colors.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../model/API_Model/User.dart';
 import '../../../../model/API_Model/UserPrivilegeLevel.dart';
 import '../../../../notifiers/APINotifier.dart';
@@ -32,32 +37,18 @@ class _StationsListScreenState extends State<StationsListScreen> {
   final bool _showPassword = true;
   //String _searchString = "";
   final TextEditingController _searchString = TextEditingController();
-  List<User> objects = List.empty(growable: true);
-/*
-  Future<User?> updateUserListObject(String _uId, int _i) async {
-    User _u;
-    Response? _response =
-        await Provider.of<Api>(context, listen: false).getUserById(_uId);
-    if (_response?.statusCode == 200) {
-      _u = User.fromJson(await _response?.data);
-      objects[_i].name = _u.name.toString();
-      objects[_i].phoneNumber = _u.phoneNumber.toString();
-      objects[_i].email = _u.email.toString();
-      objects[_i].name = _u.name.toString();
+  List<FuelStation> objects = List.empty(growable: true);
+  late Brand _selectedBrand;
+  late List<Brand> _brands;
 
-      return _u;
-    } else {
-      return null;
-    }
-  }*/
-  Future<User?> updateUserListObject(String _uId, int _i) async {
-    User? _u = await Provider.of<Api>(context, listen: false).getUserById(_uId);
+  Future<FuelStation?> updateStationListObject(String _uId, int _i) async {
+    FuelStation? _f = await Provider.of<GoogleMaps>(context, listen: false)
+        .getFuelStationById(_uId);
 
-    objects[_i].name = _u?.name.toString();
-    objects[_i].phoneNumber = _u?.phoneNumber.toString();
-    objects[_i].email = _u?.email.toString();
-    objects[_i].name = _u?.name.toString();
-    return _u;
+    objects[_i].name = _f!.name.toString();
+    objects[_i].coordinates = _f.coordinates;
+    objects[_i].brand = _f.brandId ?? "";
+    return _f;
   }
 
   Future<bool> showResponse(Response _response) async {
@@ -77,30 +68,16 @@ class _StationsListScreenState extends State<StationsListScreen> {
     }
   }
 
-  Future<bool> setAdminUser(User _u) async {
-    _u.setUserPrivilegeLevel("ADMINISTRATOR");
-    Response? _response =
-        await Provider.of<Api>(context, listen: false).updateUserById(_u);
-    return showResponse(_response!);
+  Future<bool?> deleteStation(String _uId) async {
+    bool? _response = await Provider.of<GoogleMaps>(context, listen: false)
+        .deleteStationById(_uId);
+    return _response;
   }
 
-  Future<bool> confirmUsers(User _u) async {
-    _u.SetConfirm(true);
-    Response? _response =
-        await Provider.of<Api>(context, listen: false).updateUserById(_u);
-    return showResponse(_response!);
-  }
-
-  Future<bool> banUser(User _u) async {
-    _u.SetBann(!_u.isBanned!);
-    Response? _response =
-        await Provider.of<Api>(context, listen: false).updateUserById(_u);
-    return showResponse(_response!);
-  }
-
-  Future<bool> deleteUser(User _u) async {
-    Response? _response =
-        await Provider.of<Api>(context, listen: false).deleteUserById(_u);
+  Future<bool?> updateStation(String _uId, String _longitude, String _latitude,
+      String _name, String _brand) async {
+    Response? _response = await Provider.of<GoogleMaps>(context, listen: false)
+        .updateStationById(_uId, _longitude, _latitude, _name, _brand);
     return showResponse(_response!);
   }
 
@@ -118,6 +95,11 @@ class _StationsListScreenState extends State<StationsListScreen> {
     return showResponse(_response!);
   }
 
+  loadData() async {
+    await Provider.of<GoogleMaps>(context, listen: false).getAllBrands();
+    loadData();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -125,34 +107,41 @@ class _StationsListScreenState extends State<StationsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<Api>(context).user.userPrivilegeLevel ==
-        UserPrivilegeLevel.ADMINISTRATOR) {
-      Provider.of<Api>(context).getAllUsers();
+    _brands = Provider.of<GoogleMaps>(context, listen: false).brands;
+    _selectedBrand = _brands[0];
+    List<FuelStation> _fuelStationToSearch =
+        Provider.of<GoogleMaps>(context).allFuelStations;
+    for (FuelStation obj in _fuelStationToSearch) {
+      if (obj.brandId != null) {
+        obj.setBrandObj(obj.brandId!);
+      }
+      log('StationsListScreen: ' + obj.toJsonAll().toString());
     }
-    List<User> _usersToSearch = Provider.of<Api>(context).users;
     _searchString.text = _searchString.text.replaceAll(" ", "");
     log("_searchString: '" + _searchString.text + "'");
     if (_searchString.text == "") {
-      objects = Provider.of<Api>(context).users;
+      objects = Provider.of<GoogleMaps>(context).allFuelStations;
     } else {
-      Iterable<User> _users = _usersToSearch.where((element) =>
-          element.name!
-              .toLowerCase()
-              .contains(_searchString.text.toLowerCase()) ||
-          element.phoneNumber!
-              .toLowerCase()
-              .contains(_searchString.text.toLowerCase()) ||
-          element.email!
-              .toLowerCase()
-              .contains(_searchString.text.toLowerCase()) ||
-          element.userPrivilegeLevel
-              .toString()
-              .toLowerCase()
-              .contains(_searchString.text.toLowerCase()));
+      Iterable<FuelStation> _fuelStation = _fuelStationToSearch.where(
+          (element) =>
+              element.name
+                  .toLowerCase()
+                  .contains(_searchString.text.toLowerCase()) ||
+              element.address!
+                  .toLowerCase()
+                  .contains(_searchString.text.toLowerCase()) ||
+              element
+                  .brand
+                  .toLowerCase()
+                  .contains(_searchString.text.toLowerCase()) ||
+              element.coordinates
+                  .toString()
+                  .toLowerCase()
+                  .contains(_searchString.text.toLowerCase()));
       objects = List.empty(growable: true);
 
-      for (User obj in _users) {
-        log("find user: " + obj.name.toString());
+      for (FuelStation obj in _fuelStation) {
+        log("find _fuelStation: " + obj.name.toString());
         objects.add(obj);
       }
     }
@@ -192,40 +181,35 @@ class _StationsListScreenState extends State<StationsListScreen> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        UserPrivilegeLevel _up = UserPrivilegeLevel.USER;
-                        bool _isConfirmed = true;
-                        bool _isBanned = false;
-                        final TextEditingController idController =
-                            TextEditingController();
-                        final TextEditingController phoneNumberController =
-                            TextEditingController();
                         final TextEditingController nameController =
                             TextEditingController();
-                        final TextEditingController firstpasswordController =
+                        final TextEditingController
+                            longitudeControllerController =
                             TextEditingController();
-                        final TextEditingController emailController =
+                        final TextEditingController
+                            latitudeControllerController =
+                            TextEditingController();
+                        final TextEditingController brandControllerController =
+                            TextEditingController();
+                        final TextEditingController
+                            addressControllerController =
                             TextEditingController();
 
-                        //// update list object
-                        if (firstload == false) {
-                          Future<User?> _u = updateUserListObject(
-                              objects[index].id.toString(), index);
-                        }
-
-                        _up = Provider.of<Api>(context)
-                            .user
-                            .getUserPrivilegeLevel(
-                                objects[index].userPrivilegeLevel.toString());
-                        idController.text = objects[index].id.toString();
+                        Future<FuelStation?> _f;
+                        _f = updateStationListObject(
+                            objects[index].id.toString(), index);
+                        if (firstload == false) {}
                         nameController.text = objects[index].name.toString();
-                        phoneNumberController.text =
-                            objects[index].phoneNumber.toString();
-                        firstpasswordController.text =
-                            objects[index].password.toString();
-                        emailController.text = objects[index].email.toString();
-                        //_isConfirmed = objects[index].isConfirmed!;
-                        //log(_isConfirmed.toString());
-
+                        brandControllerController.text =
+                            objects[index].brandObj!.id;
+                        longitudeControllerController.text =
+                            objects[index].coordinates.longitude.toString();
+                        latitudeControllerController.text =
+                            objects[index].coordinates.latitude.toString();
+                        addressControllerController.text =
+                            objects[index].address.toString();
+                        String googleMapsUrl =
+                            "google.navigation:q=${latitudeControllerController.text},${longitudeControllerController.text}";
                         return Scaffold(
                           appBar: AppBar(
                             leading: IconButton(
@@ -233,22 +217,11 @@ class _StationsListScreenState extends State<StationsListScreen> {
                                 Icons.arrow_back,
                               ),
                               onPressed: () => {
-                                idController.clear(),
-                                nameController.clear(),
-                                phoneNumberController.clear(),
-                                firstpasswordController.clear(),
-                                emailController.clear(),
-                                //_isConfirmed = false,
-                                _isBanned = false,
                                 Navigator.of(context).pop(),
                               },
                             ),
-                            title: Text(AppLocalizations.of(context)!.account +
-                                ": " +
-                                objects[index].name.toString() +
-                                " ID:" +
-                                objects[index].id.toString()),
-                            centerTitle: true,
+                            title: Text(objects[index].id.toString()),
+                            //centerTitle: true,
                           ),
                           body: SingleChildScrollView(
                             child: Container(
@@ -268,13 +241,15 @@ class _StationsListScreenState extends State<StationsListScreen> {
                                         children: [
                                           ElevatedButton(
                                             onPressed: () async {
-                                              if (await updateUser(
-                                                  objects[index],
+                                              await updateStation(
+                                                  objects[index].id.toString(),
+                                                  longitudeControllerController
+                                                      .text,
+                                                  latitudeControllerController
+                                                      .text,
                                                   nameController.text,
-                                                  phoneNumberController.text,
-                                                  emailController.text)) {
-                                                _isBanned = !_isBanned;
-                                              }
+                                                  brandControllerController
+                                                      .text);
                                             },
                                             child: Text(
                                               AppLocalizations.of(context)!
@@ -292,17 +267,15 @@ class _StationsListScreenState extends State<StationsListScreen> {
                                                         MaterialStatePropertyAll<Color>(
                                                             GetColors.warning)),*/
                                             onPressed: () async {
-                                              if (await deleteUser(
-                                                objects[index],
-                                              )) {
-                                                objects[index].Clear();
-                                                //objects.removeAt(index);
-                                                Navigator.of(context).pop();
-                                              }
+                                              await deleteStation(
+                                                  objects[index].id);
+                                              // ignore: list_remove_unrelated_type
+                                              objects.remove(index);
+                                              Navigator.of(context).pop();
                                             },
                                             child: Text(
                                               AppLocalizations.of(context)!
-                                                  .deleteaccount,
+                                                  .delete,
                                               style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -318,8 +291,8 @@ class _StationsListScreenState extends State<StationsListScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(height: size.height * 0.03),
-                                        Text(AppLocalizations.of(context)!
-                                            .username),
+                                        Text(
+                                            AppLocalizations.of(context)!.name),
                                         TextFormField(
                                           validator: (value) =>
                                               Validator.validateName(
@@ -329,7 +302,7 @@ class _StationsListScreenState extends State<StationsListScreen> {
                                           decoration: InputDecoration(
                                             hintText:
                                                 AppLocalizations.of(context)!
-                                                    .username,
+                                                    .name,
                                             isDense: true,
                                             border: OutlineInputBorder(
                                               borderRadius:
@@ -339,251 +312,138 @@ class _StationsListScreenState extends State<StationsListScreen> {
                                         ),
                                         SizedBox(height: size.height * 0.01),
                                         Text(AppLocalizations.of(context)!
-                                            .phonenumber),
+                                            .latitude),
                                         TextFormField(
-                                          validator: (value) =>
-                                              Validator.validatePhoneNumber(
+                                          validator: (value) => Validator
+                                              .validateCoordinatesLatitude(
                                                   value ?? "", context),
-                                          controller: phoneNumberController,
-                                          keyboardType: TextInputType.phone,
+                                          controller:
+                                              latitudeControllerController,
+                                          keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
                                             hintText:
                                                 AppLocalizations.of(context)!
-                                                    .phonenumber,
+                                                    .latitude,
                                             isDense: true,
                                           ),
                                           onTap: () {},
                                         ),
                                         SizedBox(height: size.height * 0.01),
-                                        Text("email"),
-                                        TextFormField(
-                                          validator: (value) =>
-                                              Validator.validateEmail(
-                                                  value ?? "", context),
-                                          controller: emailController,
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          decoration: InputDecoration(
-                                            hintText: "Email",
-                                            isDense: true,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: size.height * 0.01),
                                         Text(AppLocalizations.of(context)!
-                                            .password),
+                                            .longitude),
                                         TextFormField(
-                                          showCursor: false,
-                                          readOnly: true,
-                                          enableInteractiveSelection: false,
-                                          focusNode: FocusNode(),
-                                          obscureText: _showPassword,
-                                          controller: firstpasswordController,
-                                          keyboardType:
-                                              TextInputType.visiblePassword,
+                                          validator: (value) => Validator
+                                              .validateCoordinatesLongitude(
+                                                  value ?? "", context),
+                                          controller:
+                                              longitudeControllerController,
+                                          keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
                                             hintText:
                                                 AppLocalizations.of(context)!
-                                                    .password,
+                                                    .longitude,
                                             isDense: true,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
                                           ),
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  icon: Icon(Icons.error),
-                                                  iconColor: GetColors.error,
-                                                  content: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(AppLocalizations.of(
-                                                              context)!
-                                                          .updatePasswordError),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            );
+                                          onTap: () {},
+                                        ),
+                                        SizedBox(height: size.height * 0.01),
+                                        Text(AppLocalizations.of(context)!
+                                            .brandid),
+                                        TextFormField(
+                                          validator: (value) =>
+                                              Validator.validateName(
+                                                  value ?? "", context),
+                                          controller: brandControllerController,
+                                          keyboardType: TextInputType.name,
+                                          decoration: InputDecoration(
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .brand,
+                                            isDense: true,
+                                          ),
+                                          onTap: () {},
+                                        ),
+                                        SizedBox(height: size.height * 0.01),
+                                        Text(AppLocalizations.of(context)!
+                                            .address),
+                                        TextFormField(
+                                          validator: (value) =>
+                                              Validator.validateName(
+                                                  value ?? "", context),
+                                          controller:
+                                              addressControllerController,
+                                          keyboardType: TextInputType.name,
+                                          decoration: InputDecoration(
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .address,
+                                            isDense: true,
+                                          ),
+                                          onTap: () async => {
+                                            //Navigator.pop(context, true),
+                                            // ignore: deprecated_member_use
+                                            await launch(googleMapsUrl),
                                           },
                                         ),
-                                        //!_isConfirmed
-                                        Column(
-                                          children: [
-                                            SizedBox(
-                                                height: size.height * 0.01),
-                                            Text(
-                                              objects[index].isBanned == true
-                                                  ? AppLocalizations.of(
-                                                          context)!
-                                                      .banusertrue
-                                                  : AppLocalizations.of(
-                                                          context)!
-                                                      .banuserfalse,
-                                              style: const TextStyle(
-                                                fontSize: 30,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                                height: size.height * 0.01),
-                                            SizedBox(
-                                              width: double.infinity,
-                                              child: ElevatedButton(
-                                                onPressed: () async {
-                                                  if (await banUser(
-                                                      objects[index])) {
-                                                    _isBanned = !_isBanned;
-                                                  }
-                                                },
-                                                child: Text(
-                                                  objects[index].isBanned ==
-                                                          true
-                                                      ? AppLocalizations.of(
-                                                              context)!
-                                                          .banuserfalseinfo
-                                                      : AppLocalizations.of(
-                                                              context)!
-                                                          .banusertrueinfo,
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        if (objects[index].isConfirmed != true)
-                                          Column(
-                                            children: [
-                                              SizedBox(
-                                                  height: size.height * 0.03),
-                                              SizedBox(
-                                                width: double.infinity,
-                                                child: ElevatedButton(
-                                                  onPressed: () async {
-                                                    if (await confirmUsers(
-                                                        objects[index])) {
-                                                      _isConfirmed = true;
-                                                    }
-                                                  },
-                                                  child: Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .confirmuser,
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                        SizedBox(height: size.height * 0.01),
+                                        Text(AppLocalizations.of(context)!
+                                            .searchbrand),
+                                        DropdownButtonFormField(
+                                          value: _selectedBrand,
+                                          icon:
+                                              const Icon(Icons.arrow_drop_down),
+                                          iconSize: 42,
+                                          items: _brands.map((brand) {
+                                            FuelStation _fs = FuelStation();
+                                            String image =
+                                                'assets/stationslogo/default.png';
+                                            for (Brand obj in _brands) {
+                                              if (brand.image == obj.image) {
+                                                image = obj.image;
+                                              }
+                                            }
+                                            return DropdownMenuItem(
+                                              value: brand,
+                                              child: SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                        width:
+                                                            size.height * 0.03),
+                                                    SizedBox(
+                                                      width: 200,
+                                                      child: Text(
+                                                        brand.name.toString(),
+                                                        overflow:
+                                                            TextOverflow.clip,
+                                                        style: const TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
-                                          )
-                                        else
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                  height: size.height * 0.03),
-                                              Center(
-                                                child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .confirmuserinto,
-                                                  style: const TextStyle(
-                                                    fontSize: 30,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-
-                                        SizedBox(height: size.height * 0.01),
-                                        if (objects[index].userPrivilegeLevel !=
-                                            UserPrivilegeLevel.ADMINISTRATOR)
-                                          Column(
-                                            children: [
-                                              SizedBox(
-                                                  height: size.height * 0.01),
-                                              SizedBox(
-                                                width: double.infinity,
-                                                child: ElevatedButton(
-                                                  onPressed: () async {
-                                                    if (await setAdminUser(
-                                                        objects[index])) {
-                                                      _up = UserPrivilegeLevel
-                                                          .ADMINISTRATOR;
-                                                    } else {}
-                                                  },
-                                                  child: Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .setadmin,
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-
-                                        SizedBox(height: size.height * 0.01),
-                                        SizedBox(
-                                          width: double.infinity,
-                                          child: ElevatedButton(
-                                            onPressed: () async {
-                                              setState(() {
-                                                Provider.of<Api>(context,
-                                                        listen: false)
-                                                    .getPriceEntriesByUserId(
-                                                        objects[index]
-                                                            .id
-                                                            .toString());
-                                                (context as Element)
-                                                    .reassemble();
-                                              });
-
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    log(objects[index]
-                                                        .id
-                                                        .toString());
-                                                    return PriceEntriesScreen(
-                                                      objects[index]
-                                                          .id
-                                                          .toString(),
-                                                    );
-                                                  });
-                                            },
-                                            child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .priceentrieshistory,
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
+                                            );
+                                          }).toList(),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _selectedBrand = value as Brand;
+                                              brandControllerController.text =
+                                                  _selectedBrand.id;
+                                            });
+                                          },
+                                          validator: (value) {
+                                            if (value == null) {
+                                              return 'Wybierz stację paliw';
+                                            }
+                                            return null;
+                                          },
                                         ),
-                                        SizedBox(height: size.height * 0.01),
                                       ],
                                     ))
                                   ],
@@ -602,7 +462,7 @@ class _StationsListScreenState extends State<StationsListScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(15),
                       child: Text(
-                          "${AppLocalizations.of(context)!.username}: ${objects[index].name.toString()}\nEmail: ${objects[index].email.toString()}\n${AppLocalizations.of(context)!.phonenumber}: ${objects[index].phoneNumber.toString()}\n${AppLocalizations.of(context)!.type}: ${objects[index].getUserPrivilegeLevel(objects[index].userPrivilegeLevel.toString()).name}"),
+                          "${AppLocalizations.of(context)!.name}: ${objects[index].name.toString()}\n${AppLocalizations.of(context)!.latitude}: ${objects[index].coordinates.latitude.toString()}\n${AppLocalizations.of(context)!.longitude}: ${objects[index].coordinates.longitude.toString()}"),
                     ),
                   ),
                 );
