@@ -44,7 +44,7 @@ class _MapScreenState extends State<MapScreen> {
   Set<Marker> markers = {};
   late BitmapDescriptor customIcon;
   late bool _darkmode = false;
-  double _distance = 0;
+  double _distance = 20;
 
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
@@ -70,6 +70,9 @@ class _MapScreenState extends State<MapScreen> {
   getCurrentPosition() async {
     getUserCurrentLocation().then((value) async {
       LatLng location = LatLng(value.latitude, value.longitude);
+
+      await Provider.of<GoogleMaps>(context, listen: false)
+          .setPosition(value.latitude.toString(), value.longitude.toString());
 
       String? _formattedAddress =
           await Provider.of<GoogleMaps>(context, listen: false)
@@ -102,6 +105,7 @@ class _MapScreenState extends State<MapScreen> {
 
   getFuelStations() async {
     ////add fake data
+    /*
     FuelStation _fs4 = FuelStation();
     await _fs4.setValues("4", "52.415611, 16.907161", "Auchan", "Auchan");
     //_locations.add(_fs4);
@@ -128,23 +132,33 @@ class _MapScreenState extends State<MapScreen> {
       _locations[0].addPrice(obj);
       _locations[1].addPrice(obj);
       _locations[2].addPrice(obj);
-    }
-    //////
-    ///
-/*
-    Response? _response =
-        await Provider.of<GoogleMaps>(context, listen: false).getFuelStation();
-    if (_response?.statusCode == 204) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('${AppLocalizations.of(context)!.success}'),
-        backgroundColor: GetColors.success,
-      ));
+    }*/
+
+    Response? _response = await Provider.of<GoogleMaps>(context, listen: false)
+        .getFuelStation(_distance.toString());
+
+    if (_response?.statusCode == 200) {
+      if (Provider.of<GoogleMaps>(context, listen: false)
+          .searchFuelStations
+          .isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context)!.getstationssucess}'),
+          backgroundColor: GetColors.success,
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context)!.distancetosmall}'),
+          backgroundColor: GetColors.warning,
+        ));
+      }
+      //await loadLocations();
+      //setState(() {});
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('${AppLocalizations.of(context)!.error}'),
+        content: Text('${AppLocalizations.of(context)!.getstationerror}'),
         backgroundColor: GetColors.error,
       ));
-    }*/
+    }
   }
 
   loadLocations() async {
@@ -165,7 +179,7 @@ class _MapScreenState extends State<MapScreen> {
     await loadDistance();
     await getCurrentPosition();
     await getFuelStations();
-    await loadLocations();
+    // await loadLocations();
   }
 
   updateCameraPosition(LatLng value) async {
@@ -182,7 +196,7 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {});
   }
 
-  final List<FuelStation> _locations = [];
+  List<FuelStation> _locations = List.empty(growable: true);
 
   @override
   void initState() {
@@ -195,11 +209,15 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _locations = Provider.of<GoogleMaps>(context).searchFuelStations;
     //loginController.text = "Adam";
     //passwordController.text = "TEST";
     //_darkmode = Provider.of<GoogleMaps>(context).isDarkTheme;
     //double _value =Provider.of<GoogleMaps>(context, listen: false).getDistance();
+    //loadLocations();
     log(_distance.toString());
+    log("Provider.of<GoogleMaps>(context).searchFuelStations:" +
+        Provider.of<GoogleMaps>(context).searchFuelStations.length.toString());
     var size = MediaQuery.of(context).size;
 
     createMarkers(context);
@@ -403,8 +421,16 @@ class _MapScreenState extends State<MapScreen> {
                                 await Provider.of<GoogleMaps>(context,
                                         listen: false)
                                     .setDistance(newValue.toString());
-
                                 await loadDistance();
+                                log("Load distance" +
+                                    Provider.of<GoogleMaps>(context,
+                                            listen: false)
+                                        .distance
+                                        .toString());
+                                await Provider.of<GoogleMaps>(context,
+                                        listen: false)
+                                    .getAllFuelStation();
+
                                 setState(() {});
                               },
                             ),
@@ -443,7 +469,7 @@ class _MapScreenState extends State<MapScreen> {
       marker = Marker(
         markerId: MarkerId(loaction.coordinates.toString()),
         position: loaction.coordinates,
-        icon: await _getAssetIcon(context, loaction.marker)
+        icon: await _getAssetIcon(context, loaction.marker!)
             .then((value) => value),
         infoWindow: InfoWindow(
           title: loaction.name,
