@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fueler/model/API_Model/FuelType.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 
 import 'package:fueler/settings/Get_colors.dart';
 
@@ -63,19 +64,22 @@ class _AddWidgetState extends State<AddWidget> {
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.01),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: addPriceEntry,
-                    child: Text(
-                      AppLocalizations.of(context)!.addprice,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                if (Provider.of<GoogleMaps>(context, listen: false)
+                    .searchFuelStations
+                    .isNotEmpty)
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: addPriceEntry,
+                      child: Text(
+                        AppLocalizations.of(context)!.addprice,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
                 SizedBox(height: size.height * 0.01),
                 if (Provider.of<Api>(context).user.isConfirmed == true)
                   SizedBox(
