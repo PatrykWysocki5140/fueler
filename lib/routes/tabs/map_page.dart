@@ -63,8 +63,19 @@ class _MapPage extends State<MapPage> with AppBarNotifier {
     showAppBar(context);
   }
 
+  loadData() async {
+    double? _distance =
+        await Provider.of<GoogleMaps>(context, listen: false).getDistance();
+    await Provider.of<GoogleMaps>(context, listen: false).getPosition();
+    await Provider.of<GoogleMaps>(context, listen: false)
+        .getFuelStation(_distance.toString());
+    await Provider.of<GoogleMaps>(context, listen: false).getAllBrands();
+  }
+
   @override
   Widget build(BuildContext context) {
+    loadData();
+
     //Provider.of<GoogleMaps>(context).
     return const MapScreen();
   }
