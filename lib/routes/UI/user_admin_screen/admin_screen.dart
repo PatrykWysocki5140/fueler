@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 
 import 'package:fueler/routes/UI/user_admin_screen/widgets/users_list_widget.dart';
 import 'package:fueler/settings/Get_colors.dart';
@@ -85,7 +86,10 @@ class _AdminScreenState extends State<AdminScreen> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                Response? _response =
+                    await Provider.of<GoogleMaps>(context, listen: false)
+                        .getAllFuelStation();
                 Navigator.of(context).pushNamed("/profile/fuelstations");
               },
               child: Text(
