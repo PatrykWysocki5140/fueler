@@ -216,6 +216,21 @@ class FuelStation {
 
     return _fs;
   }
+  factory FuelStation.fromJsonMap(dynamic data) {
+    data = myjson.JsonDecoder(data);
+    data = myjson.JsonDecoderList(data);
+    data = jsonDecode(data);
+    Map<String, dynamic> json = Map<String, dynamic>.from(data);
+    FuelStation _fs = FuelStation();
+    _fs.setValues(
+      json['id'],
+      json['coordinates'],
+      json["name"],
+      json["brand"],
+    );
+    _fs.addPrices(priceEntriesModelFromJson(json['priceEntries'].toString()));
+    return _fs;
+  }
   factory FuelStation.fromJsonNotMapString(String myJSON) {
     FuelStation _fs = FuelStation();
 
@@ -237,6 +252,7 @@ class FuelStation {
   }
 
   factory FuelStation.fromJsonList(dynamic data) {
+    log((data).toString());
     Map<String, dynamic> json = Map<String, dynamic>.from(data);
     FuelStation _fs = FuelStation();
 
