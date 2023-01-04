@@ -39,7 +39,7 @@ class _StationsListScreenState extends State<StationsListScreen> {
   final TextEditingController _searchString = TextEditingController();
   List<FuelStation> objects = List.empty(growable: true);
   late Brand _selectedBrand;
-  late List<Brand> _brands;
+  List<Brand> _brands = [Brand(id: "0", name: "", image: "")];
 
   Future<FuelStation?> updateStationListObject(String _uId, int _i) async {
     FuelStation? _f = await Provider.of<GoogleMaps>(context, listen: false)
@@ -97,18 +97,20 @@ class _StationsListScreenState extends State<StationsListScreen> {
 
   loadData() async {
     await Provider.of<GoogleMaps>(context, listen: false).getAllBrands();
-    loadData();
+    // Brand _b = Brand(id:"0",name:"",image:"");
+    // _b.setValues("0", "", "");
+    // _brands.add(_b);
   }
 
   @override
   void initState() {
     super.initState();
+
+    loadData();
   }
 
   @override
   Widget build(BuildContext context) {
-    _brands = Provider.of<GoogleMaps>(context, listen: false).brands;
-    _selectedBrand = _brands[0];
     List<FuelStation> _fuelStationToSearch =
         Provider.of<GoogleMaps>(context).allFuelStations;
     for (FuelStation obj in _fuelStationToSearch) {
@@ -181,6 +183,18 @@ class _StationsListScreenState extends State<StationsListScreen> {
                     showDialog(
                       context: context,
                       builder: (context) {
+                        _brands =
+                            Provider.of<GoogleMaps>(context, listen: false)
+                                .brands;
+                        if (_brands.isEmpty) {
+                          Brand _b = Brand();
+                          _b.setValues("0", "", "");
+                          _brands.add(_b);
+                          _selectedBrand = _b;
+                        } else {
+                          _selectedBrand = _brands[0];
+                        }
+
                         final TextEditingController nameController =
                             TextEditingController();
                         final TextEditingController
@@ -210,6 +224,7 @@ class _StationsListScreenState extends State<StationsListScreen> {
                             objects[index].address.toString();
                         String googleMapsUrl =
                             "google.navigation:q=${latitudeControllerController.text},${longitudeControllerController.text}";
+
                         return Scaffold(
                           appBar: AppBar(
                             leading: IconButton(
