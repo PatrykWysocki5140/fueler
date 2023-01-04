@@ -5,8 +5,10 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fueler/model/API_Model/FuelStation.dart';
 import 'package:fueler/model/API_Model/FuelType.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 
 import 'package:fueler/settings/Get_colors.dart';
 
@@ -36,6 +38,9 @@ class _PriceEntryWidgetState extends State<PriceEntryWidget> {
   final PriceEntries pe;
   _PriceEntryWidgetState(this.pe);
   User _user = User();
+  late FuelStation _station;
+  //FuelStation.fromJsonMap("{id: a41b9a8f-c23a-413d-bff1-0ff73c2123e4, coordinates: 52.396629821084595,16.948683340512122, name: BP, brand: 948ad547-7a66-4050-96df-5c4e4c03356e, priceEntries: [{id: c6dec0e7-6042-43b5-a6cd-113a41a92f3a, price: 8.5, fuelType: DIESEL, addedBy: b8424a07-bfa5-4104-beaf-ed7c0e1f6237, fuelStation: a41b9a8f-c23a-413d-bff1-0ff73c2123e4}, {id: 0baf96ae-2e36-48ac-b063-2e207dcfd4bc, price: 12, fuelType: GASOLINE95, addedBy: 1b5770ba-437a-46b1-9ad3-e0955198813a, fuelStation: a41b9a8f-c23a-413d-bff1-0ff73c2123e4}]}");
+
   String assets = "";
 
   Future<bool> findUserById(String _uId) async {
@@ -50,6 +55,28 @@ class _PriceEntryWidgetState extends State<PriceEntryWidget> {
     return true;
   }
 
+  Future<bool> findStationById(String _uId) async {
+    //User? _u = await Provider.of<Api>(context).getUserById(_uId);
+    /// nie działą ???
+    // FuelStation? _station;
+    List<FuelStation> _stations =
+        Provider.of<GoogleMaps>(context, listen: false).allFuelStations;
+    for (FuelStation obj in _stations) {
+      if (obj.id == _uId) {
+        _station = obj;
+      }
+    }
+    _station = (await Provider.of<GoogleMaps>(context, listen: false)
+        .getFuelStationById(_uId))!;
+    return true;
+  }
+
+  @override
+  void initState() {
+    findStationById(pe.fuelStation);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     //Provider.of<Api>(context).searchpriceEntrie = List.empty();
@@ -61,6 +88,7 @@ class _PriceEntryWidgetState extends State<PriceEntryWidget> {
       _user = Provider.of<Api>(context).user;
     }
     assets = pe.icon;
+    log("station PriceEntryWidget " + _station.name);
     /*
     if (pe.fuelType == FuelType.CNG) {
       assets = 'assets/cng.png';
@@ -177,26 +205,114 @@ class _PriceEntryWidgetState extends State<PriceEntryWidget> {
                   ),
                 ],
               ),
-            SizedBox(height: size.height * 0.02),
-            Row(
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.fuelstation,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+            // ignore: unnecessary_null_comparison
+            if (_station != null)
+              Column(
+                children: [
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.fuelstation,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.03),
+                      Text(
+                        _station.name,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(width: size.width * 0.03),
-                Text(
-                  pe.fuelStation.toString(),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.address,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.03),
+                      Text(
+                        _station.address ?? "...",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
+                  Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.latitude,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.03),
+                      Text(
+                        _station.coordinates.latitude.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.longitude,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.03),
+                      Text(
+                        _station.coordinates.longitude.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            else
+              Column(
+                children: [
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.fuelstation,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.03),
+                      Text(
+                        pe.fuelStation.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             SizedBox(height: size.height * 0.02),
 
 /*
