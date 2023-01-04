@@ -39,6 +39,8 @@ class _FuelStationsAdminScreenState extends State<FuelStationsAdminScreen> {
   Future<void> loadAllFuelStation() async {
     Response? _response = await Provider.of<GoogleMaps>(context, listen: false)
         .getAllFuelStation();
+    Response? _response2 =
+        await Provider.of<GoogleMaps>(context, listen: false).getAllBrands();
     _allFuelStations =
         await Provider.of<GoogleMaps>(context, listen: false).allFuelStations;
   }
