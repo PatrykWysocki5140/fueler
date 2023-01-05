@@ -104,8 +104,11 @@ class GoogleMaps with ChangeNotifier {
         String _formattedAddress = "";
         if ((data.isNotEmpty) ||
             (data["results"][0] != null) ||
+            (data["results"] == List.empty()) ||
             (data["results"][0]["formatted_address"] != null)) {
-          _formattedAddress = data["results"][0]["formatted_address"];
+          if (data["status"] != "OVER_QUERY_LIMIT") {
+            _formattedAddress = data["results"][0]["formatted_address"];
+          }
         }
         log("Adres: $_formattedAddress");
         return _formattedAddress;
@@ -141,6 +144,7 @@ class GoogleMaps with ChangeNotifier {
       // Wyświetl odpowiedź
       log("status:" + response.statusCode.toString());
       if (response.statusCode == 200) {
+        searchFuelStations.clear();
         List<FuelStation> _model =
             fuelStationModelFromJson(response.data.toString());
         log("getFuelStation lenght:" + _model.length.toString());
@@ -414,6 +418,82 @@ class GoogleMaps with ChangeNotifier {
       dio.close();
     }
     return _b;
+  }
+
+  Future<Response?> addbrand(String _name, String _image) async {
+    Response response;
+    String url = '$baseUrl/api/brands';
+    Dio dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString(preferencesKeyToken);
+
+    try {
+      log(url);
+      response = await dio.post(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: {"Name": _name, "Image": _image},
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      return await response;
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+  }
+
+  Future<Response?> updateBrandById(
+      String _uId, String _name, String _image) async {
+    Response response;
+    String url = '$baseUrl/api/brands/$_uId';
+    Dio dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString(preferencesKeyToken);
+
+    try {
+      log(url);
+      response = await dio.put(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: {"Name": _name, "Image": _image},
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      return await response;
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return await (e.response);
+    }
+  }
+
+  Future<bool?> deleteBrandById(String _uId) async {
+    Response response;
+    String url = '$baseUrl/api/brands/$_uId';
+    Dio dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(preferencesKeyToken);
+
+    try {
+      log(url);
+      response = await dio.delete(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if (response.statusCode == 204) {
+        log(response.data.toString());
+        dio.close();
+        return true;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return false;
+    }
   }
 }
 
