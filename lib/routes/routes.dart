@@ -1,6 +1,7 @@
 import 'package:bart/bart.dart';
 import 'package:flutter/material.dart';
 import 'package:fueler/notifiers/APINotifier.dart';
+import 'package:fueler/routes/UI/user_admin_screen/widgets/brands_screen.dart';
 import 'package:fueler/routes/UI/user_admin_screen/widgets/fuelstations_screen.dart';
 import 'package:fueler/routes/UI/user_screen/widgets/veryfication_widget.dart';
 import 'package:fueler/routes/UI/widgets/add_price_entry_widget.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'UI/login_screen/login_screen.dart';
 import 'UI/register_screen/register_screen.dart';
 import 'UI/splash_screen/splash_screen_page.dart';
+import 'UI/user_admin_screen/widgets/create_brand_screen.dart';
 import 'UI/user_admin_screen/widgets/create_user_screen.dart';
 import 'UI/user_screen/user_screen.dart';
 import 'UI/user_screen/widgets/price_entries_list_widget.dart';
@@ -101,6 +103,16 @@ List<BartMenuRoute> subRoutes() {
       path: '/profile/fuelstations',
       pageBuilder: (parentContext, tabContext, settings) =>
           const FuelStationsAdminScreen(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/profile/brands',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const BrandsAdminScreen(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/profile/brands/addnewbrand',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const CreateBrandScreen(),
     ),
     BartMenuRoute.innerRoute(
       path: '/profile/mypriceentries',
