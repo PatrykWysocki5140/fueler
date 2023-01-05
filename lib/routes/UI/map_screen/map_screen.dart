@@ -418,6 +418,9 @@ class _MapScreenState extends State<MapScreen> {
                               max: 100.0,
                               value: _distance,
                               onChanged: (double newValue) async {
+                                Provider.of<GoogleMaps>(context, listen: false)
+                                    .searchFuelStations
+                                    .clear();
                                 await Provider.of<GoogleMaps>(context,
                                         listen: false)
                                     .setDistance(newValue.toString());
