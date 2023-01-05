@@ -134,12 +134,18 @@
     "distance": "Odległość",
     "fuelstations": "Stacje paliw",
     "searchtoeditstation": "Wybierz stację aby edytować jej dane",
+    "searchtoeditbrand": "Wybierz markę aby edytować jej dane",
     "ifstationslistisemptyerror": "Nie załadowano żadnej stacji, odśwież stronę",
+    "ifbrandslistisemptyerror": "Nie załadowano żadnej marki, odśwież stronę",
+    "delete": "Usuń",
     "delete": "Usuń",
     "address": "Adres",
     "getstationssucess": "Pobrano stacje",
     "getstationerror": "Nie pobrano stacji",
     "distancetosmall": "Nie wyszukano stacji - za mały dystans",
     "brandid": "Id Marki",
-    "searchbrand": "Zmień Markę"
+    "searchbrand": "Zmień Markę",
+    "allbrands": "Wszystkie Marki",
+    "image": "Ikona",
+    "addbrand": "Dodaj nową Markę"
 }
