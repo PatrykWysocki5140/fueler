@@ -82,6 +82,25 @@ class _FuelStationsAdminScreenState extends State<FuelStationsAdminScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: size.height * 0.03),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Response? _response =
+                        await Provider.of<GoogleMaps>(context, listen: false)
+                            .getAllBrands();
+                    Navigator.of(context).pushNamed("/profile/brands");
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.allbrands,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: size.height * 0.03),
               Center(
                 child: Text(
                   Provider.of<GoogleMaps>(context).allFuelStations.isEmpty ==
