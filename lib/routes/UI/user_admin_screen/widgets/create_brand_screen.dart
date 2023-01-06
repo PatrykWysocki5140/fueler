@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fueler/notifiers/MapNotifier.dart';
 import 'package:fueler/settings/Get_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -23,16 +25,9 @@ class CreateBrandScreen extends StatefulWidget {
 class _CreateBrandScreenState extends State<CreateBrandScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController firstpasswordController = TextEditingController();
-  final TextEditingController secondpasswordController =
-      TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController imageController = TextEditingController();
 
-  //final ApiClient _apiClient = Provider.of<Api>(context, listen: true);
-  bool _showPassword = true;
-
-  Future<void> registerUsers() async {
+  Future<void> addNewBrand() async {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     if (_formKey.currentState!.validate()) {
@@ -40,9 +35,9 @@ class _CreateBrandScreenState extends State<CreateBrandScreen> {
         content: Text(AppLocalizations.of(context)!.procesing),
         backgroundColor: GetColors.warning, //Colors.green.shade300,
       ));
-      Response? _response = await Provider.of<Api>(context, listen: false)
-          .registerUser(nameController.text, phoneController.text,
-              emailController.text, firstpasswordController.text);
+      Response? _response =
+          await Provider.of<GoogleMaps>(context, listen: false)
+              .addbrand(nameController.text, imageController.text);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       if (_response?.statusCode == 204) {
@@ -51,7 +46,7 @@ class _CreateBrandScreenState extends State<CreateBrandScreen> {
           content: Text('${AppLocalizations.of(context)!.success}'),
           backgroundColor: GetColors.success, //Colors.red.shade300,
         ));
-        Navigator.of(context).pushNamed("/profile");
+        Navigator.of(context).pushNamed("/profile/brands");
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('${AppLocalizations.of(context)!.error}'),
@@ -86,7 +81,7 @@ class _CreateBrandScreenState extends State<CreateBrandScreen> {
                     SizedBox(height: size.height * 0.08),
                     Center(
                       child: Text(
-                        AppLocalizations.of(context)!.createnewuser,
+                        AppLocalizations.of(context)!.addbrand,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -101,7 +96,7 @@ class _CreateBrandScreenState extends State<CreateBrandScreen> {
                       controller: nameController,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.username,
+                        hintText: AppLocalizations.of(context)!.name,
                         isDense: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -111,11 +106,11 @@ class _CreateBrandScreenState extends State<CreateBrandScreen> {
                     SizedBox(height: size.height * 0.03),
                     TextFormField(
                       validator: (value) =>
-                          Validator.validatePhoneNumber(value ?? "", context),
-                      controller: phoneController,
-                      keyboardType: TextInputType.phone,
+                          Validator.validateName(value ?? "", context),
+                      controller: imageController,
+                      keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.phonenumber,
+                        hintText: AppLocalizations.of(context)!.image,
                         isDense: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -123,82 +118,13 @@ class _CreateBrandScreenState extends State<CreateBrandScreen> {
                       ),
                     ),
                     SizedBox(height: size.height * 0.03),
-                    TextFormField(
-                      validator: (value) =>
-                          Validator.validateEmail(value ?? "", context),
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.03),
-                    TextFormField(
-                      obscureText: _showPassword,
-                      validator: (value) => Validator.validatePasswordRegister(
-                          value ?? "", secondpasswordController.text, context),
-                      controller: firstpasswordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.password,
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _showPassword = !_showPassword;
-                            });
-                          },
-                          child: Icon(
-                            _showPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            //color: Colors.grey,
-                          ),
-                        ),
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.03),
-                    TextFormField(
-                      obscureText: _showPassword,
-                      validator: (value) => Validator.validatePasswordRegister(
-                          value ?? "", firstpasswordController.text, context),
-                      controller: secondpasswordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.password,
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _showPassword = !_showPassword;
-                            });
-                          },
-                          child: Icon(
-                            _showPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            //color: Colors.grey,
-                          ),
-                        ),
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
                     SizedBox(height: size.height * 0.06),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: registerUsers,
+                        onPressed: addNewBrand,
                         child: Text(
-                          AppLocalizations.of(context)!.create,
+                          AppLocalizations.of(context)!.add,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
