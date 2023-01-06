@@ -153,6 +153,12 @@ class _MapScreenState extends State<MapScreen> {
       }
       //await loadLocations();
       //setState(() {});
+    } else if (_response?.statusCode == 403) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content:
+            Text('${AppLocalizations.of(context)!.getstationerrorpreemision}'),
+        backgroundColor: GetColors.warning,
+      ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('${AppLocalizations.of(context)!.getstationerror}'),
@@ -415,7 +421,7 @@ class _MapScreenState extends State<MapScreen> {
                           Expanded(
                             child: Slider(
                               min: 0.0,
-                              max: 100.0,
+                              max: 250.0,
                               value: _distance,
                               onChanged: (double newValue) async {
                                 Provider.of<GoogleMaps>(context, listen: false)
