@@ -165,7 +165,7 @@ class GoogleMaps with ChangeNotifier {
     Dio dio = Dio();
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(preferencesKeyToken);
-    _distance = "130000";
+    //_distance = "130000";
     await getDistance();
     log("distance: " + _distance.toString());
     log("userlng: " + userlng.toString());
