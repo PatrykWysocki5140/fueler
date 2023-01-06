@@ -4,6 +4,7 @@ import "dart:convert";
 import 'dart:developer';
 
 import 'package:fueler/model/API_Model/Brand.dart';
+import 'package:fueler/model/API_Model/FuelStationBrands.dart';
 import 'package:fueler/model/API_Model/MyJson.dart';
 import 'package:fueler/model/API_Model/PriceEntries.dart';
 import 'package:fueler/notifiers/MapNotifier.dart';
@@ -49,7 +50,8 @@ class FuelStation {
     name = _name;
     marker = getMarker(_name);
     brandId = _brand;
-    brand = await getBrand(_brand);
+    brand = await mapApi.getBrand(_brand, _brand);
+    //setBrand(await getBrand(brandId!));
     if (brand == 'assets/stationslogo/default.png') {
       brand = getBrandByName(_name);
     }
@@ -96,19 +98,22 @@ class FuelStation {
     }
     return val;
   }
-
-  Future<String> getBrand(String _brand) async {
+/*
+  getBrand(String _brand) async{
     GoogleMaps _mapApi = GoogleMaps();
     Brand _b = Brand();
-    _b = (await _mapApi.getBrandById(_brand));
+    
 
-    if (_b.image != null) {
+    _b = await _mapApi.getBrandById(_brand) ;
+
+    if (_b != null) {
       _brand = _b.image;
     } else {
       _brand = _brand.toLowerCase();
     }
     //_brand = _brand.toLowerCase();
     String val = "";
+
     if (_brand == "orlen") {
       val = 'assets/stationslogo/Orlen.png';
     } else if (_brand == "lotos") {
@@ -136,6 +141,7 @@ class FuelStation {
     }
     return val;
   }
+*/
 
   String getBrandByName(String _brand) {
     _brand = _brand.toLowerCase();
@@ -173,7 +179,7 @@ class FuelStation {
   }
 
   void setBrand(String _brand) {
-    marker = _brand;
+    brand = _brand;
   }
 
   void addPrice(PriceEntries _price) {
