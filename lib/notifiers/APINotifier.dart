@@ -262,34 +262,33 @@ class Api with ChangeNotifier {
     try {
       log(url);
       Response response = await dio.get(url);
-      if (response.statusCode != 401) {
-        var _token = response.data;
-        token = _token;
-        log("token:" + token);
+      //if ((response.statusCode != 401) || (response.statusCode != 502)) {
+      var _token = response.data;
+      token = _token;
+      log("token:" + token);
 
-        // Jeśli status 200 i token różny od null
-        if ((response.statusCode == 200) && (_token != null)) {
-          // Zapisz token w SharedPreferences
-          var prefs = await SharedPreferences.getInstance();
-          await prefs.setString(preferencesKeyToken, _token);
+      // Jeśli status 200 i token różny od null
+      if ((response.statusCode == 200) && (_token != null)) {
+        // Zapisz token w SharedPreferences
+        var prefs = await SharedPreferences.getInstance();
+        await prefs.setString(preferencesKeyToken, _token);
 
-          Future<String?> _userFromJson = getMyData();
-          // ignore: unrelated_type_equality_checks
-          if (_userFromJson != "") {
-            _user = await User.fromJson(await _userFromJson);
-            await prefs.setString(
-                preferencesKeyUser, _user.toJson().toString());
-            await prefs.setString(preferencesKeyUserExist, true.toString());
-            token = _token;
-            user = _user;
-            dio.close();
-            return response;
-          }
-          //Zwracanie pobranego usera
-        } else {
+        Future<String?> _userFromJson = getMyData();
+        // ignore: unrelated_type_equality_checks
+        if (_userFromJson != "") {
+          _user = await User.fromJson(await _userFromJson);
+          await prefs.setString(preferencesKeyUser, _user.toJson().toString());
+          await prefs.setString(preferencesKeyUserExist, true.toString());
+          token = _token;
+          user = _user;
           dio.close();
           return response;
         }
+        /*
+        } else {
+          dio.close();
+          return response;
+        }*/
       } else {
         dio.close();
         return response;
