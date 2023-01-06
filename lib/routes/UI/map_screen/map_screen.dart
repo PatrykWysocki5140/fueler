@@ -430,9 +430,10 @@ class _MapScreenState extends State<MapScreen> {
                                             listen: false)
                                         .distance
                                         .toString());
+
                                 await Provider.of<GoogleMaps>(context,
                                         listen: false)
-                                    .getAllFuelStation();
+                                    .getFuelStation(newValue.toString());
 
                                 setState(() {});
                               },
