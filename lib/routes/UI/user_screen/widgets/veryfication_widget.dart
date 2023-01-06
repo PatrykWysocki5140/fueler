@@ -20,7 +20,7 @@ import '../../../../notifiers/APINotifier.dart';
 import '../../../../settings/Get_colors.dart';
 import '../../../../settings/validator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
+/*
 class VeryficationScreen extends StatefulWidget {
   static String id = "user_screen";
   const VeryficationScreen({
@@ -218,30 +218,8 @@ class _VeryficationScreenState extends State<VeryficationScreen> {
         ),
       ),
     );
-/*
-    return Scaffold(
-      body: ListView.builder(
-          itemCount: objects.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(objects[index]),
-              // Po kliknięciu w element listy wyświetl szczegóły obiektu
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: Text(objects[index]['phoneNumber']),
-                    );
-                  },
-                );
-              },
-            );
-          },
-        ),
-      );*/
   }
-}
+}*/
 
 class PinCodeVerificationScreen extends StatefulWidget {
   final String? phoneNumber;
@@ -332,9 +310,12 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
           content: Text(AppLocalizations.of(context)!.success),
           backgroundColor: GetColors.success,
         ));
-        Provider.of<Api>(context, listen: false).user.SetConfirm(true);
+        //Provider.of<Api>(context, listen: false).LogOut();
+        Provider.of<Api>(context).user.SetConfirm(true);
+        //Provider.of<Api>(context, listen: false).LogOut();
+        //Provider.of<Api>(context, listen: false).user.SetConfirm(true);
         Navigator.pop(context, true);
-        //Navigator.of(context).pushNamed("/");
+        //Navigator.of(context).pushNamed("/profile");
         return true;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
