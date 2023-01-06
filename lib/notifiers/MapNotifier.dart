@@ -118,15 +118,56 @@ class GoogleMaps with ChangeNotifier {
       return null;
   }
 
+  Future<String> getBrand(String _brand, String valuetoSearch) async {
+    Brand _b = Brand();
+
+    _b = await getBrandById(valuetoSearch);
+
+    if (_b.image != null) {
+      _brand = _b.image;
+    } else {
+      _brand = _brand.toLowerCase();
+    }
+    //_brand = _brand.toLowerCase();*/
+    String val = "";
+
+    if (_brand == "orlen") {
+      val = 'assets/stationslogo/Orlen.png';
+    } else if (_brand == "lotos") {
+      val = 'assets/stationslogo/Lotos.png';
+    } else if (_brand == "shell") {
+      val = 'assets/stationslogo/Shell.png';
+    } else if (_brand == "bp") {
+      val = 'assets/stationslogo/BP.png';
+    } else if (_brand == "intermarche") {
+      val = 'assets/stationslogo/InterMarche.png';
+    } else if (_brand == "circlek") {
+      val = 'assets/stationslogo/CircleK.png';
+    } else if (_brand == "auchan") {
+      val = 'assets/stationslogo/Auchan.png';
+    } else if (_brand == "amic") {
+      val = 'assets/stationslogo/Amic.png';
+    } else if (_brand == "huzar") {
+      val = 'assets/stationslogo/Huzar.png';
+    } else if (_brand == "moya") {
+      val = 'assets/stationslogo/Moya.png';
+    } else if (_brand == "statoil") {
+      val = 'assets/stationslogo/Statoil.png';
+    } else {
+      val = 'assets/stationslogo/default.png';
+    }
+    return val;
+  }
+
   Future<Response?> getFuelStation(String _distance) async {
     Response response;
     String url = '$baseUrl/api/fuel-stations/location';
     Dio dio = Dio();
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(preferencesKeyToken);
-
+    _distance = "130000";
     await getDistance();
-    log("distance: " + distance.toString());
+    log("distance: " + _distance.toString());
     log("userlng: " + userlng.toString());
     log("userlat: " + userlat.toString());
     final queryParameters = {
@@ -235,7 +276,7 @@ class GoogleMaps with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(preferencesKeyToken);
 
-    await getDistance();
+    //await getDistance();
 
     try {
       log(url);
@@ -249,9 +290,10 @@ class GoogleMaps with ChangeNotifier {
         List<FuelStation> _model =
             fuelStationModelFromJson(response.data.toString());
         allFuelStations.clear();
+        log("AllFuelStation:" + _model.length.toString());
         for (var obj in _model) {
           allFuelStations.add(obj);
-          log("FuelStation:" + obj.toJson().toString());
+          log("AllFuelStation:" + obj.toJson().toString());
         }
         if (_model.isNotEmpty) searchFuelStations = _model;
         dio.close();
