@@ -229,7 +229,7 @@ class _MapScreenState extends State<MapScreen> {
     createMarkers(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flueler'),
+        //title: const Text('Flueler'),
         leading: GestureDetector(
           //FloatingActionButton
           //heroTag: "/inner",
@@ -241,6 +241,26 @@ class _MapScreenState extends State<MapScreen> {
           },
         ),
         actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                //heroTag: "/settingsss",
+                child: Row(
+                  children: [
+                    const Icon(Icons.search_sharp),
+                    Text(
+                      AppLocalizations.of(context)!.search,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/map/search");
+                },
+              )),
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
