@@ -6,7 +6,9 @@ import 'package:dio/dio.dart';
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:fueler/model/API_Model/Brand.dart';
+import 'package:fueler/model/API_Model/Coordinates.dart';
 import 'package:fueler/model/API_Model/FuelStation.dart';
+import 'package:fueler/model/API_Model/SearchParams.dart';
 import 'package:fueler/model/API_Model/User.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -537,25 +539,45 @@ class GoogleMaps with ChangeNotifier {
       return false;
     }
   }
-}
+  ////////////////////////////////////////////////////////////////////////
+  /// Best Station
+  /// ////////////////////////////////////////////////////////////////
 
-class Coordinates {
-  final double latitude;
-  final double longitude;
+  Future<Response?> getBestFuelStation(SearchParams _params) async {
+    FuelStation _f = FuelStation();
+    Response response;
+    String url = 'http://fueler.computation.awrzawinski.xyz/api/best-station/';
+    Dio dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(preferencesKeyToken);
 
-  Coordinates({required this.longitude, required this.latitude});
-
-  factory Coordinates.fromJson(Map<String, dynamic> json) {
-    return Coordinates(
-      longitude: json['longitude'],
-      latitude: json['latitude'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'longitude': longitude,
-      'latitude': latitude,
+    final queryParameters = {
+      'Coordinates.Longitude': _params.coordinates.longitude,
+      'Coordinates.Latitude': _params.coordinates.latitude,
+      'Distance': _params.distance,
+      'FuelType': _params.fuelType,
+      'amount': _params.amount,
+      'burnRate': _params.burnRate,
+      'searchType': _params.searchType,
     };
+    try {
+      log(url);
+      response = await dio.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        queryParameters: queryParameters,
+      );
+      // Wyświetl odpowiedź
+      log("status:" + response.statusCode.toString());
+      if ((response.statusCode == 200) || (response.statusCode == 204)) {
+        //_f = FuelStation.fromJsonNotMapString(await response.data.toString());
+        dio.close();
+        return response;
+      }
+    } on DioError catch (e) {
+      log("e.response!.data: " + e.response!.data.toString());
+      dio.close();
+      return e.response;
+    }
   }
 }
