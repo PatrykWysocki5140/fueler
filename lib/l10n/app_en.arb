@@ -38,6 +38,7 @@
     "exit": "Exit",
     "procesing": "Processing Data",
     "error": "Error",
+    "errorsearchbeststation": "The station has not been searched for you  - try with other parameters",
     "warning": "Warning",
     "success": "Success",
     "register": "Register",
@@ -116,6 +117,8 @@
     "back": "Back",
     "priceentrieshistoryempty": "Price entries history is empty",
     "validPrice": "Enter the correct price.",
+    "validDouble": "Enter the correct float number.",
+    "validInt": "Enter the correct integer number.",
     "cng": "CNG",
     "on": "ON",
     "onpremium": "ON PREMIUM",
@@ -132,6 +135,7 @@
     "validCoordinates": "Enter the correct coordinates.",
     "brand": "Brand",
     "distance": "Distance",
+    "distancekm": "Distance in kilometers",
     "fuelstations": "Fuel Stations",
     "searchtoeditstation": "Select a station to edit",
     "searchtoeditbrand": "Select a brand to edit",
@@ -147,5 +151,12 @@
     "searchbrand": "Search Brand",
     "allbrands": "All Brands",
     "image": "Image",
-    "addbrand": "Add new Brand"
+    "addbrand": "Add new Brand",
+    "searchbeststation": "Searching for the best station",
+    "searchparams": "Search parameters",
+    "literstorefuel": "Liters to refuel",
+    "burnRate": "Car combustion per 100 km",
+    "closest": "Closest",
+    "cheapest": "Cheapest",
+    "optimal": "Optimal"
 }

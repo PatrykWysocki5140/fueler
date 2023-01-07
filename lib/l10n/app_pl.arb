@@ -38,6 +38,7 @@
     "exit": "Wyjdź",
     "procesing": "Przetwarzanie danych",
     "error": "Błąd",
+    "errorsearchbeststation": "Nie wyszukano dla Ciebie stacji - spróbuj z innymi parametrami",
     "warning": "Ostrzeżenie",
     "success": "Sukces",
     "register": "Rejestracja", 
@@ -116,6 +117,8 @@
     "back": "Powrót",
     "priceentrieshistoryempty": "Historia wpisów cen jest pusta",
     "validPrice": "Wprowadź poprawną cenę.",
+    "validDouble": "Wprowadź poprawną liczbę zmiennoprzecinkową.",
+    "validInt": "Wprowadź poprawną liczbę całkowitą.",
     "cng": "CNG",
     "on": "ON",
     "onpremium": "ON PREMIUM",
@@ -132,6 +135,7 @@
     "validCoordinates": "Wprowadź poprawne koordynaty.",
     "brand": "Marka",
     "distance": "Odległość",
+    "distancekm": "Odległość w kilometrach",
     "fuelstations": "Stacje paliw",
     "searchtoeditstation": "Wybierz stację aby edytować jej dane",
     "searchtoeditbrand": "Wybierz markę aby edytować jej dane",
@@ -148,5 +152,12 @@
     "searchbrand": "Zmień Markę",
     "allbrands": "Wszystkie Marki",
     "image": "Ikona",
-    "addbrand": "Dodaj nową Markę"
+    "addbrand": "Dodaj nową Markę",
+    "searchbeststation": "Szukaj najlepszej stacji",
+    "searchparams": "Parametry wyszukiwania",
+    "literstorefuel": "Litry do zatankowania",
+    "burnRate": "Spalanie auta na 100km",
+    "closest": "Najbliżej",
+    "cheapest": "Najtaniej",
+    "optimal": "Optymalnie"
 }
