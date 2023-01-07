@@ -9,6 +9,7 @@ import 'package:fueler/routes/tabs/map_page.dart';
 import 'package:fueler/routes/tabs/settings_page.dart';
 import 'package:provider/provider.dart';
 import 'UI/login_screen/login_screen.dart';
+import 'UI/map_screen/widgets/search_widget.dart';
 import 'UI/register_screen/register_screen.dart';
 import 'UI/splash_screen/splash_screen_page.dart';
 import 'UI/user_admin_screen/widgets/create_brand_screen.dart';
@@ -127,6 +128,11 @@ List<BartMenuRoute> subRoutes() {
     BartMenuRoute.innerRoute(
       path: '/map/add',
       pageBuilder: (parentContext, tabContext, settings) => const AddWidget(),
+    ),
+    BartMenuRoute.innerRoute(
+      path: '/map/search',
+      pageBuilder: (parentContext, tabContext, settings) =>
+          const SearchWidget(),
     ),
     BartMenuRoute.innerRoute(
       path: '/map/add/addpriceentry',
