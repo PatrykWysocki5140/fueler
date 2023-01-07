@@ -65,7 +65,7 @@ class Validator {
 
   static String? validateText(String value, BuildContext context) {
     if (value.isEmpty) {
-      return '🚩 ${AppLocalizations.of(context)!.validText}';
+      return '🚩 ${AppLocalizations.of(context)!.validEmptyField}';
     } else {
       return null;
     }
@@ -78,6 +78,30 @@ class Validator {
       return '🚩 ${AppLocalizations.of(context)!.validEmptyField}';
     } else if (!regex.hasMatch(value)) {
       return '🚩 ${AppLocalizations.of(context)!.validPrice}.';
+    } else {
+      return null;
+    }
+  }
+
+  static String? validateDouble(String value, BuildContext context) {
+    Pattern pattern = r'^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$';
+    RegExp regex = RegExp(pattern as String);
+    if (value.isEmpty) {
+      return '🚩 ${AppLocalizations.of(context)!.validEmptyField}';
+    } else if (!regex.hasMatch(value)) {
+      return '🚩 ${AppLocalizations.of(context)!.validDouble}.';
+    } else {
+      return null;
+    }
+  }
+
+  static String? validateInt(String value, BuildContext context) {
+    Pattern pattern = r'^[-+]?[0-9]+$';
+    RegExp regex = RegExp(pattern as String);
+    if (value.isEmpty) {
+      return '🚩 ${AppLocalizations.of(context)!.validEmptyField}';
+    } else if (!regex.hasMatch(value)) {
+      return '🚩 ${AppLocalizations.of(context)!.validInt}.';
     } else {
       return null;
     }
