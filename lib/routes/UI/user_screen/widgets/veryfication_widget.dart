@@ -369,7 +369,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 child: Text(
                   AppLocalizations.of(context)!.numbersendsms +
                       " " +
-                      Provider.of<Api>(context).user.phoneNumber.toString(),
+                      Provider.of<Api>(context).user.email.toString(),
                   style: const TextStyle(
                       //color: Colors.black,
                       fontWeight: FontWeight.bold,
