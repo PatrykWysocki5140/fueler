@@ -182,6 +182,11 @@ class FuelStation {
     brand = _brand;
   }
 
+  Future<void> setAddress(double latitude, double longitude) async {
+    GoogleMaps mapApi = GoogleMaps();
+    address = await mapApi.getAddressFromLatLng(latitude, longitude);
+  }
+
   void addPrice(PriceEntries _price) {
     prices?.add(_price);
   }
