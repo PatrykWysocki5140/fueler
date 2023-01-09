@@ -18,8 +18,6 @@ import 'package:http/http.dart' as http;
 class GoogleMaps with ChangeNotifier {
   String baseUrl = "http://fueler.data.awrzawinski.xyz";
   String preferencesKeyToken = "token";
-  //String preferencesKeyUser = "userData";
-  //String preferencesKeyUserExist = "userExist";
   String preferencesKeyNightMode = "dark_mode_enabled";
   String preferencesKeyDistance = "distance";
   String preferencesKeyuserlat = "userlat";
@@ -97,7 +95,7 @@ class GoogleMaps with ChangeNotifier {
     userlat = lat;
     userlng = lng;
     String _host = 'https://maps.google.com/maps/api/geocode/json';
-    //final url = '$_host?key=$mapApiKey&language=en&latlng=$lat,$lng';
+
     final url = '$_host?latlng=$lat,$lng&key=$mapApiKey';
     if (lat != null && lng != null) {
       var response = await http.get(Uri.parse(url));
@@ -130,7 +128,6 @@ class GoogleMaps with ChangeNotifier {
     } else {
       _brand = _brand.toLowerCase();
     }
-    //_brand = _brand.toLowerCase();*/
     String val = "";
 
     if (_brand == "orlen") {
@@ -167,7 +164,7 @@ class GoogleMaps with ChangeNotifier {
     Dio dio = Dio();
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(preferencesKeyToken);
-    //_distance = "130000";
+
     await getDistance();
     log("distance: " + _distance.toString());
     log("userlng: " + userlng.toString());
@@ -215,7 +212,6 @@ class GoogleMaps with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString(preferencesKeyToken);
 
-    //Coordinates coordinates = Coordinates(longitude: double.parse(_longitude), latitude: double.parse(_latitude));
     Coordinates coordinates = Coordinates(
         longitude: double.parse(_longitude), latitude: double.parse(_latitude));
     try {
@@ -277,8 +273,6 @@ class GoogleMaps with ChangeNotifier {
     Dio dio = Dio();
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(preferencesKeyToken);
-
-    //await getDistance();
 
     try {
       log(url);
@@ -415,7 +409,6 @@ class GoogleMaps with ChangeNotifier {
         url,
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
-      // Wyświetl odpowiedź
       log("status:" + response.statusCode.toString());
       if (response.statusCode == 200) {
         List<Brand> _model = brandModelFromJson(response.data.toString());
@@ -562,15 +555,15 @@ class GoogleMaps with ChangeNotifier {
     };
     try {
       log(url);
+      log(queryParameters.toString());
       response = await dio.get(
         url,
         options: Options(headers: {'Authorization': 'Bearer $token'}),
         queryParameters: queryParameters,
       );
-      // Wyświetl odpowiedź
+
       log("status:" + response.statusCode.toString());
       if ((response.statusCode == 200) || (response.statusCode == 204)) {
-        //_f = FuelStation.fromJsonNotMapString(await response.data.toString());
         dio.close();
         return response;
       }
