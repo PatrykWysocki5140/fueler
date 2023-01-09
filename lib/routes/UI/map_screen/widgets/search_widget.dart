@@ -43,6 +43,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   final TextEditingController amountController = TextEditingController();
   final TextEditingController burnRateController = TextEditingController();
   final TextEditingController searchTypeController = TextEditingController();
+
   String _fuelType = '';
   late String _searchType;
   double _distance = 20;
@@ -98,6 +99,8 @@ class _SearchWidgetState extends State<SearchWidget> {
         ));
         FuelStation _fs =
             FuelStation.fromJsonNotMapString(await _response!.data.toString());
+        await _fs.setAddress(
+            _fs.coordinates.latitude, _fs.coordinates.longitude);
         showDialog<bool>(
             context: context,
             builder: (BuildContext context) => StationDialog(fuelstation: _fs));
@@ -243,13 +246,13 @@ class _SearchWidgetState extends State<SearchWidget> {
                       //Text(AppLocalizations.of(context)!.distance),
                       Slider(
                         min: 0.0,
-                        max: 250.0,
+                        max: 99.0,
                         value: _distance,
                         onChanged: (double newValue) async {
                           _distance = newValue;
                           //double.parse(newValue.toStringAsFixed(2));
                           //newValue.toStringAsFixed(2);
-                          distanceController.text = newValue.toStringAsFixed(2);
+                          distanceController.text = newValue.toStringAsFixed(0);
                           setState(() {});
                         },
                       ),
