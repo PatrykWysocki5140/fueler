@@ -34,7 +34,7 @@ class _MapPage extends State<MapPage> with AppBarNotifier {
     updateAppBar(
       context,
       AppBar(
-        title: const Text('Flueler'),
+        title: const Text('Fueler'),
         leading: GestureDetector(
           //FloatingActionButton
           //heroTag: "/inner",
