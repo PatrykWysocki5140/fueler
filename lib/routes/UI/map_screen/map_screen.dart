@@ -229,7 +229,7 @@ class _MapScreenState extends State<MapScreen> {
     createMarkers(context);
     return Scaffold(
       appBar: AppBar(
-        //title: const Text('Flueler'),
+        //title: const Text('Fueler'),
         leading: GestureDetector(
           //FloatingActionButton
           //heroTag: "/inner",
