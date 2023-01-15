@@ -141,18 +141,10 @@ Konto administratora pozwala na takie funkcjonalności jak:
 
 
 
-![Obraz zawierający tekst
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.021.jpeg)![Obraz zawierający tekst
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.022.jpeg)![Obraz zawierający tekst
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.023.jpeg)
+![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.021.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.022.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.023.jpeg)
 
 *Źródło: Opracowanie własne na podstawie wygenerowanej aplikacji mobilnej “Fueler”* 
 
 Zarządzanie stacjami, użytkownikami i markami opiera się o aktywności takie jak:
 
 dodawanie nowego obiektu, modyfikacja istniejącego obiektu, usuwanie obiektu, wyszukanie wszystkich obiektów danego typu, wyszukanie konkretnego obiektu po jego identyfikatorze.
-
-2
