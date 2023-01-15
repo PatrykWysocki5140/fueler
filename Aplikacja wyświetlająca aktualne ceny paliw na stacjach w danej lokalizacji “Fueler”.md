@@ -19,15 +19,8 @@ Użytkownik po uruchomieniu aplikacji otrzymuje dostępne możliwości interakcj
 - wybór ustawień 
 - podgląd mapy
 
-![Obraz zawierający tekst
 
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.003.jpeg)![Obraz zawierający tekst, sprzęt elektroniczny
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.004.jpeg)
-
-![Obraz zawierający mapa
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.005.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.006.jpeg)
+![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.006.jpeg)
 
 *Źródło: Opracowanie własne na podstawie wygenerowanej aplikacji mobilnej “Fueler”* 
 
@@ -49,9 +42,7 @@ Dostępne typy użytkowników to:
 - użytkownik zweryfikowany
 
 
-![Obraz zawierający tekst
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.007.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.008.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.009.jpeg)
+![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.007.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.008.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.009.jpeg)
 
 *Źródło: Opracowanie własne na podstawie wygenerowanej aplikacji mobilnej “Fueler”* 
 
@@ -73,9 +64,7 @@ Wartą uwagi funkcjonalnością wdrożoną do rozwiązania jest stworzenie spers
 
 *Źródło: Opracowanie własne na podstawie wygenerowanej aplikacji mobilnej “Fueler”* 
 
-![Obraz zawierający tekst
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.012.png)
+![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.012.png)
 
 *Źródło: Opracowanie własne na podstawie wygenerowanej wiadomości mailowej, wysłanej na adres zarejestrowanego użytkownika*
 
@@ -84,9 +73,7 @@ W przypadku nowego użytkownika wymagana jest weryfikacja konta, przy wykorzysta
 
 Ilustracja przedstawia Widget/Ekran, który wykorzystany jest do realizacji procesu weryfikacji, przy prawidłowym wpisaniu ciągu sześciu cyfr zwracany jest komunikat odpowiedni do poprawności wprowadzonych danych. Dodana została dodatkowa opcja pozwalająca na ponowne wysłanie wiadomości e-mail, co pozwoliło na uniknięcie problemu poszukiwania zagubionej wiadomości na skrzynce użytkownika. 
 
-![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.013.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.014.jpeg)![Obraz zawierający tekst, zegar, zrzut ekranu
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.015.jpeg)
+![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.013.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.014.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.015.jpeg)
 
 *Źródło: Opracowanie własne na podstawie wygenerowanej aplikacji mobilnej “Fueler”*
 
@@ -119,9 +106,7 @@ Poprawne wypełnienie parametrów pozwala na pobranie stacji paliw według prefe
 
 Użytkownik może zapoznać się z lokalizacją stacji, ostatnimi dodanymi typami i cenami paliw, oraz skorzystać z opcji przekierowania wybranego miejsca do innej aplikacji zarządzającej podróżami np. Google Maps, Yanosik, celem wyznaczenia trasy podróży i skorzystania z usług handlowych danej placówki.  
 
-![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.017.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.018.jpeg)![Obraz zawierający tekst
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.019.jpeg)
+![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.017.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.018.jpeg)![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.019.jpeg)
 
 *Źródło: Opracowanie własne na podstawie wygenerowanej aplikacji mobilnej “Fueler”* 
 
@@ -135,9 +120,7 @@ Dodanie kolejnej ceny wiąże się z ponownym kliknięciem sekwencję przyciskó
 
 Tożsamy mechanizm dotyczy procesu dodawania nowej stacji paliw.
 
-![Obraz zawierający tekst
-
-Opis wygenerowany automatycznie](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.020.jpeg)
+![](Aspose.Words.007e6f39-83ad-4bf4-8e63-4139b31334df.020.jpeg)
 
 *Źródło: Opracowanie własne na podstawie wygenerowanej aplikacji mobilnej “Fueler”* 
 
